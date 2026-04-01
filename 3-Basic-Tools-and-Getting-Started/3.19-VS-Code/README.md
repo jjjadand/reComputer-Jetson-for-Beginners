@@ -6,8 +6,6 @@
 
 Visual Studio Code is a lightweight editor with a strong extension ecosystem. It is a practical choice for Python, C++, ROS, and remote Jetson development.
 
-Original screenshots extracted from the xiaobai Word lesson are collected in [assets](./assets/README.md).
-
 ## Install the ARM64 Package
 
 1. Open the official VS Code download page in a browser.

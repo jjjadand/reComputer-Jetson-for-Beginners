@@ -6,8 +6,6 @@
 
 During development you will often move scripts, datasets, models, and logs between your PC and Jetson. The simplest secure approach is to transfer files over SSH.
 
-Original screenshots extracted from the xiaobai Word lesson are collected in [assets](./assets/README.md).
-
 ## Transfer Files with `scp`
 
 Upload a file from your PC to Jetson:

@@ -6,8 +6,6 @@
 
 VNC (Virtual Network Computing) lets you control the Jetson desktop remotely from another computer. It is useful when you need a graphical session for browser setup, IDE usage, or desktop debugging.
 
-Original screenshots extracted from the xiaobai Word lesson are collected in [assets](./assets/README.md).
-
 > Note: VNC is best suited to desktop sessions where Jetson is already logged in. For headless remote desktop scenarios, [NoMachine](../3.10-Nomachine/README.md) is often easier to keep stable.
 
 ## Enable Desktop Sharing on Jetson

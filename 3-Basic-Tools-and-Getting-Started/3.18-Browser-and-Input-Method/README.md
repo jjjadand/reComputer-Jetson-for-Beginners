@@ -6,8 +6,6 @@
 
 A browser is useful for downloading packages, opening local web UIs, and reading online documentation. A Chinese input method is helpful when searching Chinese-language resources or entering Chinese text on Jetson.
 
-Original screenshots extracted from the xiaobai Word lessons are collected in [assets](./assets/README.md).
-
 ## Install Firefox
 
 ```bash

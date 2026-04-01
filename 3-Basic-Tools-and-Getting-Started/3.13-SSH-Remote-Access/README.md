@@ -6,8 +6,6 @@
 
 SSH (Secure Shell) lets you log in to Jetson from another computer, run commands remotely, transfer files securely, and manage the system without a monitor or keyboard attached.
 
-Original screenshots extracted from the xiaobai Word lesson are collected in [assets](./assets/README.md).
-
 ## Make Sure Jetson and Your PC Can Reach Each Other
 
 The two devices must be on the same LAN unless you have routed or VPN access.

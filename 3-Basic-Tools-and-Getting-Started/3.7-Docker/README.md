@@ -6,9 +6,7 @@
 
 Docker is a practical way to package applications and their dependencies into portable containers. On Jetson, containers are especially useful for AI development because they let you isolate Python environments, reuse prebuilt images, and run GPU-accelerated workloads without changing the host system too much.
 
-This page combines the existing Docker section with beginner-friendly usage patterns from the xiaobai Chapter 3 materials.
-
-Original screenshots extracted from the xiaobai Word lesson are collected in [assets](./assets/README.md).
+This page introduces Docker on Jetson with beginner-friendly installation, image management, and container workflow examples.
 
 ## Install Docker Engine
 

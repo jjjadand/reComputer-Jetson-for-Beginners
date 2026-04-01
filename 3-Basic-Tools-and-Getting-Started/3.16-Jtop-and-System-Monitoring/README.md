@@ -6,8 +6,6 @@
 
 `jtop` is one of the most useful Jetson tools for beginners. It provides a real-time view of CPU, GPU, memory, temperatures, power mode, clocks, fan state, storage, process activity, and JetPack component versions.
 
-Original screenshots extracted from the xiaobai Word lesson are collected in [assets](./assets/README.md).
-
 ## Install `jtop`
 
 ```bash

@@ -6,8 +6,6 @@
 
 JupyterLab is useful for interactive Python development, quick model experiments, data inspection, and teaching demos on Jetson. It exposes a browser-based workspace that can be accessed locally or from another device on the same network.
 
-Original screenshots extracted from the xiaobai Word lesson are collected in [assets](./assets/README.md).
-
 ## Install JupyterLab
 
 ```bash

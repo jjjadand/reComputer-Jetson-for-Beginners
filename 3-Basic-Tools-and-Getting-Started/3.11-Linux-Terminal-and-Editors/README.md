@@ -6,8 +6,6 @@
 
 The Linux terminal is the fastest way to manage files, install packages, inspect the system, and run development tools on Jetson. This page combines the basic terminal workflow and editor usage that beginners need before moving on to CUDA, Docker, ROS, or AI frameworks.
 
-Original screenshots extracted from the xiaobai Word lesson are collected in [assets](./assets/README.md).
-
 You can open a terminal on the Jetson desktop with:
 
 ```bash

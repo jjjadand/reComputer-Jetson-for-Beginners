@@ -6,8 +6,6 @@
 
 Before installing packages, using SSH, or opening web services such as JupyterLab, Jetson needs a working network connection. This page covers Wi-Fi, Ethernet, IP checking, and static IP basics.
 
-Original screenshots extracted from the xiaobai Word lesson are collected in [assets](./assets/README.md).
-
 ## Connect to Wi-Fi from the Desktop
 
 On Jetson desktop:
