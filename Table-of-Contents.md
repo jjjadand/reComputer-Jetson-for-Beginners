@@ -41,20 +41,41 @@ Explore a broad range of topics from Jetson platform basics to generative AI dep
 | Module 4.3.1| [Train and Deploy YOLOv8](./4-Computer-Vision/4.3-Object%20Detection%20and%20Recognition/4.3.1-Train%20and%20Deploy%20YOLOv8%20on%20reComputer/README.md)|
 | Module 4.3.2| [Deploy YOLOv8 using TensorRT and DeepStream SDK Support](./4-Computer-Vision/4.3-Object%20Detection%20and%20Recognition/4.3.2-Deploy%20YOLOv8%20on%20NVIDIA%20Jetson%20using%20TensorRT%20and%20DeepStream%20SDK%20Support/README.md)|
 | **Module 4.4**| [**Project Practice-Intelligent Surveillance System**](./4-Computer-Vision/4.4-Project%20Practice-Intelligent%20Surveillance%20System/README.md)|
-| **Module 5**| **Generative AI Applications**                    |
-| **Module 6**     | **ROS Robotics** |
-| Module 6.1     | Introduction to ROS |
-| Module 6.1.1     | [Overview of ROS and Environment Setup](./6-Robotics/6.1-Introduction%20to%20ROS/6.1.1-Overview%20of%20ROS%20and%20Environment%20Setup/README.md) |
-| Module 6.1.2     | [Quick Experience with HelloWorld for ROS](./6-Robotics/6.1-Introduction%20to%20ROS/6.1.2-Quick%20Experience%20with%20HelloWorld%20for%20ROS/README.md) |
-| Module 6.1.3     | [ROS Architecture](./6-Robotics/6.1-Introduction%20to%20ROS/6.1.3-ROS%20Architecture/README.md)|
-| Module 6.1.4     | [ROS Communication Mechanism](./6-Robotics/6.1-Introduction%20to%20ROS/6.1.4-ROS%20Communication%20Mechanism/README.md) |
-| Module 6.1.5    | [Common ROS Commands](./6-Robotics/6.1-Introduction%20to%20ROS/6.1.5-Common%20ROS%20Commands/README.md) |
-| Module 6.1.6   | [ROS Operation Management](./6-Robotics/6.1-Introduction%20to%20ROS/6.1.6-ROS%20Operation%20Management/README.md) |
-| Module 6.1.7     | [Common Components and Features of ROS](./6-Robotics/6.1-Introduction%20to%20ROS/6.1.7-Common%20Components%20and%20Features%20of%20ROS/README.md) |
-| Module 6.1.8     | [TF Coordinate Transformation in ROS](./6-Robotics/6.1-Introduction%20to%20ROS/6.1.8-TF%20Coordinate%20Transformation%20in%20ROS/README.md) |
-| Module 6.2| ROS Robot Simulation  |
-| Module 6.3| Development with Physical ROS Robots |
-| Module 6.4| ROS Project Practice: Advanced Features |
-| **Module 7**| **Algorithm Optimization and Deployment**          |
-| **Module 8**| **Practical Applications of the Jetson Platform** |
-| **Module 9**| **Course Summary and Outlook**                    |
+| **Module 5**| **Offline Large Model Development** |
+| Module 5.1| [Environment and Basics with Ollama](./5-Offline-Large-Model-Development/5.1-Environment-and-Basics-Ollama/README.md)|
+| Module 5.2| [Offline Text LLMs](./5-Offline-Large-Model-Development/5.2-Offline-Text-LLMs/README.md)|
+| Module 5.3| [Offline Vision-Language Models and Applications](./5-Offline-Large-Model-Development/5.3-Offline-Vision-Language-Models-and-Applications/README.md)|
+| Module 5.4| [Offline Speech Pipeline Basics](./5-Offline-Large-Model-Development/5.4-Offline-Speech-Pipeline-Basics/README.md)|
+| Module 5.5| [Offline Multimodal Voice Applications](./5-Offline-Large-Model-Development/5.5-Offline-Multimodal-Voice-Applications/README.md)|
+| **Module 6**| **Generative AI Applications** |
+| Module 6.1| [Introduction-to-Generative-AI](./6-Generative-AI/6.1-Introduction-to-Generative-AI/README.md)|
+| Module 6.2| [Generative-Adversarial-Network](./6-Generative-AI/6.2-Generative-Adversarial-Network/README.md)|
+| Module 6.3| [Variational-Autoencoders](./6-Generative-AI/6.3-Variational-Autoencoders/README.md)|
+| Module 6.4| [Autoregressive-Models-and-Generative-Text-Models](./6-Generative-AI/6.4-Autoregressive-Models-and-Generative-Text-Models/README.md)|
+| Module 6.5| [The-Evolution-of-Transformer-Models-and-Generative-AI](./6-Generative-AI/6.5-The-Evolution-of-Transformer-Models-and-Generative-AI/README.md)|
+| Module 6.6| [Local-Intelligent-Q&A-System](./6-Generative-AI/6.6-Local-Intelligent-Q&A-System/README.md)|
+| Module 6.7| [Image-Generation-Models-and-Diffusion-Models](./6-Generative-AI/6.7-Image-Generation-Models-and-Diffusion-Models/README.md)|
+| **Module 7**     | **ROS Robotics** |
+| Module 7.1     | Introduction to ROS |
+| Module 7.1.1     | [Overview of ROS and Environment Setup](./7-Robotics/7.1-Introduction%20to%20ROS/7.1.1-Overview%20of%20ROS%20and%20Environment%20Setup/README.md) |
+| Module 7.1.2     | [Quick Experience with HelloWorld for ROS](./7-Robotics/7.1-Introduction%20to%20ROS/7.1.2-Quick%20Experience%20with%20HelloWorld%20for%20ROS/README.md) |
+| Module 7.1.3     | [ROS Architecture](./7-Robotics/7.1-Introduction%20to%20ROS/7.1.3-ROS%20Architecture/README.md)|
+| Module 7.1.4     | [ROS Communication Mechanism](./7-Robotics/7.1-Introduction%20to%20ROS/7.1.4-ROS%20Communication%20Mechanism/README.md) |
+| Module 7.1.5    | [Common ROS Commands](./7-Robotics/7.1-Introduction%20to%20ROS/7.1.5-Common%20ROS%20Commands/README.md) |
+| Module 7.1.6   | [ROS Operation Management](./7-Robotics/7.1-Introduction%20to%20ROS/7.1.6-ROS%20Operation%20Management/README.md) |
+| Module 7.1.7     | [Common Components and Features of ROS](./7-Robotics/7.1-Introduction%20to%20ROS/7.1.7-Common%20Components%20and%20Features%20of%20ROS/README.md) |
+| Module 7.1.8     | [TF Coordinate Transformation in ROS](./7-Robotics/7.1-Introduction%20to%20ROS/7.1.8-TF%20Coordinate%20Transformation%20in%20ROS/README.md) |
+| Module 7.2| [ROS1 Noetic](./7-Robotics/7.2-ROS1-Noetic/README.md) |
+| Module 7.2.1| [ROS1 Basics](./7-Robotics/7.2-ROS1-Noetic/7.2.1-ROS1-Basics/README.md) |
+| Module 7.2.2| [ROS1 Vision Applications](./7-Robotics/7.2-ROS1-Noetic/7.2.2-ROS1-Vision-Applications/README.md) |
+| Module 7.3| [ROS2 Humble](./7-Robotics/7.3-ROS2-Humble/README.md) |
+| Module 7.3.1| [ROS2 Foundations and Setup](./7-Robotics/7.3-ROS2-Humble/7.3.1-ROS2-Foundations-and-Setup/README.md) |
+| Module 7.3.2| [ROS2 Core Communication](./7-Robotics/7.3-ROS2-Humble/7.3.2-ROS2-Core-Communication/README.md) |
+| Module 7.3.3| [ROS2 Advanced Interfaces and Middleware](./7-Robotics/7.3-ROS2-Humble/7.3.3-ROS2-Advanced-Interfaces-and-Middleware/README.md) |
+| Module 7.3.4| [ROS2 Tools, Launch, and Visualization](./7-Robotics/7.3-ROS2-Humble/7.3.4-ROS2-Tools-Launch-and-Visualization/README.md) |
+| Module 7.3.5| [ROS2 Simulation and Vision](./7-Robotics/7.3-ROS2-Humble/7.3.5-ROS2-Simulation-and-Vision/README.md) |
+| Module 7.4| Development with Physical ROS Robots |
+| Module 7.5| ROS Project Practice: Advanced Features |
+| **Module 8**| **Algorithm Optimization and Deployment** |
+| **Module 9**| **Practical Applications of the Jetson Platform** |
+| **Module 10**| **Course Summary and Outlook** |
