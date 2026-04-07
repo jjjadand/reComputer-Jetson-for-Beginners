@@ -1,220 +1,320 @@
 # Offline Multimodal Voice Applications
 
-## 05离线多模态语音应用（语音+视觉/表格/代理）
+## 05 Offline multimodular voice application (speak + visual/table/agent)
 
-## 11.05-01多模态视觉理解语音交互
+| Name | Owner | Modified | Created |
+| --- | --- | --- | --- |
+| 11.05-01 Multimodal Visual Understanding Voice Interactive | Yujiang! | 2026-01-14 16:52 | 2026-01-09 14:59 |
+| 11.05-02 Multimodal Texture Applications | Yujiang! | 2026-01-14:53 | 2026-01-09 14:59 |
+| 11.05-03 Multimodal Video Analysis Application | Yujiang! | 2026-01-14 16:54 | 2026-01-09 15:00 |
+| 11.05-04 Multimodal Visual Positioning Application | Yujiang! | 2026-01-14 16:55 | 2026-01-09 15:00 |
+| 11.05-05 Multimodal Table Scan Application | Yujiang! | 2026-01-14 17:05 | 2026-01-09 15:01 |
+| 11.05-06 Multi-mode autonomous proxy application | Yujiang! | 2026-01-14 17:05 | 2026-01-09 15:01 |
+| 11.05-07 AI Large Model Offline Voice Assistant | Yujiang! | 2026-01-14:07 | 2026-01-09 15:01 |
 
-### 概念介绍
+### 11.05-01 Multimodal Visual Understanding Voice Interactive
 
-### 视觉理解是什么？
+### Concept introduction
 
-视觉理解是指赋予计算机像人类一样理解图像或视频内容的能力，使其不仅能够识别画面中出现的对象和场景，还能进一步理解这些对象之间的关系、所处状态以及正在发生的行为或事件。它关注的是视觉信息背后的语义和逻辑，而不仅是简单的分类或检测。通过将视觉信息与语言信息相结合，模型可以对图像进行描述、回答问题、进行推理甚至辅助决策，因此视觉理解已成为多模态大模型、自动驾驶、智能监控以及人机交互等领域中的关键技术能力之一。
+### What is visual understanding?
 
-### 实现原理
+Visual understanding means giving computers the same ability as humans to understand images or video content, not only to identify objects and scenes that appear in the images, but also to further understand the relationship between those objects, their state and the behaviour or events that are taking place. It is concerned with semantics and logic behind visual information, not just simple classification or testing. By combining visual information with language information, models can describe images, answer questions, reason and even support decision-making, so visual understanding has become one of the key technical capabilities in areas such as large multimodular models, autopilot, smart surveillance and human interaction.
 
-视觉理解的实现主要依赖将视觉信息与语言信息输入多模态大模型进行处理，其过程可以分为以下几个步骤：
+### Principle of realization
 
-### 代码解析
+The achievement of visual understanding depends mainly on the processing of visual and linguistic input into large models, the process of which can be divided into the following steps:
 
-### 关键代码
+Image Encoding: Conversion of input images into digital vectors through visual encoders, which include characteristics such as colour, shape, texture, etc. of the images, which are easily understood by the computer.
 
-#### 工具层入口(largemodel/utils/tools_manager.py)
+Text encoding: user questions or descriptions (e.g. " What is the current scene? ) is also converted to text vectors to match image information.
 
-此文件中的seewhat函数定义了该工具的执行流程。
+Cross-modular integration: In the Attention Layer, the model integrates the image vector with the text vector to enable the model to focus on the desktop area according to the most relevant area of the problem-based "concern" image, such as the reference to the "desk" in questions.
+
+Generate an answer: The integration information is transmitted to the Large Language Model (LLM), based on which descriptive text is generated or questions answered.
+
+#### Code Parsing
+
+### Key Code
+
+### Tool Layer Entry (largemodel/utils/tools_manager.py)
+
+The seewhat function in this document defines the process of executing the tool.
 
 ```bash
-# From largemodel/utils/tools_manager.py
+#From largemodel/utils/tools_manager.py
 class ToolsManager:
-# ...
-def seewhat(self):
-"""
-Capture camera frame and analyze environment with AI model.
-捕获摄像头画面并使用AI模型分析环境。
-:return: Dictionary with scene description and image path, or None if failed.
-"""
-self.node.get_logger().info("Executing seewhat() tool")
-image_path = self.capture_frame()
-if image_path:
-# Use isolated context for image analysis. / 使用隔离的上下文进行图像分析。
-analysis_text = self._get_actual_scene_description(image_path)
-# Return structured data for the tool chain. / 为工具链返回结构化数据。
-return {
-"description": analysis_text,
-"image_path": image_path
-}
-else:
-# ... (Error handling)
-return None
-def _get_actual_scene_description(self, image_path, message_context=None):
-"""
-Get AI-generated scene description for captured image.
-获取捕获图像的AI生成场景描述。
-:param image_path: Path to captured image file.
-:return: Plain text description of scene.
-"""
-try:
-# ... (构建Prompt)
-result = self.node.model_client.infer_with_image(image_path, scene_prompt, message=simple_context)
-# ... (处理结果)
-return description
-except Exception as e:
-# ...
+  # ...
+
+  def seewhat(self):
+  """
+  Capture camera frame and analyze environment with AI model.
+  Capture a camera frame and analyse the environment with an AI model.
+
+  :return: Dictionary with scene description and image path, or None if failed.
+  """
+  self.node.get_logger().info("Executing seewhat() tool")
+  image_path = self.capture_frame()
+  if image_path:
+  # Use isolated context for image analysis.
+  analysis_text = self._get_actual_scene_description(image_path)
+
+  # Return structured data for the tool chain.
+  return {
+  "description": analysis_text,
+  "image_path": image_path
+  }
+  else:
+  # ... (Error handling)
+  return None
+
+  def _get_actual_scene_description(self, image_path, message_context=None):
+  """
+  Get AI-generated scene description for captured image.
+  Get an AI-generated scene description for the captured image.
+
+  :param image_path: Path to captured image file.
+  :return: Plain text description of scene.
+  """
+  try:
+  # ... (Build the prompt)
+  result = self.node.model_client.infer_with_image(image_path, scene_prompt, message=simple_context)
+  # ... (Process the result)
+  return description
+  except Exception as e:
+  # ...
 ```
 
-#### 模型接口层(largemodel/utils/large_model_interface.py)
+### Model interface layer (largemodel/utils/large_model_interface.py)
 
-此文件中的infer_with_image函数是所有图像理解任务的统一入口，它负责根据配置调用具体的模型实现。
+The infer with image function in this file is the unified access point for all images to understand the task, and it is to be performed using specific models according to configuration.
 
 ```bash
-# From largemodel/utils/large_model_interface.py
+#From largemodel/utils/large_model_interface.py
 class model_interface:
-# ...
-def infer_with_image(self, image_path, text=None, message=None):
-"""Unified image inference interface. / 统一的图像推理接口。"""
-# ... (准备消息)
-try:
-# 根据 self.llm_platform 的值，决定调用哪个具体实现
-if self.llm_platform == 'ollama':
-response_content = self.ollama_infer(self.messages, image_path=image_path)
-elif self.llm_platform == 'tongyi':
-# ... 调用通义模型的逻辑
-pass
-# ... (其他平台的逻辑)
-# ...
-return {'response': response_content, 'messages': self.messages.copy()}
+  # ...
+  def infer_with_image(self, image_path, text=None, message=None):
+  """Unified image inference interface.
+  # ... (prepare messages)
+  try:
+  # choose the concrete implementation based on `self.llm_platform`
+  if self.llm_platform == 'ollama':
+  response_content = self.ollama_infer(self.messages, image_path=image_path)
+  elif self.llm_platform == 'tongyi':
+  # ... logic for calling the Tongyi model
+  pass
+  # ... (logic for other platforms)
+  # ...
+  return {'response': response_content, 'messages': self.messages.copy()}
 ```
 
-### 代码解析
+### Code Parsing
 
-该功能的实现采用了分层架构设计，主要由工具层与模型接口层两部分构成。两者职责清晰、相互解耦，是平台具备通用性与可扩展性的核心基础。
+The functionality was achieved using a stratification architecture, consisting mainly of two components: the tool layer and the model interface. Clear and mutually deconstructed responsibilities are the core foundation for the platform ' s interoperability and scalability.
 
-工具层负责承载业务逻辑，其中seewhat函数是整个视觉理解流程的核心实现。
+Tool Layer (tools_manager.py):
 
-通过这种方式，工具层专注于业务流程本身，而不被模型实现细节所干扰。
+The tool layer is responsible for carrying business logic, in which seewhat functions are at the core of the whole visual understanding process.
 
-模型接口层承担着模型适配与调度的职责，其核心函数为infer_with_image。
+The act of "visual understanding" is completely sealed. Its execution process first captures current image data via Capture frame;
 
-正因如此，工具层代码无需任何修改，即可在不同的大模型后端之间自由切换，从而显著提升系统的可移植性与扩展能力。
+get actual scene description to generate Prompt to guide large-linguistic models for image analysis;
 
-seewhat工具的执行流程体现了一种典型的职责分离（Separation of Concerns）设计模式：
+Upon completion of the above preparatory work, Seewhat reasoned the image data along with the analytical instructions to the model by calling on the harmonized method provided by the model interface layer;
 
-这种架构使得核心业务逻辑在在线或离线模式下保持完全一致，仅需切换模型配置即可适配不同运行环境，极大提升了教程与代码的通用性和复用价值。
+It is important to emphasize that Seewhat does not care which model or platform is specifically used at the bottom, but only relies on a stable interface to make the call;
 
-### 配置离线大模型
+Ultimately, the tool layer collates and encapsulates the results of the text analysis returned by the model into a structured dictionary for direct use by the upper application.
 
-#### 配置LLM平台(seeed.yaml)
+In this way, the tool layer focuses on the business process itself without being disturbed by the details of the model ' s realization.
 
-此文件决定了model_service节点加载哪个大模型平台作为其主要的语言模型。
+Model interface layer (large_model_interface.py):
 
-#### 在终端打开文件:
+The model interface layer is responsible for model adaptation and movement, and its core function is infer with image.
+
+Infer with image is equivalent to a single entry or dispatch centre, which will be achieved by dynamic selection of the corresponding reasoning based on the current platform configuration item self.llm platform;
+
+Parameter formats, data coding methods and API call logic required for different model platforms (e.g. Ollama, Thongyi infer) are encapsulated in their respective independent reasoning functions (e.g. ollama infer, toongyi infer);
+
+This way of encapsulating the platform-related differences is confined to the model interface layer, which is fully transparent to the upper layer.
+
+As a result, the tool layer code is free to switch between the back end of different large models, without any modifications, thereby significantly increasing the portability and expansion of the system.
+
+The implementation process of the Seewhat tool reflects a typical design model for segregation of duties:
+
+ToolsManager defines "do what" — obtains images and requests analysis;
+
+Model Interface decides how to do it - selects the appropriate model platform according to configuration and completes the actual interaction.
+
+This structure allows the core business logic to be fully aligned in an online or offline mode, with the need to switch the configuration of the model to fit different operating environments and greatly enhances the interoperability and reuse of tutorials and codes.
+
+## Configure Large Offline Model
+
+### Configure LLM platform (seeed.yaml)
+
+This document determines which large model platform to load at the model service node as its main language model.
+
+Open file in terminal:
 
 ```bash
-代码块
+Code Block
 vim /opt/seeed/development_guide/12_llm_offline/seeed_ws/src/largemodel/config/seeed.yaml
 ```
 
-#### 修改/确认llm_platform:
+Modify/confirm llm platform:
 
 ```bash
-model_service: # 模型服务器节点参数
-ros__parameters:
-language: 'zh' # 大模型接口语言
-useolinetts: True # 文字模式下此项无效，可忽略
-# 大模型配置
-llm_platform: 'ollama' # 关键: 确保这里是 'ollama'
-regional_setting : "China"
+model_service:  #model server node parameters
+  ros__parameters:
+  language: 'zh'  #LLM interface language
+  useolinetts: True  #Not used in text-only mode; can be ignored
+
+  # LLM configuration
+  llm_platform: 'ollama'  # Key: make sure this is set to 'ollama'
+  regional_setting : "China"
 ```
 
-#### 配置模型接口(large_model_interface.yaml)
+### Configure Model Interface (large_model_interface.yaml)
 
-此文件定义了当平台被选为ollama时，具体使用哪个视觉模型。
+This document defines which visual model is used when the platform is selected as olama.
 
-在终端打开文件
+Open file in terminal
 
 ```bash
-vim /opt/seeed/development_guide/12_llm_offline/seeed_ws/src/largemodel/config/large_model_interface.yaml
+# vim /opt/seeed/development_guide/12_llm_offline/seeed_ws/src/largemodel/config/large_model_interface.yaml
 ```
 
-找到ollama相关的配置
+Find the configuration of olama
 
 ```bash
-# .....
-# 离线大模型 (Offline Large Language Models)
-# Ollama配置
-ollama_host: "http://127.0.0.1:11434" # Ollama服务器地址
-ollama_model: "qwen2.5vl:3b" # 关键: 将这里改为你已下载的多模态模型
-# .....
+#.....
+#Offline Large Language Models
+#Ollama configuration
+ollama_host: "http://127.0.0.1:11434"  # Ollama server address
+ollama_model: "qwen2.5vl:3b"  # Key: change this to a multimodal model you have already downloaded
+#.....
 ```
 
-```
-注意: 请确保配置参数中指定的模型（如qwen2.5vl）能够处理多模态输入。
-```
+> Note: Make sure that the model specified in the configuration parameters (e.g. qwen2.5vl) handles multi-modular input.
 
-### 启动并测试功能
+#### Activate and test functionality
 
-启动largemodel主程序:打开一个终端，然后运行下面的指令：
+Start the largemodel master: open a terminal and then run the following command:
 
 ```bash
-# 安装依赖(如果之前没安装过)
+# Install dependencies if they are not installed yet
 sudo apt update
 sudo apt install -y portaudio19-dev libasound2-dev
 pip install pyaudio playsound==1.2.2 webrtcvad
+
 ros2 launch largemodel largemodel_control.launch.py
 ```
 
-初始化成功之后，说出唤醒词，然后开始提问：你看到了什么？或者描述一下当前的环境
+After the initialization was successful, a wake-up call was made and the question began: What did you see? Or describe the current environment.
 
-观察结果:在第一个运行主程序的终端中，你将看到日志输出，显示系统接收到文本指令，调用seewhat工具，并最终打印出由大模型生成的文字描述。然后扬声器也会播报生成的结果
+Observation result: In the first terminal where the main program is run, you will see log output, show the system receiving text commands, call the Seewhat tool, and eventually print text descriptions generated by large models. Then the speaker will broadcast the results.
 
-### 常见问题与解决方案
+## Common problems and solutions
 
-### 响应非常慢
+### Very slow response.
 
-问题:提问后，需要等很久才有语音回答。解决方案:多模态模型的推理成本远高于纯文本模型，因此延迟较高是正常的。
+Question: It takes a long time after the question is answered by voice. Solutions: The reasoning cost of a multi-mode model is much higher than that of a pure text model and therefore the higher delay is normal.
 
-## 11.05-02多模态文生图应用
+Use smaller models: Inlarge model interface.yaml, try to use a lighter version of the llava model.
 
-概念介绍
+# 11.05-02 Multimodal Texture Applications
 
-### 什么是文生图（Text-to-Image）？
+Concept introduction
 
-文生图（Text-to-Image）是一种人工智能生成技术，指的是模型根据用户输入的自然语言描述，自动生成与文字语义相匹配的图像。它不仅能理解“画面里有什么”，还能理解风格、场景、情绪和细节要求，例如“在草地上晒太阳的蓝色猫，卡通风格，柔和光线”。文生图技术通常基于大规模视觉-语言模型和扩散模型，通过学习海量图文对应关系，将抽象的文字转化为具体、可视化的画面，已广泛应用于艺术创作、内容生成、产品设计和教育科普等领域。
+### What is Text-to-Image?
 
-#### 核心原理
+Text-to-Image is an artificial intelligence generation technique that refers to the automatic generation of images that match the semantics of the text according to the natural language description entered by the user. It understands not only what is in the picture, but also style, scene, emotion and detail requirements, such as the "blue cat in the grass, cartoon style, soft light". It is usually based on large-scale visual-linguistic models and diffusion models, which translate abstract words into concrete, visualized images by learning the correspondence of big graphics, and have been widely applied in areas such as artistic creation, content generation, product design and education.
 
-```
-ollama框架不支持文生图的功能，本章我们其他工具来实现本地文生图功能。
-```
+### Core principles
 
-### 什么是FastSDCPU？
+![](./images/5-5-offline-multimodal-voice-applications-01.png)
 
-FastSD CPU是一个在CPU上运行的轻量级Stable Diffusion推理框架，旨在无需GPU也能生成高质量图像。它通过优化模型加载、推理流程和多线程计算，实现文本到图像（Text-to-Image）的快速生成，同时支持LoRA、ControlNet等扩展模块。FastSD CPU特别适合硬件资源有限的环境，如普通PC或嵌入式设备，让更多用户在无需高性能显卡的情况下体验AI图像生成。
+Text encoding: Converts a text description to a vector, captures semantic information.
 
-#### 核心特点
+![](./images/5-5-offline-multimodal-voice-applications-02.png)
 
-#### 适用场景
+Submarine means that images are mapd into low-dimensional spaces and easily generated.
 
-### 项目部署
+Conditional generation: Image generation based on text vector using proliferation models or PAN.
 
-### 部署环境
+Multi-modular alignment: ensure that the image content and text semantics are consistent (common CLIP).
 
-```
-注意：如果使用我们的出厂镜像，无需部署环境，可直接跳过部署步骤。直接参考最下面的 【2.4 部署成功后启动方法】，直接启动即可。
-```
+Sampling and denocation: gradually generating clear images while following the semantics of the text.
 
-打开一个终端，然后执行以下代码：
+Post-processing: Increase image quality or adjust style.
+
+![](./images/5-5-offline-multimodal-voice-applications-03.png)
+
+> The olama framework does not support the functions of the graphics, and this chapter provides us with other tools to achieve the functions of the local drawings.
+
+### What's FastSDCPU?
+
+![](./images/5-5-offline-multimodal-voice-applications-04.png)
+
+FastSD CPU is a lightweight Stable Diffusion reasoning framework running on CPU, designed to generate high-quality images without GPU. It achieves the rapid generation of text to image (Text-to-Image) by optimizing model loading, reasoning processes and multi-line calculations, while supporting extended modules such as LoRA, ControlNet. FastSD CPU is particularly suited to environments with limited hardware resources, such as ordinary PCs or embedded devices, allowing more users to experience AI image generation without high performance graphic cards.
+
+### Core characteristics
+
+CPU Optimizing reasoning: Designed exclusively for GPU-free environments, making full use of CPU multi-line and quantitative calculations, and increasing the speed of reasoning.
+
+Light Quantification and Quick Start: Models and relying on optimized, fast-starting, low-resource, hardware-limited equipment.
+
+![](./images/5-5-offline-multimodal-voice-applications-05.png)
+
+Text to image (Text-to-Image) supports: high-quality images can be generated according to natural language descriptions, compatible with Stable Diffusion standard lines.
+
+Extension function support: Supports extensions such as the LoRA fine-tuning model, ControlNet condition control, etc., with flexibility to enhance the generation of effects.
+
+![](./images/5-5-offline-multimodal-voice-applications-06.png)
+
+Multi-wire and batch processing: multiple images can be generated at the same time, increasing overall throughput capacity on CPU.
+
+![](./images/5-5-offline-multimodal-voice-applications-07.png)
+
+Offline and light model compatibility: Supporting offline model and light quantitative model (e.g. GGF format) without frequent network downloads to improve safety and stability.
+
+![](./images/5-5-offline-multimodal-voice-applications-08.png)
+
+Wide scope of application: Fits to a common PC, embedded device, or an ARM platform such as Jetson, and can experience AI image generation without a high performance graphic card.
+
+![](./images/5-5-offline-multimodal-voice-applications-09.png)
+
+### Apply scene
+
+![](./images/5-5-offline-multimodal-voice-applications-10.png)
+
+Images can be generated quickly for conceptual validation, product design or creative sketches.
+
+Display AI image generation techniques in classroom or laboratory environments to reduce hardware costs.
+
+Support local models that are suitable for scenarios that limit data privacy or the network environment.
+
+Common CPU computer, notebook or embedded device (e. g. Jetson) AI creation tool
+
+## Project deployment
+
+### Deployment environment
+
+> N.B. If we use our off-site mirrors without the need to deploy the environment, we can skip the deployment steps. Take a direct look at the bottom of the list.
+
+Open a terminal and execute the following code:
 
 ```bash
-# 如果之前没安装git，就先运行
+# If Git is not installed yet, run this first
 sudo apt update
 sudo apt install git -y
 sudo apt install python3.10-venv -y
-# 添加环境变量
+
+# Add environment variables
 echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
 source ~/.bashrc
 ```
 
-克隆项目
+Cloning project
 
 ```bash
 cd /opt/seeed/development_guide/12_llm_offline
@@ -222,904 +322,620 @@ git clone https://github.com/rupeshs/fastsdcpu.git
 cd fastsdcpu
 ```
 
-创建虚拟环境并安装依赖
+Create virtual environments and install dependency
 
 ```bash
 python -m venv venv
 source venv/bin/activate
-# 安装uv
+#Installuv
 curl -Ls https://astral.sh/uv/install.sh | sh
 ```
 
-```
-这一步如果在中国没有挂代理可能会无法成功，如果不超过可以跳过这一步，执行以下命令
-```
+> This step may not be successful if there is no hanging agent in China, and if this step is not exceeded, the following orders will be executed:
 
 ```bash
 wget https://mirrors.huaweicloud.com/astral/uv/0.8.4/uv-aarch64-unknown-linux-gnu -O ~/.local/bin/uv
 chmod +x ~/.local/bin/uv
 ```
 
-安装环境
+Install Environment
 
 ```bash
 chmod +x install.sh start-webui.sh
-# 安装
+#Install
 ./install.sh --disable-gui
 ```
 
-![](./images/5-5-offline-multimodal-voice-applications-01.png)
+Installed successfully, exit by any key:
 
-安装成功，按任意键退出：
+### LAN access
 
-![](./images/5-5-offline-multimodal-voice-applications-02.png)
-
-### 局域网访问
-
-启动之前，需要修改一个文件，用于支持局域网的访问，否则只能本地访问webui：
+Prior to startup, a document needs to be modified to support LAN access, otherwise webui can only be accessed locally:
 
 ```bash
-vim /opt/seeed/development_guide/12_llm_offline/fastsdcpu/src/frontend/webui/ui.py
+# vim /opt/seeed/development_guide/12_llm_offline/fastsdcpu/src/frontend/webui/ui.py
 ```
 
-打开ui.py文件之后，翻到最后一行，找到webui.launch(share=share)这句代码，修改成webui.launch(server_name="0.0.0.0",share=share)
+After opening the ui.py file, turn to the last line and find the code webui.launch (share=share) and change it to webui.launch (server name= "0.0.0.0", share=share)
 
-然后保存
+And save it.
 
-![](./images/5-5-offline-multimodal-voice-applications-03.png)
-
-启动：
+Start:
 
 ```bash
-./start-webui.sh
+# ./start-webui.sh
 ```
 
-![](./images/5-5-offline-multimodal-voice-applications-04.png)
+Then you can enter your master board IP:7860 on the browser to access this webui.
 
-然后就可以在浏览器上面输入你的主板IP:7860来访问这个webui了。
+### Use Vincent function
 
-### 使用文生图功能
+Use ifconfig command to view the IP of Jetson at the end, for example, mine is 192.168.137.47.
 
-在终端使用ifconfig命令查看Jetson的IP，例如我的是192.168.137.47。
+Then we turn on the browser and enter your master panel ip:7860. For example, I will enter 192.168.137.47:7860 and then get into webui.
 
-然后我们就打开浏览器，输入你的主板ip:7860。例如我，就输入192.168.137.47:7860，然后就能进入webui了。
+And then we click on LCM-LoRA, and this model is relatively small on memory, and if you want to use another model, you can study it yourself.
 
-![](./images/5-5-offline-multimodal-voice-applications-05.png)
+And then you click on Models, you can see the LCM LoRA model set, you can change the model you want, you can choose the default as I do.
 
-接着我们点击LCM-LoRA，这个模型对内存的占用比较小，如果想使用其他模型，可以自行研究。
+Then click on General Settings, and pull up the Inference Steps, which improves the quality of the images produced.
 
-然后再点击Models，可以看到LCM LoRA的模型设置，可以自己更改自己想要的模型，也可以和我一样选择默认的就可以了。
+And then you go back to our Text to Image, and you enter what we want to generate in the dialogue box, and then press Generate, and you can start generating pictures.
 
-![](./images/5-5-offline-multimodal-voice-applications-06.png)
+When first used, the model needs to be downloaded, and it can be seen at the terminal that the model that was selected by default is being downloaded, and once it is downloaded, it will begin to function as a graphic.
 
-接着点击Generation Settings，将里面的Inference Steps拉高，可以提高生成图片的质量，我这里拉到5.
+Result generated:
 
-![](./images/5-5-offline-multimodal-voice-applications-07.png)
+> Note: The English hint supports better, and the resulting pictures are more amenable to description. It is suggested that the English description be used to generate pictures.
 
-接着继续回到我们的Text to Image中，在对话框里输入我们想生成的内容，接着按Generate，就可以开始生成图片了。
-
-![](./images/5-5-offline-multimodal-voice-applications-08.png)
-
-首次使用的话，需要下载模型，可以在终端看到刚才默认选择的模型正在被下载中，等它下载完毕之后，就会开始执行文生图的功能。
-
-![](./images/5-5-offline-multimodal-voice-applications-09.png)
-
-生成的结果：
-
-![](./images/5-5-offline-multimodal-voice-applications-10.png)
-
-```
-注：英文的提示词支持会更好，生成的图片会更贴合描述。建议使用英文描述来生成图片。
-```
-
-### 部署成功后启动方法
+### Method for start-up after successful deployment
 
 ```bash
-cd fastsdcpu # 进入fastsdcpu的目录
-source venv/bin/activate # 进入虚拟环境
-./start-webui.sh # 启动webui
+cd fastsdcpu #enter the `fastsdcpu` directory
+source venv/bin/activate #enter the virtual environment
+./start-webui.sh #start the WebUI
 ```
 
-webui启动成功后，就在浏览器上输入你的主板IP:7860，就可以开始文生图功能了。
+When webui starts successfully, enter your master plate IP:7860 on the browser, so you can start the vernacular function.
 
-## 11.05-03多模态视频分析应用
+# 11.05-03 Multimodal Video Analysis Application
 
-### 概念介绍
+## Concept introduction
 
-### 视频分析是什么？
+### What's video analysis?
 
-视频分析是指利用计算机视觉与人工智能技术，对视频流中的图像序列进行自动理解与处理的过程。它通过对视频中每一帧及其时间关系进行分析，实现对目标的检测、识别、跟踪以及行为和事件的理解，从而将原始的视频数据转化为可解释、可决策的信息，广泛应用于安防监控、智能交通、工业检测和智能交互等场景。
+Video analysis refers to the automatic understanding and processing of image sequences in the video stream using computer visual and artificial intelligence techniques. By analysing each frame in the video and its time relationship, it achieves the detection, identification, tracking, and understanding of the behaviour and events of the target, thus translating raw video data into interpretable and decision-making information, and is widely used in security surveillance, intelligent transport, industrial testing and intelligent interaction.
 
-### 实现原理简述
+### Brief description of the rationale for realization
 
-离线视频分析的核心在于高效处理大量帧，同时保留视频的关键内容和时序信息，其实现流程可以分为以下几个步骤：
+The core of offline video analysis is the efficient processing of a large number of frames, while maintaining key content and time-series information for the video, the process of achieving which can be divided into the following steps:
 
-总结：可以理解为，视频被“浓缩”为几张关键图片及其顺序，模型像看连环画一样理解故事内容，再用语言生成答案或描述。
+Key frame extraction: The system does not process video on a frame-by-frame basis, but extracts the most representative key frame from a scenario change test or from a fixed time interval, thus significantly reducing the amount of data to be processed.
 
-### 代码解析
+Image Encoding: Each frame key frame is sent into the visual encoder and converted to a digital vector containing image characteristics, similar to the treatment in a single frame visual understanding.
 
-### 关键代码
+Time-series information integration: To understand the time sequence between key frames, models usually use circular neural networks (RNNs) or Transformer to integrate all key frame vectors into a " video memory vector " , representing the dynamic content of the entire video.
 
-#### 工具层入口(largemodel/utils/tools_manager.py)
+Questions and answers and generation: After the user's text is coded, cross-mode integration with video memory vectors. The Big Language Model (LLM) is then based on integrating information to generate summaries of videos or answers to specific questions.
 
-此文件中的analyze_video函数定义了该工具的执行流程。
+Summary: It can be understood that the video is "condensed" into several key images and their sequences, with models that understand the content of the story as they look at comics and then generate answers or descriptions in language.
+
+### Code Parsing
+
+### Key Code
+
+### Tool Layer Entry (largemodel/utils/tools_manager.py)
+
+The analyze video function in this document defines the process of executing the tool.
 
 ```bash
-# From largemodel/utils/tools_manager.py
+#From largemodel/utils/tools_manager.py
 class ToolsManager:
-# ...
-def analyze_video(self, args):
-"""
-Analyze video file and provide content description.
-分析视频文件并提供内容描述。
-:param args: Arguments containing video path.
-:return: Dictionary with video description and path.
-"""
-self.node.get_logger().info(f"Executing analyze_video() tool with args: {args}")
-try:
-video_path = args.get("video_path")
-# ... (智能路径回退机制)
-if video_path and os.path.exists(video_path):
-# ... (构建Prompt)
-# Use a fully isolated, one-time context for video analysis to ensure a plain text description. / 使用完全隔离的一次性上下文进行视频分析，以确保获得纯文本描述。
-simple_context = [{
-"role": "system",
-"content": "You are a video description assistant. ..."
-}]
-result = self.node.model_client.infer_with_video(video_path, prompt, message=simple_context)
-# ... (处理结果)
-return {
-"description": description,
-"video_path": video_path
-}
-# ... (错误处理)
+  # ...
+  def analyze_video(self, args):
+  """
+  Analyze video file and provide content description.
+  Analyse a video file and provide a content description.
+
+  :param args: Arguments containing video path.
+  :return: Dictionary with video description and path.
+  """
+  self.node.get_logger().info(f"Executing analyze_video() tool with args: {args}")
+  try:
+  video_path = args.get("video_path")
+  # ... (smart path fallback mechanism)
+
+  if video_path and os.path.exists(video_path):
+  # ... (Build the prompt)
+
+  # Use a fully isolated, one-time context for video analysis to ensure a plain text description.
+  simple_context = [{
+  "role": "system",
+  "content": "You are a video description assistant. ..."
+  }]
+
+  result = self.node.model_client.infer_with_video(video_path, prompt, message=simple_context)
+
+  # ... (Process the result)
+  return {
+  "description": description,
+  "video_path": video_path
+  }
+  # ... (Error handling)
 ```
 
-#### 模型接口层与帧提取(largemodel/utils/large_model_interface.py)
+#### Model interface layer and frame extraction (largemodel/utils/large_model_interface.py)
 
-此文件中的函数负责处理视频文件，并将其传递给底层模型。
+The function in this file handles video files and transmits them to the bottom model.
 
 ```bash
-# From largemodel/utils/large_model_interface.py
+#From largemodel/utils/large_model_interface.py
 class model_interface:
-# ...
-def infer_with_video(self, video_path, text=None, message=None):
-"""Unified video inference interface. / 统一的视频推理接口。"""
-# ... (准备消息)
-try:
-# 根据 self.llm_platform 决定调用哪个具体实现
-if self.llm_platform == 'ollama':
-response_content = self.ollama_infer(self.messages, video_path=video_path)
-# ... (其他在线平台的逻辑)
-# ...
-return {'response': response_content, 'messages': self.messages.copy()}
-def _extract_video_frames(self, video_path, max_frames=5):
-"""Extract keyframes from a video for analysis. / 从视频中提取关键帧用于分析。"""
-try:
-import cv2
-# ... (视频读取和帧间隔计算)
-while extracted_count < max_frames:
-# ... (循环读取视频帧)
-if frame_count % frame_interval == 0:
-# ... (将帧保存为临时图片)
-frame_base64 = self.encode_file_to_base64(temp_path)
-frame_images.append(frame_base64)
-# ...
-return frame_images
-# ... (异常处理)
+  # ...
+  def infer_with_video(self, video_path, text=None, message=None):
+  """Unified video inference interface. / Unified video inference interface."""
+  # ... (prepare messages)
+  try:
+  # choose the concrete implementation based on `self.llm_platform`
+  if self.llm_platform == 'ollama':
+  response_content = self.ollama_infer(self.messages, video_path=video_path)
+  # ... (logic for other online platforms)
+  # ...
+  return {'response': response_content, 'messages': self.messages.copy()}
+
+  def _extract_video_frames(self, video_path, max_frames=5):
+  """Extract keyframes from a video for analysis.
+  try:
+  import cv2
+  # ... (video reading and frame interval calculation)
+  while extracted_count < max_frames:
+  # ... (loop through the video frames)
+  if frame_count % frame_interval == 0:
+  # ... (save frames as temporary images)
+  frame_base64 = self.encode_file_to_base64(temp_path)
+  frame_images.append(frame_base64)
+  # ...
+  return frame_images
+  # ... (exception handling)
 ```
 
-### 代码解析
+#### Code Parsing
 
-相较于单张图像分析，视频分析在实现上多了一层关键处理步骤——视频帧提取。该逻辑被有意放置在模型接口层中，从而保证上层业务代码的简洁与通用性。
+Compared to a single image analysis, video analysis has achieved a critical step in processing — video frame extraction. The logic is deliberately placed in a model interface to ensure simplicity and interoperability of the upper levels of business codes.
 
-#### 工具层（tools_manager.py）
+### Tool Layer (tools_manager.py)
 
-工具层负责承载视频分析的业务入口，其核心函数为analyze_video。
+The tool layer is the business portal for video analysis with the core function of analize video.
 
-这种设计使工具层始终专注于“业务意图的表达”，而非“技术细节的实现”。
+The main functions of analize video are to receive video file paths and construct analytical instructions (Prompt) for requesting video content interpretation in models;
 
-#### 模型接口层（large_model_interface.py）
+It then launched the full video analysis process by calling self.node.model client.infer with video;
 
-模型接口层是视频分析的核心处理模块，承担着任务调度与数据预处理的职责。
+Consistent with the image analysis tool, the tool layer is not concerned with how the bottom model will be achieved, nor does it need to process any video resolution details, but is responsible only for sending down video resources and analytical instructions.
 
-整体来看，视频分析的通用执行流程可以概括为：
+This design keeps the tool layer focused on "expression of business intent" rather than "realization of technical details".
 
-ToolsManager发起分析请求 →model_interface接管请求并通过_extract_video_frames将视频拆解为关键帧 →model_interface根据配置将帧数据与分析指令发送至对应模型平台 → 模型返回对视频内容的综合描述 → 结果交由ToolsManager向上层应用返回。
+#### Model interface layer (large_model_interface.py)
 
-这种分层设计有效隔离了视频处理细节与业务逻辑，确保了上层应用接口的稳定性，同时也为后续扩展不同模型或平台提供了良好的通用基础。
+The model interface level is the core processing module for video analysis, with responsibility for mission movement and data pre-processing.
 
-### 实践操作
+Infer with video as a unified portal will distribute video analysis requests to the corresponding specific realization function based on the currently configured model platform (self.llm platform);
 
-### 配置离线大模型
+Unlike a single photo reasoning, video data require additional pre-processing steps before being sent to the model.  extract video frames reflects this common realization logic;
 
-#### 配置LLM平台(seeed.yaml)
+This method is based on the cv2 library to read video files and extract key frames from them (default 5 frames) in accordance with the set policy;
 
-此文件决定了model_service节点加载哪个大模型平台作为其主要的语言模型。
+Each frame is considered to be a stand-alone image and is usually converted to the Base64 code format for uniform transmission to large model interfaces;
 
-#### 在终端打开文件:
+Ultimately, requests consisting of multiple frame image data together with analytical instructions are sent to large language models that synthesize reasoning based on these continuous visual information and generate an overall description of the entire video content. It is worth noting that the frame extraction and coding process of the Video Multigraph is completely enclosed within the model interface and is fully transparent to the tool layer.
+
+Overall, the generic implementation process for video analysis can be summarized as follows:
+
+ToolsManager initiates the analysis request → model interface takes over the request and dismantles the video as a key frame  model interface by  extract video frames  model interface sends frame data and analysis instructions to the corresponding model platform → model returns the comprehensive description of the video content according to configuration → and returns to ToolsManager to the top.
+
+This stratification effectively isolates video processing details from business logic, ensures stability of the upper application interface and provides a good common basis for subsequent expansion of different models or platforms.
+
+## Practice
+
+#### Configure Large Offline Model
+
+### Configure LLM platform (seeed.yaml)
+
+This document determines which large model platform to load at the model service node as its main language model.
+
+Open file in terminal:
 
 ```bash
-代码块
+Code Block
 vim /opt/seeed/development_guide/12_llm_offline/seeed_ws/src/largemodel/config/seeed.yaml
 ```
 
-#### 修改/确认llm_platform:
+Modify/confirm llm platform:
 
 ```bash
-model_service: # 模型服务器节点参数
-ros__parameters:
-language: 'zh' # 大模型接口语言
-useolinetts: True # 文字模式下此项无效，可忽略
-# 大模型配置
-llm_platform: 'ollama' # 关键: 确保这里是 'ollama'
-regional_setting : "China"
+model_service:  #model server node parameters
+  ros__parameters:
+  language: 'zh'  #LLM interface language
+  useolinetts: True  #Not used in text-only mode; can be ignored
+
+  # LLM configuration
+  llm_platform: 'ollama'  # Key: make sure this is set to 'ollama'
+  regional_setting : "China"
 ```
 
-#### 配置模型接口(large_model_interface.yaml)
+### Configure Model Interface (large_model_interface.yaml)
 
-此文件定义了当平台被选为ollama时，具体使用哪个视觉模型。
+This document defines which visual model is used when the platform is selected as olama.
 
-在终端打开文件
+Open file in terminal
 
 ```bash
-vim /opt/seeed/development_guide/12_llm_offline/seeed_ws/src/largemodel/config/large_model_interface.yaml
+# vim /opt/seeed/development_guide/12_llm_offline/seeed_ws/src/largemodel/config/large_model_interface.yaml
 ```
 
-找到ollama相关的配置
+Find the configuration of olama
 
 ```bash
-# .....
-离线大模型 (Offline Large Language Models)
-Ollama配置
-ollama_host: "http://127.0.0.1:11434" # Ollama服务器地址
-ollama_model: "qwen2.5vl:3b" # 关键: 将这里改为你已下载的多模态模型，如 "llava"
-# .....
+#.....
+Offline Large Language Models
+Ollama configuration
+ollama_host: "http://127.0.0.1:11434"  # Ollama server address
+ollama_model: "qwen2.5vl:3b"  # Key: change this to a multimodal model you have already downloaded, such as "llava"
+#.....
 ```
 
-```
-注意: 请确保配置参数中指定的模型（如 qwen2.5vl）能够处理多模态输入。
-```
+> Note: Ensure that the model specified in the configuration parameters (e.g. qwen2.5vl) handles multi-modular input.
 
-### 3.2启动并测试功能
+### 3.2 Activate and test functionality
 
-```
-注：Jetson Orin Nano 4GB 由于性能限制，无法运行此案例。如需体验此功能，请参考<在线大模型（语音交互）>对应章节
-```
+> Note: Jetson Orin Nano 4GB cannot run the case due to performance constraints. If you need to experience this function, refer to the corresponding section of <Big Model Online (Voice Interactive)>
+
+Prepare video files:
+
+Place a video file to test in the following path:
+
+And then the video is named test video.mp4.
+
+Start largemodel master:
+
+Open a terminal and then run the following command:
 
 ```bash
-ros2 launch largemodel largemodel_control.launch.py
+# ros2 launch largemodel largemodel_control.launch.py
 ```
 
-#### 测试:
+Test:
 
-## 11.05-04多模态视觉定位应用
+Wake up: To the microphone, say, "Hello, calf. It's not like it's gonna happen.
 
-### 概念介绍
+After the speaker's response, you can say, "analyze the video."
 
-### 多模态视觉定位是什么？
+Observation log: In the terminal where the launch file is run, you should see:
 
-多模态视觉定位是指融合来自不同传感器或不同信息模态的数据（如RGB图像、深度信息、激光雷达、IMU或语义信息等），通过统一建模与协同推理，实现对设备或目标在空间中位置与姿态的精确估计。相比单一视觉定位方式，多模态视觉定位能够充分利用各模态的互补优势，在光照变化、纹理稀疏或动态环境等复杂场景下显著提升定位的稳定性、鲁棒性和精度，常用于机器人导航、自动驾驶和增强现实等领域。
+ASR nodes identify your problems and print them out.
 
-### 实现原理简述
+Model service received text, called LLM and printed LLM responses.
 
-### 代码解析
+You should be able to hear it from the speaker later.
 
-### 关键代码
+# 11.05-04 Multimodal Visual Positioning Application
 
-#### 工具层入口(largemodel/utils/tools_manager.py)
+### Concept introduction
 
-此文件中的visual_positioning函数定义了该工具的执行流程，特别是它如何构建一个包含目标物体名称和格式要求的Prompt。
+### What's multi-modular visual positioning?
+
+Multimodal visual positioning means the integration of data from different sensors or information mosaics (e.g. RGB images, depth information, laser radar, IMU or semantic information) to achieve an accurate estimate of the location and attitude of the equipment or target in space through uniform modelling and synergetic reasoning. Compared to single visual positioning, multi-modular visual positioning can take full advantage of the complementary advantages of the various modulations, significantly increasing the stability, scalability and accuracy of positioning in complex contexts such as photo-change, texture thinness or dynamic environments, often in the areas of robotic navigation, autopilot and enhancement of reality.
+
+### Brief description of the rationale for realization
+
+Cross-temporal means learning: the system needs to "read" visual information for the large language model. To this end, the visualization of images or videos is usually carried out through visual networks such as CNN and ViT, and visual features are mapped into embedded spaces consistent with the text semantics through projection or adaptation layers, thus achieving visual-linguistic alignment at the expression level so that models can handle different mosaics of information in a unified semantic space.
+
+Joint training mechanism: Introduction of visual and text data in the same learning framework, and design of loss functions for cross-modular alignment or matching to enable models to develop links between image content and language semantics in the course of training. For example, in visual questions and answers or in graphic interpretation missions, models need to integrate image information and text input to learn how to work together on the reasoning between the two modes.
+
+Visually-led language understanding and generation: At this point, visual information is no longer just a supporting input, but rather an important basis for driving language model reasoning, which not only describes visual content but also allows for questions and answers, reasoning and even implementation of directives based on images, thereby achieving a true multi-modular intelligence understanding and decision-making.
+
+## Code Parsing
+
+#### Key Code
+
+### Tool Layer Entry (largemodel/utils/tools_manager.py)
+
+The visual propositioning function in this document defines the process of implementing the tool, in particular how it constructs a Prompt that contains the name and format requirements of the target object.
 
 ```bash
-# From largemodel/utils/tools_manager.py
+#From largemodel/utils/tools_manager.py
 class ToolsManager:
-# ...
-def visual_positioning(self, args):
-"""
-Locate object coordinates in image and save results to MD file.
-定位图像中物体坐标并将结果保存为MD文件。
-:param args: Arguments containing image path and object name.
-:return: Dictionary with file path and coordinate data.
-"""
-self.node.get_logger().info(f"Executing visual_positioning() tool with args: {args}")
-try:
-image_path = args.get("image_path")
-object_name = args.get("object_name")
-# ... (路径回退机制和参数检查)
-# Construct a prompt asking the large model to identify the coordinates of the specified object. / 构造提示，要求大模型识别指定物品的坐标。
-if self.node.language == 'zh':
-prompt = f"请仔细分析这张图片，用一个个框定位图像每一个{object_name}的位置..."
-else:
-prompt = f"Please carefully analyze this image and find the position of all {object_name}..."
-# ... (构建独立的message上下文)
-result = self.node.model_client.infer_with_image(image_path, prompt, message=message_to_use)
-# ... (处理和解析返回的坐标文本)
-return {
-"file_path": md_file_path,
-"coordinates_content": coordinates_content,
-"explanation_content": explanation_content
-}
-# ... (错误处理)
+  # ...
+  def visual_positioning(self, args):
+  """
+  Locate object coordinates in image and save results to MD file.
+  Locate object coordinates in the image and save the result to a Markdown file.
+
+  :param args: Arguments containing image path and object name.
+  :return: Dictionary with file path and coordinate data.
+  """
+  self.node.get_logger().info(f"Executing visual_positioning() tool with args: {args}")
+  try:
+  image_path = args.get("image_path")
+  object_name = args.get("object_name")
+  # ... (path fallback mechanism and parameter checks)
+
+  # Construct a prompt asking the large model to identify the coordinates of the specified object.
+  if self.node.language == 'zh':
+  prompt = f"Please analyze this image carefully and locate each `{object_name}` in the image with separate bounding boxes."
+  else:
+  prompt = f"Please carefully analyze this image and find the position of all {object_name}..."
+
+  # ... (build an independent message context)
+
+  result = self.node.model_client.infer_with_image(image_path, prompt, message=message_to_use)
+
+  # ... (process and parse the returned coordinate text)
+
+  return {
+  "file_path": md_file_path,
+  "coordinates_content": coordinates_content,
+  "explanation_content": explanation_content
+  }
+  # ... (Error handling)
 ```
 
-#### 模型接口层(largemodel/utils/large_model_interface.py)
+### Model interface layer (largemodel/utils/large_model_interface.py)
 
-此文件中的infer_with_image函数是所有图像相关任务的统一入口。
+The infer with image function in this file is the unified entry for all image-related tasks.
 
 ```bash
-# From largemodel/utils/large_model_interface.py
+#From largemodel/utils/large_model_interface.py
 class model_interface:
-# ...
-def infer_with_image(self, image_path, text=None, message=None):
-"""Unified image inference interface. / 统一的图像推理接口。"""
-# ... (准备消息)
-try:
-# 根据 self.llm_platform 的值，决定调用哪个具体实现
-if self.llm_platform == 'ollama':
-response_content = self.ollama_infer(self.messages, image_path=image_path)
-elif self.llm_platform == 'tongyi':
-# ... 调用通义模型的逻辑
-pass
-# ... (其他平台的逻辑)
-# ...
-return {'response': response_content, 'messages': self.messages.copy()}
+  # ...
+  def infer_with_image(self, image_path, text=None, message=None):
+  """Unified image inference interface.
+  # ... (prepare messages)
+  try:
+  # choose the concrete implementation based on `self.llm_platform`
+  if self.llm_platform == 'ollama':
+  response_content = self.ollama_infer(self.messages, image_path=image_path)
+  elif self.llm_platform == 'tongyi':
+  # ... logic for calling the Tongyi model
+  pass
+  # ... (logic for other platforms)
+  # ...
+  return {'response': response_content, 'messages': self.messages.copy()}
 ```
 
-### 代码解析
+### Code Parsing
 
-视觉定位功能的核心思想在于通过精确的指令设计，引导大语言模型输出可解析的结构化结果。在整体架构上，该功能同样遵循工具层与模型接口层解耦的分层设计原则。
+The core idea of the visual positioning function is to direct the output of the decryptionable structural results of large-language models through precise command design. In the overall architecture, this function follows the stratification design principles for the decoupling of the tool layer with the model interface.
 
-#### 工具层（tools_manager.py）
+### Tool Layer (tools_manager.py)
 
-在工具层中，visual_positioning函数承担了视觉定位任务的主要业务逻辑。
+In the tool layer, the visual positioning function performs the main business logic of visual positioning tasks.
 
-通过这种方式，工具层既负责任务定义，也负责结果的结构化落地。
+This function receives two key input parameters: image path (the path of the image to be analysed) and object name (the name of the object to be located in the image);
 
-#### 模型接口层（large_model_interface.py）
+The core operation is to build a highly customized Prompt. Unlike a normal image description, the Prompt will embed object name dynamically into a pre-designed command template, clearly requiring the model to locate all specified targets in the image;
 
-模型接口层中的infer_with_image函数在视觉定位场景下依旧扮演着“调度中心”的角色。
+At the same time, Prompt will implicitly or visibly bind the model to return the result to a specific structure, such as coordinates of arrays or position information in fixed format, thus creating conditions for subsequent analysis;
 
-视觉定位功能的通用执行流程可以概括为：
+After completing the Prompt construction, visual propositioning sends image data to the model with customised commands by using the model interface method;
 
-ToolsManager接收目标物体名称并构建精确的、要求返回坐标信息的Prompt → ToolsManager调用模型接口 →model_interface将图像与Prompt打包，并根据配置发送至相应模型平台 → 模型返回包含位置信息的文本结果 →model_interface将结果返回给ToolsManager → ToolsManager对文本进行解析，提取结构化坐标数据并返回给上层应用。
+When the model returns the result, the tool layer also has to perform the necessary reprocessing operations, usually extracting precise coordinates from the natural language output by means such as regular expressions;
 
-该流程充分展示了如何借助Prompt Engineering技术，使通用的视觉大模型完成更具体、更可控、且结构化输出的视觉定位任务。
+Ultimately, the structured coordinate data obtained by resolution will be consolidated and returned to the upper application.
 
-### 实践操作
+In this way, the tool layer is responsible for both the definition of tasks and the structuralization of results.
 
-### 配置离线大模型
+#### Model interface layer (large_model_interface.py)
 
-#### 配置LLM平台(seeed.yaml)
+The infer with image function in the model interface continues to play the role of the Movement Center in the visual positioning scene.
 
-此文件决定了model_service节点加载哪个大模型平台作为其主要的语言模型。
+This function receives image data and positioning instructions from the visual positioning and delivers requests to the corresponding backend model according to the currently configured model platform type (self.llm platform);
 
-#### 在终端打开文件:
+For visual positioning missions, the processing process at the model interface level is largely consistent with visual understanding tasks, with responsibilities focused mainly on data containment and platform compatibility;
+
+All details of realization related to a specific model platform (e.g., request format, coding method, interface call method, etc.) are isolated within the layer;
+
+The model interface level does not perform any operational-level analysis of the text results returned by the model, but returns them to the tool-level.
+
+The generic implementation process for visual positioning can be summarized as follows:
+
+ToolsManager receives the name of the target object and constructs a precise request to return coordinate information Prompt → ToolsManager calls model interface → model interface packs images with Prompt and returns text with location information according to the configuration sent to the corresponding model platform → Model → model interface returns the result to ToolsManager to parsing text, extracts structured coordinates data and returns to upper application.
+
+The process provides ample evidence of how to use Prompt Engineering technology to achieve more specific, manageable and structured visual positioning tasks for generic large visual models.
+
+#### Practice
+
+### Configure Large Offline Model
+
+### Configure LLM platform (seeed.yaml)
+
+This document determines which large model platform to load at the model service node as its main language model.
+
+Open file in terminal:
 
 ```bash
-代码块
+Code Block
 vim /opt/seeed/development_guide/12_llm_offline/seeed_ws/src/largemodel/config/seeed.yaml
 ```
 
-#### 修改/确认llm_platform:
+Modify/confirm llm platform:
 
 ```bash
-model_service: # 模型服务器节点参数
-ros__parameters:
-language: 'zh' # 大模型接口语言
-useolinetts: True # 文字模式下此项无效，可忽略
-# 大模型配置
-llm_platform: 'ollama' # 关键: 确保这里是 'ollama'
-regional_setting : "China"
+model_service:  #model server node parameters
+  ros__parameters:
+  language: 'zh'  #LLM interface language
+  useolinetts: True  #Not used in text-only mode; can be ignored
+
+  # LLM configuration
+  llm_platform: 'ollama'  # Key: make sure this is set to 'ollama'
+  regional_setting : "China"
 ```
 
-#### 配置模型接口(large_model_interface.yaml)
+### Configure Model Interface (large_model_interface.yaml)
 
-此文件定义了当平台被选为ollama时，具体使用哪个视觉模型。
+This document defines which visual model is used when the platform is selected as olama.
 
-在终端打开文件
+Open file in terminal
 
 ```bash
-vim /opt/seeed/development_guide/12_llm_offline/seeed_ws/src/largemodel/config/large_model_interface.yaml
+# vim /opt/seeed/development_guide/12_llm_offline/seeed_ws/src/largemodel/config/large_model_interface.yaml
 ```
 
-找到ollama相关的配置
+Find the configuration of olama
 
 ```bash
-# .....
-离线大模型 (Offline Large Language Models)
-Ollama配置
-ollama_host: "http://127.0.0.1:11434" # Ollama服务器地址
-ollama_model: "qwen2.5vl:3b" # 关键: 将这里改为你已下载的多模态模型
-# .....
+#.....
+Offline Large Language Models
+Ollama configuration
+ollama_host: "http://127.0.0.1:11434"  # Ollama server address
+ollama_model: "qwen2.5vl:3b"  # Key: change this to a multimodal model you have already downloaded
+#.....
 ```
 
-```
-注意: 请确保配置参数中指定的模型（如qwen2.5vl）能够处理多模态输入。
-```
+> Note: Make sure that the model specified in the configuration parameters (e.g. qwen2.5vl) handles multi-modular input.
 
-### 启动并测试功能
+#### Activate and test functionality
 
-```
-注：Jetson Orin Nano 4GB 由于性能限制，无法运行此案例。如需体验此功能，请参考<在线大模型（语音交互）>对应章节
-```
+> Note: Jetson Orin Nano 4GB cannot run the case due to performance constraints. If you need to experience this function, refer to the corresponding section of <Big Model Online (Voice Interactive)>
+
+Prepare photo files:
+
+Place a photo file to test with the following path:
+
+And then name the picture "test image.jpg"
+
+Start largemodel master:
+
+Open a terminal and then run the following command:
 
 ```bash
-ros2 launch largemodel largemodel_control.launch.py
+# ros2 launch largemodel largemodel_control.launch.py
 ```
 
-## 11.05-05多模态表格扫描应用
+Test:
 
-### 概念介绍
+Wake up: To the microphone, say, "Hello, calf. It's not like it's gonna happen.
 
-### 多模态表格扫描是什么？
+After the speaker's response, you can say, "Analyze the location of the cat in the picture."
 
-多模态表格扫描是指结合图像、文本等多种信息模态，对纸质或电子文档中的表格内容进行自动识别、理解与结构化重建的技术。它不仅能够从图像中检测表格区域、识别单元格结构和文字内容，还会融合语义上下文对表头、字段含义及数据关系进行理解，从而将非结构化或半结构化的表格信息转换为可编辑、可计算的结构化数据，广泛应用于文档数字化、财务报表处理和智能办公等场景。
+Observation log: In the terminal where the launch file is run, you should see:
 
-### 实现原理
+ASR nodes identify your problems and print them out.
 
-1.表格定位与信息识别首先，系统通过计算机视觉方法在文档中自动检测表格区域，并结合OCR技术对表格内的文字内容进行识别与转写。随后，借助深度学习模型对表格结构进行解析，包括行列划分、单元格边界以及合并关系等，从而将原始表格转化为具有明确结构的数字化表示。
+Model service received text, called LLM and printed LLM responses.
 
-2.多模态信息融合与理解在获得表格的视觉结构与文本内容后，系统会进一步融合多种模态信息，如表格布局特征、OCR结果以及相关元数据，构建统一的多模态输入表示。通过引入专门面向文档理解的多模态模型（如LayoutLM），对不同模态信息进行联合建模，从而更准确地理解表格数据的语义含义及其上下文关系，提高表格解析与结构还原的整体准确性。
+Answer: Later, you should be able to hear from the speaker and find a md document with coordinates and location information under the path of /opt/seeed/development_guide/12_llm_offline/seeed_ws/src/largemodel/resources_file/visual_positioning.
 
-### 代码解析
+# 11.05-05 Multimodal Table Scan Application
 
-### 关键代码
+## Concept introduction
 
-#### 工具层入口(largemodel/utils/tools_manager.py)
+#### What's a multi-mode form scan?
 
-此文件中的scan_table函数定义了该工具的执行流程，特别是它如何构建一个要求返回Markdown格式的Prompt。
+Multi-modular table scanning is the technology for automatic identification, understanding and structured reconstruction of table contents in paper-based or electronic documents in combination with multiple information modulations such as images, text, etc. It not only detects table ranges, identifies cell structure and text content from images, but also integrates semantic context to understand header, field meanings and data relationships, thereby converting unstructured or semi-structured table information into editable, calculable structured data, which is widely used in document digitization, financial statement processing and intelligent office settings.
+
+### Principle of realization
+
+Table location and information recognition
+First, the system automatically detects the table range in the document by computer visual means and identifies and transliterates the text content in the table in conjunction with OCR technology. The table structure was then analysed using an in-depth learning model, including column division, cell boundaries and merging relationships, thus converting the original table into a digitalized representation with a clear structure.
+
+2. Multi-modular information integration and understanding
+Once the visual structure of the table is obtained with the text content, the system further integrates a variety of modular information, such as table layout features, OCR results and related metadata, and constructs a uniform multi-modular input expression. Improves the overall accuracy of table resolution and structural restoration by introducing a multi-modular model (e.g. LayoutLM) that is specific to document interpretation, by joint modelling of information on different mosaics in order to understand more accurately the semantic meaning of table data and their context.
+
+### Code Parsing
+
+### Key Code
+
+### Tool Layer Entry (largemodel/utils/tools_manager.py)
+
+The scan table function in this document defines the process of implementing the tool, in particular how it constructs a Prompt that requires returns to the Markdown format.
 
 ```bash
-# From largemodel/utils/tools_manager.py
+#From largemodel/utils/tools_manager.py
 class ToolsManager:
-# ...
-def scan_table(self, args):
-"""
-Scan a table from an image and save the content as a Markdown file.
-从图像中扫描表格，并将内容保存为Markdown文件。
-:param args: Arguments containing the image path.
-:return: Dictionary with file path and content.
-"""
-self.node.get_logger().info(f"Executing scan_table() tool with args: {args}")
-try:
-image_path = args.get("image_path")
-# ... (路径检查和回退)
-# Construct a prompt asking the large model to recognize the table and return it in Markdown format.
-# 构造提示，要求大模型识别表格并以Markdown格式返回。
-if self.node.language == 'zh':
-prompt = "请仔细分析这张图片，识别其中的表格，并将其内容以Markdown格式返回。"
-else:
-prompt = "Please carefully analyze this image, identify the table within it, and return its content in Markdown format."
-result = self.node.model_client.infer_with_image(image_path, prompt)
-# ... (从结果中提取Markdown文本)
-# Save the recognized content to a Markdown file. / 将识别出的内容保存到Markdown文件。
-md_file_path = os.path.join(self.node.pkg_path, "resources_file", "scanned_tables", f"table_{timestamp}.md")
-with open(md_file_path, 'w', encoding='utf-8') as f:
-f.write(table_content)
-return {
-"file_path": md_file_path,
-"table_content": table_content
-}
-# ... (错误处理)
+  # ...
+  def scan_table(self, args):
+  """
+  Scan a table from an image and save the content as a Markdown file.
+  Scan a table from the image and save the content as a Markdown file.
+
+  :param args: Arguments containing the image path.
+  :return: Dictionary with file path and content.
+  """
+  self.node.get_logger().info(f"Executing scan_table() tool with args: {args}")
+  try:
+  image_path = args.get("image_path")
+  # ... (path checks and fallback)
+
+  # Construct a prompt asking the large model to recognize the table and return it in Markdown format.
+  # Build a prompt asking the large model to recognise the table and return it in Markdown format.
+  if self.node.language == 'zh':
+  prompt = "Please analyze this image carefully, identify the table in it, and return its contents in Markdown format."
+  else:
+  prompt = "Please carefully analyze this image, identify the table within it, and return its content in Markdown format."
+
+  result = self.node.model_client.infer_with_image(image_path, prompt)
+
+  # ... (extract Markdown text from the result)
+
+  # Save the recognized content to a Markdown file. / Save the recognized content to a Markdown file.
+  md_file_path = os.path.join(self.node.pkg_path, "resources_file", "scanned_tables", f"table_{timestamp}.md")
+  with open(md_file_path, 'w', encoding='utf-8') as f:
+  f.write(table_content)
+
+  return {
+  "file_path": md_file_path,
+  "table_content": table_content
+  }
+  # ... (Error handling)
 ```
 
-#### 模型接口层(largemodel/utils/large_model_interface.py)
+### Model interface layer (largemodel/utils/large_model_interface.py)
 
-此文件中的infer_with_image函数是所有图像相关任务的统一入口。
+The infer with image function in this file is the unified entry for all image-related tasks.
 
 ```bash
-# From largemodel/utils/large_model_interface.py
+#From largemodel/utils/large_model_interface.py
+
 class model_interface:
-# ...
-def infer_with_image(self, image_path, text=None, message=None):
-"""Unified image inference interface. / 统一的图像推理接口。"""
-# ... (准备消息)
-try:
-# 根据 self.llm_platform 的值，决定调用哪个具体实现
-if self.llm_platform == 'ollama':
-response_content = self.ollama_infer(self.messages, image_path=image_path)
-elif self.llm_platform == 'tongyi':
-# ... 调用通义模型的逻辑
-pass
-# ... (其他平台的逻辑)
-# ...
-return {'response': response_content, 'messages': self.messages.copy()}
+  # ...
+  def infer_with_image(self, image_path, text=None, message=None):
+  """Unified image inference interface.
+  # ... (prepare messages)
+  try:
+  # choose the concrete implementation based on `self.llm_platform`
+  if self.llm_platform == 'ollama':
+  response_content = self.ollama_infer(self.messages, image_path=image_path)
+  elif self.llm_platform == 'tongyi':
+  # ... logic for calling the Tongyi model
+  pass
+  # ... (logic for other platforms)
+  # ...
+  return {'response': response_content, 'messages': self.messages.copy()}
 ```
 
-### 代码解析
+### Code Parsing
 
-表格扫描功能是将非结构化的图像数据转换为结构化文本数据的典型应用。其核心技术依然是通过Prompt Engineering引导模型行为。
+Table scanning is a typical application for converting unstructured image data into structured text data. Its core technology continues to guide model behaviour through Prompt Engineering.
 
-总结来说，表格扫描的通用流程是：ToolsManager接收图像并构建一个“将此图中的表格转为Markdown”的指令->ToolsManager调用模型接口->model_interface将图像和该指令打包，并根据配置发送给相应的模型平台->模型返回Markdown格式的文本->model_interface将文本返回给ToolsManager->ToolsManager将文本保存为.md文件并返回结果。这个流程展示了如何利用大模型的格式遵循能力，将其用作一个强大的OCR（光学字符识别）及数据结构化工具。
+Tool Layer (tools_manager.py):
 
-### 实践操作
+The scan table function is the business process controller for this function. It receives an image containing a table as input.
 
-### 配置离线大模型
+The most critical operation of this function is to construct a targeted Prompt. This Prompt directs the large model to perform two tasks: 1. Identify the tables in the image. The identified content will be returned in the Markdown format. This mandatory requirement for output formats is key to achieving unstructured to structured conversion.
 
-#### 配置LLM平台(seeed.yaml)
+Upon construction of Prompt, it uses the infer with image method of the model interface to pass the image along with this formatting command.
 
-此文件决定了model_service节点加载哪个大模型平台作为其主要的语言模型。
+Once it has the returned Markdown text from the model interface level, it will perform a file operation: write this text to a new.md file.
 
-#### 在终端打开文件:
+Finally, it returns structured data containing the path and table contents of the new file.
 
-```bash
-代码块
-vim /opt/seeed/development_guide/12_llm_offline/seeed_ws/src/largemodel/config/seeed.yaml
-```
+Model interface layer (large_model_interface.py):
 
-#### 修改/确认llm_platform:
+The infer with image function continues as the unified Movement Control Centre. It receives images and Prompt from scan table and assigns tasks to the correct backend model according to the current system configuration (self.llm platform).
 
-```bash
-model_service: # 模型服务器节点参数
-ros__parameters:
-language: 'zh' # 大模型接口语言
-useolinetts: True # 文字模式下此项无效，可忽略
-# 大模型配置
-llm_platform: 'ollama' # 关键: 确保这里是 'ollama'
-regional_setting : "China"
-```
+Regardless of the back end of the model, the task of this layer is to process communication details with specific platforms to ensure that the image and text data are sent correctly and then to return the pure text returned by the model (in this case the text in Markdown format) to the tool layer.
 
-#### 配置模型接口(large_model_interface.yaml)
+In summary, the common process for scanned tables is: ToolsManager receives images and constructs a command "to convert the table from this chart to Markdown" - >ToolsManager calls the model interface - >Model interface packs the images and the instructions and returns the text in the Markdown format according to the configuration sent to the corresponding model platform - >Model interface returns the text to ToolsManager - > ToolsManager saves the text as .md files and returns the result. The process demonstrates how the format of a large model can be used as a powerful OCR (optic character recognition) and data structure tool.
 
-此文件定义了当平台被选为ollama时，具体使用哪个视觉模型。
-
-在终端打开文件
-
-```bash
-vim /opt/seeed/development_guide/12_llm_offline/seeed_ws/src/largemodel/config/large_model_interface.yaml
-```
-
-找到ollama相关的配置
-
-```bash
-# .....
-离线大模型 (Offline Large Language Models)
-Ollama配置
-ollama_host: "http://127.0.0.1:11434" # Ollama服务器地址
-ollama_model: "qwen2.5vl:3b" # 关键: 将这里改为你已下载的多模态模型，如 "llava"
-# .....
-```
-
-```
-注意: 请确保配置参数中指定的模型（如qwen2.5vl）能够处理多模态输入。
-```
-
-### 启动并测试功能
-
-```
-注：Jetson Orin Nano 4GB 由于性能限制，无法运行此案例。如需体验此功能，请参考<在线大模型（语音交互）>对应章节
-```
-
-```bash
-ros2 launch largemodel largemodel_control.launch.py
-```
-
-## 11.05-06多模态自主代理应用
-
-### 概念介绍
-
-### 自主代理是什么？
-
-多模态自主代理是指能够同时感知、理解并融合多种信息模态（如文本、图像、语音、视频、传感器数据等），并在此基础上自主进行决策与行动的智能系统。它通常以大语言模型为认知核心，结合视觉、听觉和环境感知能力，在较少人工干预的情况下完成目标规划、任务分解、工具调用与持续反馈，从而实现对复杂真实世界场景的自主理解与协同执行，广泛应用于智能助手、机器人系统和自动化决策等领域。
-
-### 实现原理简述
-
-largemodel中的自主代理实现遵循业界主流的ReAct（Reason + Act）范式，其核心思想是模拟人类在解决问题时“思考-行动-观察”的循环过程，通过多轮迭代完成复杂任务。
-
-#### 思考（Reason）
-
-#### 行动（Act）
-
-#### 观察（Observe）
-
-#### 再次思考（Reason）
-
-#### 循环迭代直至目标完成
-
-这种设计使自主代理能够在多模态环境下连续决策、自我修正、动态调整，实现对复杂任务的自主规划和执行。
-
-### 代码解析
-
-### 关键代码
-
-#### Agent核心工作流(largemodel/utils/ai_agent.py)
-
-_execute_agent_workflow函数是Agent的执行主循环，它定义了“规划->执行”的核心流程。
-
-```bash
-# From largemodel/utils/ai_agent.py
-class AIAgent:
-# ...
-def _execute_agent_workflow(self, task_description: str) -> Dict[str, Any]:
-"""
-Executes the agent workflow: Plan -> Execute. / 执行Agent工作流：规划 -> 执行。
-"""
-try:
-# 第一步：任务规划
-self.node.get_logger().info("AI Agent starting task planning phase")
-plan_result = self._plan_task(task_description)
-# ... (规划失败则提前返回)
-self.task_steps = plan_result["steps"]
-# 第二步：按顺序执行所有步骤
-execution_results = []
-tool_outputs = []
-for i, step in enumerate(self.task_steps):
-# 2.1. 在执行前，处理参数中的数据引用
-processed_parameters = self._process_step_parameters(step.get("parameters", {}), tool_outputs)
-step["parameters"] = processed_parameters
-# 2.2. 执行单个步骤
-step_result = self._execute_step(step, tool_outputs)
-execution_results.append(step_result)
-# 2.3. 如果步骤成功，保存其输出以供后续步骤引用
-if step_result.get("success") and step_result.get("tool_output"):
-tool_outputs.append(step_result["tool_output"])
-else:
-# 如果任一步骤失败，中止整个任务
-return { "success": False, "message": f"Task terminated because step '{step['description']}' failed." }
-# ... 总结并返回最终结果
-summary = self._summarize_execution(task_description, execution_results)
-return { "success": True, "message": summary, "results": execution_results }
-# ... (异常处理)
-```
-
-#### 任务规划与LLM交互(largemodel/utils/ai_agent.py)
-
-_plan_task函数的核心是构建一个精密的Prompt，利用大模型自身的推理能力来生成结构化的执行计划。
-
-```bash
-# From largemodel/utils/ai_agent.py
-class AIAgent:
-# ...
-def _plan_task(self, task_description: str) -> Dict[str, Any]:
-"""
-Uses the large model for task planning and decomposition. / 使用大模型进行任务规划和分解。
-"""
-# 动态生成可用工具列表及其描述
-tool_descriptions = []
-for name, adapter in self.tools_manager.tool_chain_manager.tools.items():
-# ... (从adapter.input_schema获取工具描述)
-tool_descriptions.append(f"- {name}({params}): {description}")
-available_tools_str = "\\n".join(tool_descriptions)
-# 构建高度结构化的规划Prompt
-planning_prompt = f"""
-作为一个专业的任务规划Agent，请将用户任务分解为一系列具体的、可执行的JSON步骤。
-# 可用工具:
-{available_tools_str}
-# 核心规则:
-数据传递: 当后续步骤需要使用之前步骤的输出时，必须使用 {{{{steps.N.outputs.KEY}}}} 格式进行引用。
-N 是步骤的ID（从1开始）。
-KEY 是之前步骤输出数据中的具体字段名。
-JSON格式: 必须严格返回JSON对象。
-# 用户任务:
-{task_description}
-"""
-# 调用大模型进行规划
-messages_to_use = [{"role": "user", "content": planning_prompt}]
-# 注意这里调用的是通用的文本推理接口
-result = self.node.model_client.infer_with_text("", message=messages_to_use)
-# ... (解析JSON响应并返回步骤列表)
-```
-
-#### 参数处理与数据流实现(largemodel/utils/ai_agent.py)
-
-_process_step_parameters函数负责解析占位符，实现步骤间的数据流动。
-
-```bash
-# From largemodel/utils/ai_agent.py
-class AIAgent:
-# ...
-def _process_step_parameters(self, parameters: Dict[str, Any], previous_outputs: List[Any]) -> Dict[str, Any]:
-"""
-Parses parameter dictionary, finds and replaces all {{...}} references.
-"""
-processed_params = parameters.copy()
-# 正则表达式用于匹配 {{steps.N.outputs.KEY}} 格式的占位符
-pattern = re.compile(r"\\{\\{steps\\.(\\d+)\\.outputs\\.(.+?)\\}\\}")
-for key, value in processed_params.items():
-if isinstance(value, str) and pattern.search(value):
-# 使用 re.sub 和一个替换函数来处理所有找到的占位符
-# 替换函数会从 previous_outputs 列表中查找并返回值
-processed_params[key] = pattern.sub(replacer_function, value)
-return processed_params
-```
-
-### 代码解析
-
-AI Agent是系统的“中枢大脑”，它将用户提出的高级、有时甚至是模糊的任务，转化为一系列精确、有序的工具调用。其实现不依赖于任何特定的模型平台，而是建立在通用的、可扩展的架构之上。
-
-总结来说，AI Agent的通用实现展示了一种先进的软件架构：它不直接解决问题，而是构建一个框架，让一个外部的、通用的推理引擎（大模型）来解决问题。通过“动态规划”和“数据流管理”这两个核心机制，Agent能够将一系列独立的工具编排成复杂的、能够完成高级任务的工作流。
-
-### 实践操作
-
-### 配置离线大模型
-
-#### 配置LLM平台(seeed.yaml)
-
-此文件决定了model_service节点加载哪个大模型平台作为其主要的语言模型。
-
-#### 在终端打开文件:
-
-```bash
-代码块
-vim /opt/seeed/development_guide/12_llm_offline/seeed_ws/src/largemodel/config/seeed.yaml
-```
-
-#### 修改/确认llm_platform:
-
-```bash
-model_service: # 模型服务器节点参数
-ros__parameters:
-language: 'zh' # 大模型接口语言
-useolinetts: True # 文字模式下此项无效，可忽略
-# 大模型配置
-llm_platform: 'ollama' # 关键: 确保这里是 'ollama'
-regional_setting : "China"
-```
-
-#### 配置模型接口(large_model_interface.yaml)
-
-此文件定义了当平台被选为ollama时，具体使用哪个视觉模型。
-
-在终端打开文件
-
-```bash
-vim /opt/seeed/development_guide/12_llm_offline/seeed_ws/src/largemodel/config/large_model_interface.yaml
-```
-
-找到ollama相关的配置
-
-```bash
-# .....
-离线大模型 (Offline Large Language Models)
-Ollama配置
-ollama_host: "http://127.0.0.1:11434" # Ollama服务器地址
-ollama_model: "qwen2.5vl:3b" # 关键: 将这里改为你已下载的多模态模型，如 "llava"
-# .....
-```
-
-```
-注意: 请确保配置参数中指定的模型（如qwen2.5vl）能够处理多模态输入。
-```
-
-### 3.2启动并测试功能
-
-```
-注：Jetson Orin Nano 4GB 由于性能限制，无法运行此案例。如需体验此功能，请参考<在线大模型（语音交互）>对应章节
-```
-
-```bash
-ros2 launch largemodel largemodel_control.launch.py
-```
-
-## 11.05-07 AI大模型离线语音助手
-
-### 离线语音配置
-
-```
-注：Jetson Orin Nano 4GB 由于性能限制，无法运行此案例。如需体验此功能，请参考<在线大模型（语音交互）>对应章节
-```
-
-在设置自启动之前，我们必须保证程序本身能够在离线状态下独立工作。这需要通过修改配置文件来完成。
-
-```bash
-asr: # 语音节点参数
-ros__parameters:
-VAD_MODE: 2 # vad灵敏度
-sample_rate: 16000 # asr录音音频采样率
-frame_duration_ms: 30 # vad帧大小单位ms
-use_oline_asr: False # 是否使用在线asr识别（True使用在线，False使用离线）
-mic_serial_port: "/dev/ttyUSB0" # 麦克风串口别名
-mic_index: 0 # 麦克风索引
-language: 'zh' # asr语言
-regional_setting : "China" # international：国际版 China：国内版
-model_service: # 模型服务器节点参数
-ros__parameters:
-language: 'zh' # 大模型接口语言
-useolinetts: False # 是否使用在线语音合成（True使用在线，False使用离线）
-# 大模型配置
-# llm_platform: 'ollama' # 可选平台: 'ollama', 'tongyi', 'spark', 'qianfan', 'openrouter'
-llm_platform: 'ollama' # 当前选用的大模型平台
-regional_setting : "China"
-```
-
-#### 保存文件并重新编译项目以应用更改：
-
-```bash
-cd /opt/seeed/development_guide/12_llm_offline/seeed_ws
-colcon build
-source install/setup.bash
-```
-
-完成这一步后，程序就已经是一个纯离线的语音服务了。
-
-### 创建开机自启动服务(Systemd)
-
-现在，我们将创建一个systemd服务，让largemodel_control.launch.py在系统启动时自动运行。
-
-### 创建一个启动脚本
-
-为了让systemd能正确加载ROS2的环境，最佳实践是创建一个简单的bash脚本来封装我们的启动命令。
-
-```bash
-vim /opt/seeed/development_guide/12_llm_offline/seeed_ws/src/largemodel/start_largemodel.sh
-```
-
-#### 写入脚本内容：将以下内容复制并粘贴到脚本文件中。
-
-```bash
-代码块
-# !/bin/bash
-# Source ROS2 Humble 的环境
-source /opt/ros/humble/setup.bash
-# Source seeed 工作空间的环境
-source /opt/seeed/development_guide/12_llm_offline/seeed_ws/install/setup.bash
-# 启动 largemodel 控制脚本
-ros2 launch largemodel largemodel_control.launch.py
-```
-
-```
-重要提示: 请确保将脚本中的/opt/seeed/development_guide/12_llm_offline替换为您自己的用户主目录路径。
-```
-
-```bash
-chmod +x /opt/seeed/development_guide/12_llm_offline/seeed_ws/src/largemodel/start_largemodel.sh
-```
-
-### 创建Systemd服务文件
-
-这是最核心的一步。我们将告诉系统，我们有了一个新的服务需要管理。
-
-```bash
-sudo vim /etc/systemd/system/largemodel.service
-```
-
-```bash
-[Unit]
-Description=Robot Service
-After=network.target sound.target graphical.target multi-user.target
-Wants=network.target sound.target graphical.target multi-user.target
-[Service]
-Type=simple
-User=sunrise
-Group=sunrise
-Environment=DISPLAY=:0
-Environment=XDG_RUNTIME_DIR=/run/user/1000
-Environment=PULSE_SERVER=unix:/run/user/1000/pulse/native
-SupplementaryGroups=audio video
-ExecStartPre=/bin/sleep 10
-ExecStart=/home/sunrise/seeed_ws/src/largemodel/start_largemodel.sh
-Restart=on-failure
-StandardOutput=journal
-StandardError=journal
-[Install]
-WantedBy=multi-user.target
-```
-
-### 管理与调试服务
-
-现在，您的服务已经创建完毕，我们需要让systemd加载它并设置为开机自启。
-
-```bash
-sudo systemctl daemon-reload
-```
-
-```bash
-sudo systemctl enable largemodel.service
-```
-
-```bash
-sudo systemctl start largemodel.service
-```
-
-```bash
-sudo systemctl status largemodel.service
-``` * 如果看到 `Active: active (running)`，那么恭喜，服务已成功启动！
-如果状态是 `failed` 或其他，请继续下一步进行调试。
-```
-
-```bash
-journalctl -u largemodel.service -f
-```
-
-完成以上所有步骤后，现在每次开机，都会自动启动纯离线的largemodel语音服务。
+## Practice

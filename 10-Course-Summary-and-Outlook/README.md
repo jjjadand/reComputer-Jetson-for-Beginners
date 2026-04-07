@@ -1,25 +1,25 @@
 # Course Summary and Outlook
 
-## 课程总结与展望
+## Course Summary and Outlook
 
-通过本教程，你已经完成了从 Jetson 平台认知、基础开发工具、计算机视觉、离线大模型、生成式 AI 到 ROS 机器人与实际应用案例的完整学习路径。
+By the end of this guide, you have covered a complete learning path from Jetson platform basics and development tools to computer vision, offline LLMs, generative AI, ROS robotics, and practical Jetson application cases.
 
-## 你已经掌握的方向
+## What You Have Covered
 
-- Jetson 平台、系统环境、常用开发工具与远程调试方法
-- CUDA、TensorRT、Docker、PyTorch、TensorFlow 等基础开发能力
-- 计算机视觉、视觉模型训练与边缘部署流程
-- 离线文字大模型、视觉多模态模型与语音交互链路
-- ROS1、ROS2 与 Jetson 机器人应用的入门与实践
+- Jetson platform basics, system setup, common developer tools, and remote debugging methods
+- Core development capabilities including CUDA, TensorRT, Docker, PyTorch, and TensorFlow
+- Computer vision workflows, model training, and edge deployment
+- Offline text LLMs, vision-language models, and speech interaction pipelines
+- ROS1, ROS2, and practical robotics development on Jetson
 
-## 建议的下一步
+## Suggested Next Steps
 
-1. 选择一个主方向继续深入：视觉、机器人、离线大模型，或多模态应用。
-2. 结合 [Module 5](../5-Offline-Large-Model-Development/README.md)、[Module 7](../7-Robotics/README.MD)、[Module 9](../9-Practical-Applications-of-the-Jetson-Platform/README.md) 做一个完整项目。
-3. 将学到的环境搭建、模型部署、远程开发与调试方法迁移到你自己的 Jetson 设备和业务场景。
+1. Pick one main direction to go deeper: vision, robotics, offline LLMs, or multimodal applications.
+2. Build a complete project by combining [Module 5](../5-Offline-Large-Model-Development/README.md), [Module 7](../7-Robotics/README.MD), and [Module 9](../9-Practical-Applications-of-the-Jetson-Platform/README.md).
+3. Reuse the environment setup, deployment, remote development, and debugging methods from this course in your own Jetson projects.
 
-## 推荐实践路径
+## Recommended Project Path
 
-- 如果你偏向边缘 AI 应用开发，可以从视觉或离线大模型应用开始，先做单机 Demo，再扩展成完整系统。
-- 如果你偏向机器人方向，可以把 ROS2、视觉和语音模块串联，逐步尝试导航、感知和交互类项目。
-- 如果你已经具备基础开发经验，建议优先复用本仓库中的章节内容，整理出自己的工程模板和部署脚本。
+- If you prefer edge AI application development, start with a computer vision or offline LLM demo and then expand it into a full system.
+- If you prefer robotics, combine ROS2, vision, and speech modules into navigation, perception, or interaction projects.
+- If you already have some development experience, turn the patterns in this repository into your own project template and deployment scripts.

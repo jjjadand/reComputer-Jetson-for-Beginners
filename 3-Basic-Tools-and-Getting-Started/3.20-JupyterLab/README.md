@@ -2,73 +2,73 @@
 
 [Back to Module 3](../README.MD) | [Back to Table of Contents](../../Table-of-Contents.md)
 
-## 12安装Jupyter Lab
+## 12 Install JupyterLab
 
-### 介绍
+### Introduction
 
-JupyterLab是一款现代化的交互式数据科学与开发环境，支持在浏览器中同时运行代码、查看数据、编辑文档与构建交互式可视化。它是Jupyter Notebook的升级版，提供更灵活的多标签布局、更丰富的插件生态以及对多种编程语言的支持，非常适合用于数据分析、机器学习、科研计算和教学等场景。
+JupyterLab is a modern interactive data science and development environment that supports the simultaneous operation of codes in browsers, viewing data, editing documents and building interactive visualization. It is an upgraded version of Jupyter Notebook, which provides a more flexible multi-label layout, a richer ecology of plugins, and support for multiple programming languages, and is well suited for data analysis, machine learning, scientific computing and teaching.
 
-### Jupyter Lab安装
+### JupyterLab installation
 
-打开Jetson终端并执行安装命令
+Open the Jetson terminal and execute the installation command
 
 ```bash
-# 更新 pip3 到最新版本
+# Update `pip3` to the latest version
 pip3 install --upgrade pip
-# 安装或更新 Jupyter Lab
+# Install or update JupyterLab
 pip3 install jupyter jupyterlab
 ```
 
-安装完后会在~/.local/bin路径下
+Once installed, it's under the ~https://download.docker.com/linux/ubuntu/dists/ path
 
 ![](./images/3-20-jupyterlab-01.png)
 
-将local/bin加入环境变量
+Add local/bin to the environment variable
 
 ```bash
 nano ~/.bashrc
-# 在最下面添加
+# Add the following at the end
 export PATH="$HOME/.local/bin:$PATH"
-# Ctrl + X 保存
-# 更新环境变量
+# Press Ctrl + X to save
+# Update the environment variables
 source ~/.bashrc
 ```
 
 ![](./images/3-20-jupyterlab-02.png)
 
-#### 生成配置文件
+Generate Profile
 
 ```bash
-# 运行一下命令会在 .jupyter 目录中生成一个 jupter_lab_config.py 文件
+# Running the following command creates a `jupter_lab_config.py` file in the `.jupyter` directory
 jupyter lab --generate-config
 ```
 
 ![](./images/3-20-jupyterlab-03.png)
 
-#### 编辑配置文件
+Edit Profile
 
 ```bash
-sudo vim /home/seeed/.jupyter/jupyter_lab_config.py
+# sudo vim /home/seeed/.jupyter/jupyter_lab_config.py
 ```
 
-写入以下内容:
+Write the following:
 
 ```bash
-NotebookApp.ip = '0.0.0.0' # 允许远程访问
-NotebookApp.port = 8888 # 端口号
-NotebookApp.open_browser = False # 不自动打开浏览器
-NotebookApp.token = '' # 关闭 Token 认证
-NotebookApp.password = '' # 关闭密码认证
-NotebookApp.allow_remote_access = True # 允许远程访问
+NotebookApp.ip = '0.0.0.0'  # Allow remote access
+NotebookApp.port = 8888  # Port number
+NotebookApp.open_browser = False  # Do not open the browser automatically
+NotebookApp.token = ''  # Disable token authentication
+NotebookApp.password = ''  # Disable password authentication
+NotebookApp.allow_remote_access = True  # Allow remote access
 ```
 
 ![](./images/3-20-jupyterlab-04.png)
 
-按Esc键输入:wq!强制保存退出。
+Press Esc to enter: wq! Force save exit.
 
-#### 设置开机自启动
+Set on startup
 
-在jetson的终端中输入下面的命令来确定jupyter-lab的安装位置
+Enter the following command in the jetson terminal to determine the location of the jupyter-lab installation
 
 ```bash
 which jupyter-lab
@@ -76,18 +76,19 @@ which jupyter-lab
 
 ![](./images/3-20-jupyterlab-05.png)
 
-创建jupyter.service文件
+Create jupyter.service
 
 ```bash
 sudo vim /etc/systemd/system/jupyter.service
 ```
 
-写入以下内容:
+Write the following:
 
 ```bash
 [Unit]
-Description=Jupyter Lab
+Description=JupyterLab
 After=network.target
+
 [Service]
 Type=simple
 User=lrhan
@@ -96,39 +97,38 @@ WorkingDirectory=/home/lrhan
 ExecStart=/home/lrhan/.local/bin/jupyter-lab --ip=0.0.0.0 --port=8888 --no-browser
 Restart=always
 Environment="PATH=/home/seeed/.local/bin:/usr/bin:/bin"
+
 [Install]
 WantedBy=multi-user.target
 ```
 
 ![](./images/3-20-jupyterlab-06.png)
 
-重启Jupyter服务使得新配置生效
+Restart the Jupyter service to make the new configuration effective
 
 ```bash
-# 关闭 Jupyter 相关进程
+# Stop Jupyter-related processes
 pkill -9 -f jupyter
-# 重新启动 Jupyter 服务
+# Restart the Jupyter service
 sudo systemctl restart jupyter
 ```
 
-在Jetson上打开一个终端运行Jupyter Lab
+Open a terminal on Jetson to run JupyterLab
 
 ```bash
 jupyter lab
 ```
 
-运行后会自动打开浏览器运行Jupyter服务
+Auto-open browser running Jupyter service after running
 
 ![](./images/3-20-jupyterlab-07.png)
 
-如果想通过其他电脑远程访问Jetson上的Jupyter服务，可以在远程电脑的浏览器打开以下链接
+If you want to access the Jepyter service remotely from another computer, you can open the following links in the remote computer browser:
 
 ```bash
 http://<jetson_ip>:8888/lab
 ```
 
-```
-其中，<jetson_ip> 为 jetson 设备在局域网中的 ip 地址。
-```
+> of which <jetson ip> is the ip address of the jetson device in the local area network.
 
 [Back to Module 3](../README.MD)

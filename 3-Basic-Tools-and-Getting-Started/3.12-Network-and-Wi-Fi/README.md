@@ -2,31 +2,31 @@
 
 [Back to Module 3](../README.MD) | [Back to Table of Contents](../../Table-of-Contents.md)
 
-## 02网络知识（WIFI配置）
+## 02 Web Knowledge (WIFI Configuration)
 
-### 简介
+### Introduction
 
-本篇将介绍如何让Jetson连接上网络以及常规的网络配置。
+This section will describe how to connect Jetson to the network and to regular network configurations.
 
-### Wifi配置
+### Wi-Fi Configuration
 
-### 连接Wifi
+### Connect Wi-Fi
 
-#### 方式1：GUI连接
+Mode 1: GUI Connection
 
-进入Jeton系统桌面，点击右上角的电源图标—>Wifi图标—>Wi-Fi Setting。
+Enter the Jeton system desktop and click the power icon at the top right corner - >Wi-Fi icon - >Wi-Fi Setting.
 
 ![](./images/3-12-network-and-wi-fi-01.png)
 
-选择想连接的WiFi，如果扫描到的Wifi信号都很差，请检查无线网卡是否安装了天线或天线安装是否正常。
+Select the WiFi that you want to connect to, and check if the wireless card is equipped with antennas or antennas if both are scanned.
 
 ![](./images/3-12-network-and-wi-fi-02.png)
 
-点击已经连接的WiFi设置图标可以查看WiFi的信息。
+Click the connected WiFi settings icon to view WiFi information.
 
 ![](./images/3-12-network-and-wi-fi-03.png)
 
-查看所有网络连接的IP地址，打开终端输入以下命令：
+View the IP addresses of all network connections and open the terminal to enter the following commands:
 
 ```bash
 ifconfig
@@ -34,11 +34,11 @@ ifconfig
 
 ![](./images/3-12-network-and-wi-fi-04.png)
 
-如上图eno1是有线网的接口的IP地址，l4tbr0为Jetson为Type接口分配的IP地址，wlP1p1s0为WiFi接口的IP地址
+If the above figure is an IP address for a web-based interface, l4tbr0 is an IP address assigned to Jetson for the Type interface and wlP1p1s0 is an IP address for the WiFi interface,
 
-#### 方式2：命令行连接
+Mode 2: Command line connections
 
-打开终端输入下面的命令查询当前环境中的wifi信号：
+Open the terminal to enter the following command to query the wfi signal in the current environment:
 
 ```bash
 nmcli device wifi list
@@ -46,52 +46,49 @@ nmcli device wifi list
 
 ![](./images/3-12-network-and-wi-fi-05.png)
 
-使用下面的命令连接WiFi
+Connect WiFi with the command below
 
 ```bash
-nmcli device wifi connect "WiFi名" password "密码"
+nmcli device wifi connect "WiFi-Name" password "Password"
 ```
 
-### 设置静态IP
+### Set static IP
 
-打开Wi-Fi的设置选项
+Set Options for Open Wi-Fi
 
 ![](./images/3-12-network-and-wi-fi-06.png)
 
-```
-Address:填写需要固定的IP地址，需要可分配的IP地址范围
-Netmask:填写255.255.255.0 Gateway:填写WiFi默认网关地址
-```
+> Address: Fill in an IP address that requires a fixed IP address and an assignable IP address range
+> Netmask: Fill in 255.255.255.0
+> Gateway: Fill in WiFi default gateway address
 
-重新连接WiFi即可生效。
+Reconnecting WiFi is effective.
 
 ![](./images/3-12-network-and-wi-fi-07.png)
 
-### Wifi热点
+### Wi-Fi Hot
 
-在开发的时候，有时候需要连接Jetson的热点，来控制和调试程序。下面将介绍如何开启热点。
+In development, it is sometimes necessary to connect the Jetson hotspot to control and debug the program. Here's how to turn on the hot spots.
 
-```
-请注意，需要无线网卡支持 AP 工作模式！
-```
+> Attention, need a wireless card to support the AP working mode!
 
-打开Wifi热点
+Open Wi-Fi Hotspot
 
 ![](./images/3-12-network-and-wi-fi-08.png)
 
-配置热点然后打开
+Configure hot spots and open them
 
 ![](./images/3-12-network-and-wi-fi-09.png)
 
 ![](./images/3-12-network-and-wi-fi-10.png)
 
-在Window PC上可以正常检测到Jetson打开的热点连接
+The Hotspot Connection opened by Jetson can be detected normally on Windows PC
 
 ![](./images/3-12-network-and-wi-fi-11.png)
 
-### 有线网连接
+### Wireless connection
 
-直接将网线连接到Jetson的网口即可
+Just connect the network to Jetson's portal.
 
 ![](./images/3-12-network-and-wi-fi-12.png)
 

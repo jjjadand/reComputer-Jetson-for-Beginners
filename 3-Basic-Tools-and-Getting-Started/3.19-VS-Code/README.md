@@ -2,56 +2,56 @@
 
 [Back to Module 3](../README.MD) | [Back to Table of Contents](../../Table-of-Contents.md)
 
-## 11安装VSCode
+## 11 Install VSCode
 
-### 介绍
+### Introduction
 
-Visual Studio Code（简称VS Code）是一款由微软推出的轻量级、跨平台代码编辑器，支持Windows、macOS和Linux。它启动快、插件生态丰富，内置智能补全、Git集成、调试器、终端等功能，几乎可以满足从前端到后端、从脚本到嵌入式开发的各种需求。本文将介绍如何在Jetson设备中安装VSCode。
+VS Code is a lightweight, cross-platform code editor that supports Windows, MacOS and Linux. It activates fast, eco-rich plugins, incorporates smart completion, Git integration, debuggers, terminals, etc., and almost meets the needs of the front-to-back end, from script to embedded development. This paper will describe how VSCode will be installed in the Jetson device.
 
-### 安装VSCode
+### Install VSCode
 
-在浏览器中打开VSCode官网。
+Opens the VSCode official network in the browser.
 
-选择other platform中选择Arm64的版本，并下载对应的deb安装包。
+Select the version of Arm64 in the other platform and download the corresponding Deb installation package.
 
 ![](./images/3-19-vs-code-01.png)
 
 ![](./images/3-19-vs-code-02.png)
 
-终端进入下载目录，运行安装命令
+Terminal enters download directory, runs installation commands
 
 ```bash
-# 进入下载目录
+# Enter the `Download` directory
 cd ~/Downloads
-# 执行安装命令；输入code 按Tab补全安装包即可
+# Run the install command; type `code` and press Tab to auto-complete the package name
 sudo dpkg -i code_xxxxxxxxxxxx
 ```
 
-安装完成后，打开应用程序
+Open application after installation is complete
 
 ![](./images/3-19-vs-code-03.png)
 
-找到VSCode将其添加到桌面菜单栏
+Found VSCode to add it to the desktop menu bar
 
 ![](./images/3-19-vs-code-04.png)
 
-### 安装基础拓展
+### Installation basic extension
 
-安装基础的扩展
+Extension of installation base
 
-拓展搜索栏搜索python，选择Python进行安装：
+Expand the search box to search for python and select Python for installation:
 
 ![](./images/3-19-vs-code-05.png)
 
-C/C++
+C/C+
 
-安装C与C++拓展
+Installation of C and C++ outreach
 
 ![](./images/3-19-vs-code-06.png)
 
-Material Icon Theme
+"Material Icon Theme
 
-选择Material Icon Theme进行安装
+Select Materal Icon Theme for installation
 
 ![](./images/3-19-vs-code-07.png)
 
@@ -59,27 +59,27 @@ Material Icon Theme
 
 Remote-SSH
 
-选择Remote-SSH进行安装
+Select Remote-SSH for installation
 
 ![](./images/3-19-vs-code-09.png)
 
-#### SSH拓展的基本使用
+Basic use of SSH outreach
 
-配置远程设备信息
+Configure remote device information
 
 ![](./images/3-19-vs-code-10.png)
 
-配置远程设备的信息
+Configure remote device information
 
 ```bash
-Host PC # 远程设备别名
-HostName 192.168.137.1 # 远程设备IP
-User seeeed # 远程设备用户名
+Host PC  # Remote device alias
+  HostName 192.168.137.1 # Remote device IP
+  User seeeed  # Remote device username
 ```
 
 ![](./images/3-19-vs-code-11.png)
 
-选择远程设备进行连接
+Select remote device to connect
 
 ![](./images/3-19-vs-code-12.png)
 
@@ -87,7 +87,7 @@ User seeeed # 远程设备用户名
 
 ![](./images/3-19-vs-code-14.png)
 
-输入密码回车即可
+Just enter the password and get back to the car.
 
 ![](./images/3-19-vs-code-15.png)
 

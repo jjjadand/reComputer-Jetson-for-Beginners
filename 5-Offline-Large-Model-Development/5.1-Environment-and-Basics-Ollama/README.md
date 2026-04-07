@@ -1,108 +1,112 @@
 # Environment and Basics with Ollama
 
-## 01环境与基础准备（Ollama）
+## 01 Environment and basic preparedness (Ollama)
 
-## 12.01.01 AI大模型环境部署
+| Name | Owner | Modified | Created |
+| --- | --- | --- | --- |
+| 12.01.01 AI Large Model Environmental Deployment | Yujiang! | 2026-01-09 14:48 | 2026-01-09 14:48 |
+| 12.02.02 Toggle Chinese Input Method | Yujiang! | 2026-01-12:40 | 2026-01-09 14:48 |
+| 12.03. Installation of a large model dialogue platform | Yujiang! | 2026-01-16:20 | 2026-01-09 14:49 |
 
-### 简介
+### 12.02.02 Toggle Chinese Input Method
 
-Ollama是一个轻量级、可扩展的开源框架，专门用于在本地运行大型语言模型（LLMs）。它支持多种模型架构，提供了简单的命令行界面和REST API，特别适合在NVIDIA Jetson这类边缘计算设备上部署。
+Please refer to chapter III, subsection 10 Installation of the Chinese input method Configure the Chinese input method.
 
-### 主要特性
+### 12.03. Installation of a large model dialogue platform
 
-### 安装Ollama
+### Open WebUI Profile
 
-### 系统要求
+Open WebUI (formerly Ollama WebUI) is an open-source, self-serving Web interface designed for locally run LLMs. It provides a user experience similar to ChatGPT, supports advanced functions such as multimodel management, dialogue history, plugin systems, and is well suited to build a privatization AI assistant on the Jetson platform.
 
-```
-从 SeeedStudio 购买的 Jetson 设备已经预装了 Ollama，您可以使用 ollama -v 命令查看预装本版。 如果终端窗口中正常打印 ollama 的版本信息，请跳过安装部分。
-```
+## Core characteristics
 
-### 安装步骤
+🎨 Intuitive interface: Modern UI, chat experience like ChatGPT
 
-在Jetson设备的桌面使用ctrl + alt + T的组合快捷键打开 终端窗口，并输入下面的一键安装命令。
+Local priority: all data stored locally without network connection
 
-```bash
-sudo apt install curl -y
-curl -fsSL https://ollama.com/install.sh | sh
-```
+🔌 Multi-backend support: native support Ollama, compatible with OpenAI API
 
 ![](./images/5-1-environment-and-basics-ollama-01.png)
 
-如果终端中打印安装完成的日志，则证明Jetson设备中已经成功安装了ollama。
+:: Dialogue management: complete historical record of dialogue and search function
 
-### Ollama使用方法
+Plugin system: Support functional extension and customisation
 
-在jetson的终端窗口中输入ollama -h即可查看ollama的使用说明。
+Multi-user support: enable user authentication and permission management
 
 ![](./images/5-1-environment-and-basics-ollama-02.png)
 
-| 命令 | 功能 |
-| --- | --- |
-| ollama serve | 启动 ollama |
-| ollama create | 从模型文件创建模型 |
-| ollama show | 显示模型信息 |
-| ollama run | 运行模型 |
-| ollama pull | 从注册表中拉取模型 |
-| ollama push | 将模型推送到注册表 |
-| ollama list | 列出模型 |
-| ollama ps | 列出运行的模型 |
-| ollama cp | 复制模型 |
-| ollama rm | 删除模型 |
-| ollama help | 获取有关任何命令的帮助信息 |
+## Install Open WebUI
 
-### 参考
+Run the following commands in the terminal window of the Jetson device to fetch the docker image of Open WebUI:
 
 https://ollama.com/
 
-## 12.02.02中文输入法切换
+```python
+# Pull the Open WebUI image (ARM64 version)
+docker pull ghcr.io/open-webui/open-webui:main
+```
 
-请参考 第三章10小节10安装中文输入法配置中文输入法。
+> If the docker environment of the jetson device is abnormal, refer to 13 for installation of Docker and base use Configure the docker environment.
 
-## 12.03.03大模型对话平台安装
+## Start Open WebUI
 
-### Open WebUI简介
-
-Open WebUI（原Ollama WebUI）是一个开源、可自托管的Web界面，专为本地运行的LLMs设计。它提供了类似ChatGPT的用户体验，支持多模型管理、对话历史、插件系统等高级功能，非常适合在Jetson平台上搭建私有化AI助手。
-
-### 核心特性
-
-### 安装Open WebUI
-
-在Jetson设备的终端窗口中运行下面的命令拉取Open WebUI的docker镜像：
+Runs the command to create and start a docker container in the terminal of the Jetson device.
 
 ```python
-# 拉取 Open WebUI 镜像（ARM64 版本）
+# Create the data directory
+mkdir -p /opt/seeed/development_guide/12_llm_offline/open-webui/data
+
+# Run the container
+docker run -d --restart always --name open-webui \
+  --network host \
+  -v /opt/seeed/development_guide/12_llm_offline/open-webui/data:/app/backend/data \
+  -e OLLAMA_BASE_URL=http://127.0.0.1:11434 \
+  ghcr.io/open-webui/open-webui:main
+
+
+# Check the container status
+docker logs -f open-webui
+```
+
+> The first launch container may download some basic models, ensuring that the network of jetson equipment is smooth.
+
+When the container is activated, you can enter the https://download.docker.com/linux/ubuntu/dists/ access to WebUI in the browser. If you want to access WebUI via other devices in the local area network, you need to replace the localhost in url with the ip address of the Jetson device.
+
+Run the following command in a terminal on the Jetson device to pull the Open WebUI Docker image:
+
+```python
+# Pull the Open WebUI image (ARM64 version)
 docker pull ghcr.io/open-webui/open-webui:main
 ```
 
 ```
-如果 jetson 设备的 docker 环境异常，请参考 13 安装 Docker与基础使用 配置 docker 环境。
+If the Docker environment on the Jetson device is not working properly, refer to 13 Install Docker and Basic Use to configure Docker.
 ```
 
 ![](./images/5-1-environment-and-basics-ollama-03.png)
 
-### 启动Open WebUI
+### Start Open WebUI
 
-在Jetson设备的终端中运行下面的命令创建并启动docker容器。
+Run the following commands in a terminal on the Jetson device to create and start the Docker container.
 
 ```python
-# 创建数据目录
+# Create the data directory
 mkdir -p /opt/seeed/development_guide/12_llm_offline/open-webui/data
-# 运行容器
+# Run the container
 docker run -d --restart always --name open-webui \
 --network host \
 -v /opt/seeed/development_guide/12_llm_offline/open-webui/data:/app/backend/data \
 -e OLLAMA_BASE_URL=http://127.0.0.1:11434 \
 ghcr.io/open-webui/open-webui:main
-# 查看运行状态
+# Check the container status
 docker logs -f open-webui
 ```
 
 ```
-第一次启动容器可能会下载一些基础模型，请确保 jetson 设备的网络通畅。
+The first container startup may download some base models, so make sure the Jetson device has a stable network connection.
 ```
 
-容器启动后，可以在浏览器中输入http://localhost:8080/访问WebUI。如果您想通过局域网中的其他设备访问WebUI，需要将url中的localhost替换成Jetson设备的ip地址。
+After the container starts, open `http://localhost:8080/` in a browser to access WebUI. To access it from another device on the same LAN, replace `localhost` in the URL with the Jetson device IP address.
 
 ![](./images/5-1-environment-and-basics-ollama-04.png)

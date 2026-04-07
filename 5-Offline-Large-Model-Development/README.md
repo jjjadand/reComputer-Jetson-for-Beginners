@@ -1,10 +1,10 @@
 # Offline Large Model Development
 
-## 第十二章 离线大模型开发
+## Chapter 12 Offline Large Model Development
 
-本章内容已结合 `xiaobai-lesson` 第十二章进行整理，重点覆盖 Jetson 上离线大模型的环境部署、文字模型、视觉多模态模型、语音链路，以及多模态语音应用。
+This chapter merges the offline LLM content from `xiaobai-lesson` Chapter 12. It focuses on environment setup for Jetson, text-only models, vision-language models, speech pipelines, and multimodal voice applications.
 
-## 章节目录
+## Contents
 
 | **Module** | **Content** |
 |:----------:|:------------|
@@ -14,8 +14,8 @@
 | Module 5.4 | [Offline Speech Pipeline Basics](./5.4-Offline-Speech-Pipeline-Basics/README.md) |
 | Module 5.5 | [Offline Multimodal Voice Applications](./5.5-Offline-Multimodal-Voice-Applications/README.md) |
 
-## 建议学习顺序
+## Suggested Learning Order
 
-1. 先完成 `5.1`，确保 `Ollama`、`Open WebUI` 和基础运行环境可用。
-2. 再阅读 `5.2` 与 `5.3`，分别建立文字大模型和视觉多模态模型的使用认知。
-3. 最后结合 `5.4` 和 `5.5`，将语音输入、语音输出与多模态能力串联起来。
+1. Start with `5.1` to make sure `Ollama`, `Open WebUI`, and the base runtime are working.
+2. Continue with `5.2` and `5.3` to understand text-only and vision-language model workflows.
+3. Finish with `5.4` and `5.5` to connect speech input, speech output, and multimodal capabilities.

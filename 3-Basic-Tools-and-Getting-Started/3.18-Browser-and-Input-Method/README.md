@@ -2,72 +2,70 @@
 
 [Back to Module 3](../README.MD) | [Back to Table of Contents](../../Table-of-Contents.md)
 
-## 09安装浏览器
+## 09 Install Browser
 
-### 介绍
+### Introduction
 
-在Jetson的原始的系统中，一般默认不自带浏览器，所以需要我们手动安装浏览器。本篇将介绍如何Jetson上安装常用的火狐浏览器
+In Jetson 's original system, the browser is usually not brought by default, so we need to install the browser manually. This article will show how to install a common Firefox browser on Jetson.
 
-### firefox安装
+### Firebox installation
 
-打开jetson终端，运行以下命令安装火狐浏览器
+Opens the jetson terminal and runs the following commands to install a Firefox browser
 
 ```bash
 sudo apt update
-# 下载火狐浏览器
+# Download Firefox
 sudo apt install firefox
-# apt安装的版本会打不开需要运行以下命令修复
+# If the APT-installed version does not open, run the following commands to fix it
 cd ~/Downloads/
-# 降级 snap
+# Downgrade `snap`
 snap download snapd --revision=24724
 sudo snap ack snapd_24724.assert
 sudo snap install snapd_24724.snap
 sudo snap refresh --hold snapd
 ```
 
-安装完成后，火狐浏览器图标将出现在桌面。
+When installation is complete, the Firefox browser icon will appear on the desktop.
 
 ![](./images/3-18-browser-and-input-method-01.png)
 
-## 10安装中文输入法
+## Installation of Chinese input method
 
-### 介绍
+### Introduction
 
-Jetson默认系统语言是英文的，所以输入法也是英文的，这对于我们需要搜索查询一些资料很不方便，所以，本篇将介绍如何在Jetson上安装中文输入法。
+The Jetson default system language is English, so the input method is also English, which is not easy for us to search for some information, so this section will describe how to install the Chinese input method on Jetson.
 
-```
-Jetson是ARM架构的系统，不支持搜狗输入法(只支持amd架构)
-```
+> Jetson is an ARM system that does not support dog search input.
 
-### 安装中文输入法
+### Install Chinese Input Method
 
-进入到Jetson的桌面，打开一个终端，执行以下安装命令：
+Enter the desktop of Jetson, open a terminal and execute the following installation orders:
 
 ```bash
-# 安装googlepinyin
+#Installgooglepinyin
 sudo apt-get install fcitx-googlepinyin -y
 ```
 
-打开设置—>Region & Language—>Manage Installed Languages
+Open Settings
 
 ![](./images/3-18-browser-and-input-method-02.png)
 
 ![](./images/3-18-browser-and-input-method-03.png)
 
-添加Chinese（china语言），键盘输入法系统选择：fcitx4。
+Add Chinese (china), keyboard input system selection: fcitx4.
 
 ![](./images/3-18-browser-and-input-method-04.png)
 
-重启系统
+Restart System
 
 ```bash
 sudo reboot
 ```
 
-点击键盘图标——>配置——>选择Google拼音 和 英语
+Click on the keyboard icon -- > Configure -- > Select Google spelling and English
 
 ![](./images/3-18-browser-and-input-method-05.png)
 
-中英文输入切换可以使用默认快捷键Ctrl +空格切换
+The medium English input switch allows the use of the default shortcut Ctrl+space switch
 
 [Back to Module 3](../README.MD)

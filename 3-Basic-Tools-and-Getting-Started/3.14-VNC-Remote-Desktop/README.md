@@ -2,59 +2,59 @@
 
 [Back to Module 3](../README.MD) | [Back to Table of Contents](../../Table-of-Contents.md)
 
-## 04 VNC远程控制
+## 04 VNC Remote Control
 
-### 介绍
+### Introduction
 
-VNC（Virtual Network Computing）是一种远程桌面协议，可以让你在自己的电脑上看到另一台设备的图形界面，并像本地一样操作鼠标和键盘。通过VNC，你可以远程打开软件、查看桌面、管理系统，特别适合在没有显示器的服务器、嵌入式设备（如Jetson）或远程电脑上进行图形化操作。
+VNC is a remote desktop protocol that lets you view and control another device's graphical interface from your own computer. It is especially useful for servers without monitors, embedded devices such as Jetson, and other systems that require remote GUI access.
 
-### 配置VNC
+### Configure VNC
 
-### Jetson端
+### Jetson side
 
-进入Jetson开启桌面远程共享，设置——>Sharing
+Open desktop sharing on Jetson from `Settings -> Sharing`.
 
 ![](./images/3-14-vnc-remote-desktop-01.png)
 
-将远程桌面打开，启用传统VNC协议，设置用户名和密码(建议和系统保持一致)
+Enable Remote Desktop, turn on the traditional VNC protocol, and set a username and password. Using the same credentials as the system account is recommended.
 
 ![](./images/3-14-vnc-remote-desktop-02.png)
 
 ![](./images/3-14-vnc-remote-desktop-03.png)
 
-每次切换网络都要检查Media Sharing是否打开
+Each time you switch networks, make sure Media Sharing is still enabled.
 
 ![](./images/3-14-vnc-remote-desktop-04.png)
 
-开启远程登录
+Enable remote login
 
 ![](./images/3-14-vnc-remote-desktop-05.png)
 
-开机自启动VNC服务
+Enable the VNC service at boot.
 
-Jetson主板锁屏后无法进行VNC远程，需要以下额外配置
+If the screen is locked, VNC remote control may stop working. Use the extra configuration below to allow locked-screen remote access.
 
 ```bash
-# 安装桌面拓展管理
+# Install the desktop extension manager
 sudo apt install gnome-shell-extension-manager -y
-# 获取gnome-shell版本号
+# Get the gnome-shell version
 gnome-shell --version
 ```
 
 ![](./images/3-14-vnc-remote-desktop-06.png)
 
-根据版本号下载允许锁屏下远程的插件：
+Download the GNOME extension that allows remote desktop access while the screen is locked:
 
-在Jetson浏览器中打开:
+Open this page in a browser on the Jetson:
 
 https://extensions.gnome.org/extension/4338/allow-locked-remote-desktop/
 
-如果没有安装浏览器，可以安装火狐浏览器
+If no browser is installed, you can install a Firefox browser
 
 ```bash
-# 下载火狐浏览器
+# Download Firefox
 sudo apt install firefox
-# 版本修复浏览器
+#Fix the browser version
 cd ~/Downloads/
 snap download snapd --revision=24724
 sudo snap ack snapd_24724.assert
@@ -64,11 +64,11 @@ sudo snap refresh --hold snapd
 
 ![](./images/3-14-vnc-remote-desktop-07.png)
 
-在浏览器打开上面的链接，选择对应的版本号自动下载
+Open the link above and download the extension version that matches your GNOME Shell version.
 
 ![](./images/3-14-vnc-remote-desktop-08.png)
 
-进入插件下载目录安装插件
+Install the extension from the download directory:
 
 ```bash
 gnome-extensions install allowlockedremotedesktopkamens.us.v9.shell-extension.zip
@@ -77,29 +77,29 @@ sudo gnome-extensions enable allowlockedremotedesktop@kamens.us
 
 ![](./images/3-14-vnc-remote-desktop-09.png)
 
-重启系统
+Restart the system:
 
 ```bash
 sudo reboot
 ```
 
-重启进入桌面，按win键，搜索Extension Manager。开启对应功能。
+After rebooting, press the `Win` key, search for `Extension Manager`, and enable the installed extension.
 
 ![](./images/3-14-vnc-remote-desktop-10.png)
 
 ![](./images/3-14-vnc-remote-desktop-11.png)
 
-打开允许锁屏进行远程桌面控制
+Turn on the option that allows remote desktop control while the screen is locked.
 
 ![](./images/3-14-vnc-remote-desktop-12.png)
 
-### PC端
+### PC side
 
-下载VNC Viewer
+Download VNC Viewer
 
 ![](./images/3-14-vnc-remote-desktop-13.png)
 
-以管理员身份允许安装程序
+Allow installation as administrator
 
 ![](./images/3-14-vnc-remote-desktop-14.png)
 
@@ -117,31 +117,31 @@ sudo reboot
 
 ![](./images/3-14-vnc-remote-desktop-21.png)
 
-打开VNC Viewer软件
+Open VNC Viewer.
 
 ![](./images/3-14-vnc-remote-desktop-22.png)
 
-输入Jetson IP地址回车
+Enter the Jetson IP address and press `Enter`.
 
 ![](./images/3-14-vnc-remote-desktop-23.png)
 
 ![](./images/3-14-vnc-remote-desktop-24.png)
 
-输入Jetson密码
+Enter Jetson password
 
 ![](./images/3-14-vnc-remote-desktop-25.png)
 
-第一次打开可能会黑屏
+The first connection may show a black screen.
 
 ![](./images/3-14-vnc-remote-desktop-26.png)
 
-设置一下远程桌面的画质即可
+Adjust the viewer quality settings if needed.
 
 ![](./images/3-14-vnc-remote-desktop-27.png)
 
 ![](./images/3-14-vnc-remote-desktop-28.png)
 
-至此可以正常远程连接Jetson的图形化界面了
+At this point, you should be able to connect normally to the Jetson graphical desktop.
 
 ![](./images/3-14-vnc-remote-desktop-29.png)
 

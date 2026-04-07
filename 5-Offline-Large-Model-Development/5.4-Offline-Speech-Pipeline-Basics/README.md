@@ -1,460 +1,314 @@
 # Offline Speech Pipeline Basics
 
-## 04离线语音链路基础（ASR/TTS/对话）
+## 04 Offline voice link base (ASR/TTS/ dialogue)
 
-## 11.04-01语音交互硬件连接
+| Name | Owner | Modified | Created |
+| --- | --- | --- | --- |
+| 11.04-01 Voice interactive hardware connection | Yujiang! | 2026-01-09 14:57 | 2026-01-09 14:57 |
+| 11.04-02 Offline Voice-Text (ASR) | Yujiang! | 2026-01-16:10 | 2026-01-09 14:58 |
+| 11.04-03 Offline TTS | Yujiang! | 2026-01-14:51 | 2026-01-09 14:58 |
+| 11.04-04 AI Large Model Voice Interactive | Yujiang! | 2026-01-14:51 | 2026-01-09 14:58 |
 
-```
-注意：下面涉及到语音交互的内容将搭配我们的麦克风阵列 ReSpeaker Mic Array v3.0 进行音频识别!
-```
+# 11.04-01 Voice interactive hardware connection
 
 ![](./images/5-4-offline-speech-pipeline-basics-01.png)
 
-## 11.04-02离线语音转文字（ASR）
+> Note: The following text on voice interaction will match our microphone array ReSpeaker Mic Array v3.0 for audio recognition!
 
-### 概念介绍
+### 11.04-02 Offline Voice-Text (ASR)
 
-### “ASR”是什么？
+### Concept introduction
 
-ASR（Automatic Speech Recognition，自动语音识别）是一种将人类语音信号转换为可编辑、可处理的文本的技术。它通过声学模型、语言模型和信号处理算法，将连续的语音波形分析、解码并映射成对应的文字内容，使计算机能够“听懂”语音。ASR技术广泛应用于语音助手、电话客服、实时字幕、会议记录以及人机交互等场景。
+### What is ASR?
 
-### ASR系统实现原理
+ASR (Automatic Speech Recognition, Automatic Voice Recognition) is a technique for converting human voice signals into editable, processable texts. Through acoustic models, language models and signal processing algorithms, it analyses, decodes and maps the corresponding textual content, enabling computers to " understand " the voice. ASR technology is widely used in speech assistants, telephone passenger service, real-time subtitles, minutes of meetings and human interaction.
 
-现代自动语音识别（ASR）系统的实现主要依赖以下几个关键组件：
+### ASR system realization rationale
 
-总之，现代ASR系统通过声学建模、语言建模、发音规则和解码策略的协同，结合大规模训练数据和强大算力，实现了高效、准确的人类语音到文本的转换。随着算法和计算能力的提升，ASR的识别精度不断提高，应用场景也越来越广泛，包括语音助手、实时字幕、会议记录和智能客服等。
+The achievement of the modern automated voice recognition (ASR) system relies mainly on the following key components:
 
-### 代码解析
+Acoustic Model
 
-### 关键代码
+The acoustic model is responsible for mapping the voice signals entered into the acoustic or sub-word units.
+
+In this process, audio characterization is first required, and commonly used methods include Mel frequency respectral coefficients (MFCCs) and filter groups (Filter Banks) to express audio acoustic features.
+
+The extracting features were then entered into the deep neural network (DNN), the contours neural network (CNN), the circular neural network (RNN) or the more advanced Transformer structure to be trained in mapping relationships from audio features to acoustics or text.
+
+Language Model (Language Mode)
+
+Language models are used to predict the next most likely term under given context conditions, thus improving the accuracy of identification.
+
+It is based on large-scale text language training, which captures the probability distribution of the vocabulary series and helps the system to determine which combinations are more rational.
+
+Common language models include the n-gram model, the RNN-based LM and the Transformer-based LM popular in recent years.
+
+Pronunciation Lexicon
+
+The Dictionary provides a correspondence between words and their standard pronunciation and a bridge between acoustic and linguistic models.
+
+It allows the system to match the audio sequences heard to the correct word according to the known pronunciation rules, thereby increasing the accuracy of the recognition.
+
+Decoder
+
+The decodor is responsible for finding the most possible word series as the final output, supported by acoustic models, language models and pronunciation dictionaries.
+
+This process usually uses complex search algorithms, such as Viterbi algorithms or graphic search methods, in order to solve the optimal path and obtain text corresponding to the voice.
+
+End-to-End ASR
+
+With the development of in-depth learning, the end-to-end ASR system has begun to emerge, attempting to generate text output directly from the original audio signal, without the need for visible split acoustic models, language models and pronunciations.
+
+Such systems are often based on a sequence-to-sequence (Seq2Seq) framework, combining the Attention Mechanism or Transformer architecture, which greatly simplifys the design complexity of traditional ASR systems while maintaining high performance.
+
+In sum, the modern ASR system has achieved efficient and accurate human voice-to-text conversion through acoustic modelling, language modelling, sound rules and decodering strategies, combined with large-scale training of data and powerful computing. As algorithms and computational capabilities have improved, ASR's recognition accuracy has increased and its applications have become more extensive, including voice assistants, real-time subtitles, minutes of meetings and smart guest clothes.
+
+### Code Parsing
+
+### Key Code
+
+![](./images/5-4-offline-speech-pipeline-basics-02.png)
 
 ```bash
 cd /opt/seeed/development_guide/12_llm_offline/seeed_ws/src/largemodel/MODELS/asr/wake_word_detect/porcupine/binding/python && python setup.py install --user
 ```
 
-#### 语音处理与识别核心(largemodel/largemodel/asr.py)
+### Voice processing and identification core (largemodel/largemodel/asr.py)
 
 ```bash
-# From largemodel/largemodel/asr.py
+#From largemodel/largemodel/asr.py
 def kws_handler(self)->None:
-if self.stop_event.is_set():
-return
-if self.listen_for_speech(self.mic_index):
-asr_text = self.ASR_conversion(self.user_speechdir) # 进行 ASR 转换 / Perform ASR conversion
-if asr_text =='error': # 检查 ASR 结果长度是否小于4个字符 / Check if ASR result length is less than 4 characters
-self.get_logger().warn("I still don't understand what you mean. Please try again")
-playsound(self.audio_dict[self.error_response]) # 错误响应 / Error response
-else:
-self.get_logger().info(asr_text)
-self.get_logger().info("okay😀, let me think for a moment...")
-self.asr_pub_result(asr_text) # 发布 ASR结果 / Publish ASR result
-else:
-return
+  if self.stop_event.is_set():
+  return
+
+  if self.listen_for_speech(self.mic_index):
+  asr_text = self.ASR_conversion(self.user_speechdir)  # Perform ASR conversion
+  if asr_text =='error':  # Check if ASR result length is less than 4 characters
+  self.get_logger().warn("I still don't understand what you mean. Please try again")
+  playsound(self.audio_dict[self.error_response])  # Error response
+  else:
+  self.get_logger().info(asr_text)
+  self.get_logger().info("okay😀, let me think for a moment...")
+  self.asr_pub_result(asr_text)  # Publish ASR result
+  else:
+  return
+
 def ASR_conversion(self, input_file:str)->str:
-if self.use_oline_asr:
-result=self.modelinterface.oline_asr(input_file)
-if result[0] == 'ok' and len(result[1]) > 4:
-return result[1]
-else:
-self.get_logger().error(f'ASR Error:{result[1]}') # ASR error.
-return 'error'
-else:
-result=self.modelinterface.SenseVoiceSmall_ASR(input_file)
-if result[0] == 'ok' and len(result[1]) > 4:
-return result[1]
-else:
-self.get_logger().error(f'ASR Error:{result[1]}') # ASR error.
-return 'error'
+  if self.use_oline_asr:
+  result=self.modelinterface.oline_asr(input_file)
+  if result[0] == 'ok' and len(result[1]) > 4:
+  return result[1]
+  else:
+  self.get_logger().error(f'ASR Error:{result[1]}')  # ASR error.
+  return 'error'
+  else:
+  result=self.modelinterface.SenseVoiceSmall_ASR(input_file)
+  if result[0] == 'ok' and len(result[1]) > 4:
+  return result[1]
+  else:
+  self.get_logger().error(f'ASR Error:{result[1]}')  # ASR error.
+  return 'error'
 ```
 
-#### VAD智能录音(largemodel/largemodel/asr.py)
+### VAD smart recording (largemodel /largemodel/asr.py)
 
 ```bash
-# From largemodel/largemodel/asr.py
+#From largemodel/largemodel/asr.py
 def listen_for_speech(self,mic_index=0):
-p = pyaudio.PyAudio() # Create PyAudio instance. / 创建PyAudio实例。
-audio_buffer = [] # Store audio data. / 存储音频数据。
-silence_counter = 0 # Silence counter. / 静音计数器。
-MAX_SILENCE_FRAMES = 90 # 30帧*30ms=900ms静音后停止 / Stop after 900ms of silence (30 frames * 30ms)
-speaking = False # Flag indicating speech activity. / 语音活动标志。
-frame_counter = 0 # Frame counter. / 计数器。
-stream_kwargs = {
-'format': pyaudio.paInt16,
-'channels': 1,
-'rate': self.sample_rate,
-'input': True,
-'frames_per_buffer': self.frame_bytes,
-}
-if mic_index != 0:
-stream_kwargs['input_device_index'] = mic_index
-# Prompt the user to speak via the buzzer. / 通过蜂鸣器提示用户讲话。
-self.pub_beep.publish(UInt16(data = 1))
-time.sleep(0.5)
-self.pub_beep.publish(UInt16(data = 0))
-try:
-# Open audio stream. / 打开音频流。
-stream = p.open(**stream_kwargs)
-while True:
-if self.stop_event.is_set():
-return False
-frame = stream.read(self.frame_bytes, exception_on_overflow=False) # Read audio data. / 读取音频数据。
-is_speech = self.vad.is_speech(frame, self.sample_rate) # VAD detection. / VAD检测。
-if is_speech:
-# Detected speech activity. / 检测到语音活动。
-speaking = True
-audio_buffer.append(frame)
-silence_counter = 0
-else:
-if speaking:
-# Detect silence after speech activity. / 在语音活动后检测静音。
-silence_counter += 1
-audio_buffer.append(frame) # Continue recording buffer. / 持续记录缓冲。
-# End recording when silence duration meets the threshold. / 静音持续时间达标时结束录音。
-if silence_counter >= MAX_SILENCE_FRAMES:
-break
-frame_counter += 1
-if frame_counter % 2 == 0:
-self.get_logger().info('1' if is_speech else '-')
-# Real-time status display.
-finally:
-stream.stop_stream()
-stream.close()
-p.terminate()
-# Save valid recording (remove trailing silence). / 保存有效录音（去除尾部静音）。
-if speaking and len(audio_buffer) > 0:
-# Trim the last silent part. / 裁剪最后静音部分。
-clean_buffer = audio_buffer[:-MAX_SILENCE_FRAMES] if len(audio_buffer) > MAX_SILENCE_FRAMES else audio_buffer
-with wave.open(self.user_speechdir, 'wb') as wf:
-wf.setnchannels(1)
-wf.setsampwidth(p.get_sample_size(pyaudio.paInt16))
-wf.setframerate(self.sample_rate)
-wf.writeframes(b''.join(clean_buffer))
-return True
+  p = pyaudio.PyAudio()  # Create PyAudio instance.
+  audio_buffer = []  # Store audio data.
+  silence_counter = 0  # Silence counter.
+  MAX_SILENCE_FRAMES = 90  # Stop after 900ms of silence (30 frames * 30ms)
+  speaking = False  # Flag indicating speech activity.
+  frame_counter = 0  # Frame counter.
+  stream_kwargs = {
+  'format': pyaudio.paInt16,
+  'channels': 1,
+  'rate': self.sample_rate,
+  'input': True,
+  'frames_per_buffer': self.frame_bytes,
+  }
+  if mic_index != 0:
+  stream_kwargs['input_device_index'] = mic_index
+
+  # Prompt the user to speak via the buzzer.
+  self.pub_beep.publish(UInt16(data = 1))
+  time.sleep(0.5)
+  self.pub_beep.publish(UInt16(data = 0))
+
+  try:
+  # Open audio stream.
+  stream = p.open(**stream_kwargs)
+  while True:
+  if self.stop_event.is_set():
+  return False
+
+  frame = stream.read(self.frame_bytes, exception_on_overflow=False)  # Read audio data.
+  is_speech = self.vad.is_speech(frame, self.sample_rate)  # VAD detection.
+
+  if is_speech:
+  # Detected speech activity.
+  speaking = True
+  audio_buffer.append(frame)
+  silence_counter = 0
+  else:
+  if speaking:
+  # Detect silence after speech activity.
+  silence_counter += 1
+  audio_buffer.append(frame)  # Continue recording buffer.
+
+  # End recording when silence duration meets the threshold.
+  if silence_counter >= MAX_SILENCE_FRAMES:
+  break
+  frame_counter += 1
+  if frame_counter % 2 == 0:
+  self.get_logger().info('1' if is_speech else '-')
+  # Real-time status display.
+  finally:
+  stream.stop_stream()
+  stream.close()
+  p.terminate()
+
+  # Save valid recording (remove trailing silence).
+  if speaking and len(audio_buffer) > 0:
+  # Trim the last silent part.
+  clean_buffer = audio_buffer[:-MAX_SILENCE_FRAMES] if len(audio_buffer) > MAX_SILENCE_FRAMES else audio_buffer
+
+  with wave.open(self.user_speechdir, 'wb') as wf:
+  wf.setnchannels(1)
+  wf.setsampwidth(p.get_sample_size(pyaudio.paInt16))
+  wf.setframerate(self.sample_rate)
+  wf.writeframes(b''.join(clean_buffer))
+  return True
 ```
 
-### 代码解析
+### Code Parsing
 
-ASR（语音转文字）功能由ASRNode节点(asr.py)提供。该节点负责音频的录制、转换和发布。
+The ASR (speaks text) function is provided by the ASRNode Node (asr.py). This node is responsible for recording, converting and publishing audio.
 
-### 实践操作
+Audio recording (listen for speech):
 
-### 配置离线ASR功能
+This function uses the pyaudio library to capture audio streams from the microphone.
 
-要启用离线ASR，需要正确配置seeed.yaml文件，并确保本地模型正确放置。
+It's a webtcvad library for voice activity testing (VAD). Function loops to read audio frames and uses vad.is speech() to determine whether each frame contains a human voice.
+
+When voice is detected, data is written into a buffer zone. When continuous silence (defined by MAX SILENCE FRAMES) is detected, the recording is stopped.
+
+Eventually, audio data in the buffer zone was written into a .wav file with a path to self.user speechdir.
+
+Backend Selection and Execution (ASR conversion):
+
+The kws handler function calls the ASR conversion function after a successful recording.
+
+This function determines which backend to call by reading ROS parameteruse oline asr (a boolean value).
+
+If false, call self.modelinterface. SenseVoiceSmall ASR for local identification.
+
+If true, call self.modelinterface.oline asr, corresponding to online recognition.
+
+This function transmits the audio file path as a parameter to the selected method and processes the return result.
+
+Result published (asr pub result):
+
+When ASR conversion returns the valid text, kws handler calls the asr pub result function.
+
+This function encapsulates the text string in a std msgs.msg.String message and posts it through the ROS publisher to the /asr topic.
+
+## Practice
+
+#### Configure Offline ASR
+
+To enable offline ASR, you need to correctly configure the Seeed.yaml file and ensure that local models are correctly placed.
+
+Open profile:
 
 ```bash
-vim /opt/seeed/development_guide/12_llm_offline/seeed_ws/src/largemodel/config/seeed.yaml
+# vim /opt/seeed/development_guide/12_llm_offline/seeed_ws/src/largemodel/config/seeed.yaml
 ```
 
-#### 修改/确认以下关键配置:
+Modify/confirm the following key configurations:
 
 ```bash
-asr: # 语音节点参数
-ros__parameters:
-# ...
-use_oline_asr: False # 关键: 必须设置为 False 来启用离线ASR
-mic_serial_port: "/dev/ttyUSB0" # 麦克风串口别名
-mic_index: 0 # 麦克风设备索引
-language: 'zh' # asr语言, 'zh' 或 'en'
-regional_setting : "China"
+asr:  #speech node parameters
+  ros__parameters:
+  # ...
+  use_oline_asr: False  # Key: set this to `False` to enable offline ASR
+  mic_serial_port: "/dev/ttyUSB0"  # microphone serial-port alias
+  mic_index: 0  # microphone device index
+  language: 'zh'  # ASR language, 'zh' or 'en'
+  regional_setting : "China"
 ```
+
+![](./images/5-4-offline-speech-pipeline-basics-03.png)
+
+Here's to make sure it's False to use the local model.
+
+![](./images/5-4-offline-speech-pipeline-basics-04.png)
+
+Enter the ls /dev/ttyUSB* at the terminal to see if the USB device number assigned to the voice module is USB0, and if not, to change 0 from the configuration file to its own number.
+
+Language choice zh is Chinese and en English.
+
+At the same time, you need to specify the path of the offline model in large_model_interface.yaml.
+
+Open file in terminal
+
+![](./images/5-4-offline-speech-pipeline-basics-05.png)
 
 ```bash
-vim /opt/seeed/development_guide/12_llm_offline/seeed_ws/src/largemodel/config/large_model_interface.yaml
+# vim /opt/seeed/development_guide/12_llm_offline/seeed_ws/src/largemodel/config/large_model_interface.yaml
 ```
 
-找到local_asr_model相关的配置
+Local asr model profile found
 
 ```bash
 # large_model_interface.yaml
-## 离线语音识别 (Offline ASR)
-local_asr_model: "/opt/seeed/development_guide/12_llm_offline/seeed_ws/src/largemodel/MODELS/asr/SenseVoiceSmall" # 本地ASR模型路径
+## Offline ASR (Offline ASR)
+local_asr_model: "/opt/seeed/development_guide/12_llm_offline/seeed_ws/src/largemodel/MODELS/asr/SenseVoiceSmall"  # local ASR model path
 ```
 
-### 启动并测试功能
+### Activate and test functionality
+
+Start command:
 
 ```bash
 ros2 launch largemodel asr_respeaker.launch.py use_respeaker:=true use_wake_word_detection:=true
 ```
 
-![](./images/5-4-offline-speech-pipeline-basics-02.png)
+Test: Say to the microphone, "Hello, calcium, it'll answer: Hello, I'm here, and then I can start talking, and finally I'll show that the voice it recorded is printed in the end.
 
-## 11.04-03离线文字转语音（TTS）
+### 11.04-03 Offline TTS
 
-### 概念介绍
+#### Concept introduction
 
-### “TTS”是什么？
+### What's "TTS"?
 
-TTS（Text-to-Speech，文本转语音）是一种将文字信息转换为自然可听语音的技术。它通过语音合成模型，将输入的文本内容分析为语音单元，并生成带有韵律、语调和语速的语音信号，使计算机能够“说话”。TTS技术广泛应用于语音助手、导航播报、阅读软件、客服系统及无障碍辅助等场景，为文字信息提供了听觉呈现方式。
+TTS (Text-to-Speech, Text-to-Speech) is a technology that converts text information to natural hearing. It analyses the contents of the text entered into the voice unit through a speech synthesis model and generates voice signals with rhythm, tone and speed that enable the computer to "talk". TTS technology is widely used in such settings as voice assistants, navigational bulletins, reading software, passenger-service systems and accessibility aids, providing a visual presentation of text messages.
 
-### TTS系统实现原理
+## TTS system realization rationale
 
-文本转语音（TTS）系统的实现主要包括以下几个核心步骤：
+The achievement of the TTS system consists mainly of the following core steps:
 
-随着人工智能和深度学习的发展，现代TTS系统在发音准确性、自然度和情感表达上都有了显著提升，使机器生成的语音越来越接近真实人声。
+Text Analysis (Text Analysis)
 
-### 代码解析
+First, pre-processing of input text, including removal of irrelevant characters, uniform phrasing and case writing, semiwords, and conversion of numbers, abbreviations or other special symbols to readable text forms.
 
-### 关键代码
+At the same time, linguistic analysis is carried out, such as identifying standard pronunciation of each word (usually by means of pronunciation dictionaries), marking accents and tone, analysing sentence structures and paused information to provide the necessary linguistic characteristics for subsequent voice generation.
 
-#### TTS初始化与调用(largemodel/largemodel/model_service.py)
+Language Processing
 
-```bash
-# From largemodel/largemodel/model_service.py
-class LargeModelService(Node):
-def init(self):
-# ...
-self.system_sound_init()
-# ...
-def init_param_config(self):
-# ...
-self.declare_parameter('useolinetts', False)
-self.useolinetts = self.get_parameter('useolinetts').get_parameter_value().bool_value
-if self.useolinetts:
-self.tts_out_path = os.path.join(self.pkg_path, "resources_file", "tts_output.mp3")
-else:
-self.tts_out_path = os.path.join(self.pkg_path, "resources_file", "tts_output.wav")
-def system_sound_init(self):
-"""Initialize TTS system"""
-model_type = "oline" if self.useolinetts else "local"
-self.model_client.tts_model_init(model_type, self.language)
-self.get_logger().info(f'TTS initialized with {model_type} model')
-def _safe_play_audio(self, text_to_speak: str):
-"""
-Synthesizes and plays all non-empty messages only in non-text chat mode.
-"""
-if not self.text_chat_mode and text_to_speak:
-try:
-self.model_client.voice_synthesis(text_to_speak, self.tts_out_path)
-self.play_audio_async(self.tts_out_path)
-except Exception as e:
-self.get_logger().error(f"Safe audio playback failed: {e}")
-```
+At this stage, the system adjusts the pronunciation and tone of words to the context. For example, "read" has a different pronunciation in different times (external/external pronunciation of /red/ and other cases of /riːd/) and the system needs to understand these semantic nuances.
 
-#### TTS后端实现(largemodel/utils/large_model_interface.py)
+This phase also involves rhythm modelling, including accent location, speed control and emotional colours, to ensure that sound sounds natural and fluid.
 
-```bash
-# From largemodel/utils/large_model_interface.py
-class model_interface:
-# ...
-def tts_model_init(self,model_type='oline',language='zh'):
-if model_type=='oline':
-if self.tts_supplier=='baidu':
-self.token=self.fetch_token()
-self.model_type='oline'
-elif model_type=='local':
-self.model_type='local'
-if language=='zh':
-tts_model=self.zh_tts_model
-tts_json=self.zh_tts_json
-elif language=='en':
-tts_model=self.en_tts_model
-tts_json=self.en_tts_json
-self.synthesizer = piper.PiperVoice.load(tts_model, config_path=tts_json, use_cuda=False)
-def voice_synthesis(self,text,path):
-if self.model_type=='oline':
-if self.tts_supplier=='baidu':
-# ... (Baidu TTS implementation)
-pass
-elif self.tts_supplier=='aliyun':
-# ... (Aliyun TTS implementation)
-pass
-elif self.model_type=='local':
-with wave.open(path, 'wb') as wav_file:
-wav_file.setnchannels(1)
-wav_file.setsampwidth(2)
-wav_file.setframerate(self.synthesizer.config.sample_rate)
-self.synthesizer.synthesize(text, wav_file)
-```
+Speech Syrnthesis
 
-### 代码解析
+Characteristics obtained through text analysis and language processing are entered into a speech synthesis engine to generate actual voice signals.
 
-文字转语音（TTS）功能由LargeModelService节点发起调用，由model_interface类提供具体实现。其设计通过参数配置来切换不同的后端服务。
+Traditional method: Based on adhesive synthesis, a full sentence is selected and combined from a pre-recorded voice unit, with a better sound quality but limited to database samples.
 
-### 实践操作
+Modern method: Based on parameter synthesis or neural network (e.g. WaveNet, Tacotron, etc.), directly predict acoustic features from text and generate continuous voice. In-depth learning methods capture voice details and make the generation of voice more natural.
 
-### 配置离线TTS功能
-
-要启用离线TTS，需要正确配置seeed.yaml和large_model_interface.yaml，并确保本地模型正确放置。
-
-```bash
-vim /opt/seeed/development_guide/12_llm_offline/seeed_ws/src/largemodel/config/seeed.yaml
-```
-
-```bash
-model_service: # 模型服务器节点参数
-ros__parameters:
-language: 'zh' # 大模型接口语言
-useolinetts: False # 是否使用在线语音合成（True使用在线，False使用离线）
-regional_setting : "China"
-```
-
-useolinetts这里要确保是False才能使用本地模型。
-
-语言选择zh是中文，en是英语。
-
-#### 打开模型接口配置文件:
-
-```bash
-vim /opt/seeed/development_guide/12_llm_offline/seeed_ws/src/largemodel/config/large_model_interface.yaml
-```
-
-#### 确认离线模型路径:
-
-```bash
-# large_model_interface.yaml
-# 离线语音合成 (Offline TTS)
-# 中文TTS模型
-zh_tts_model: "/opt/seeed/development_guide/12_llm_offline/seeed_ws/src/largemodel/MODELS/tts/zh/zh_CN-huayan-medium.onnx"
-zh_tts_json: "/opt/seeed/development_guide/12_llm_offline/seeed_ws/src/largemodel/MODELS/tts/zh/zh_CN-huayan-medium.onnx.json"
-# 英文TTS模型
-en_tts_model: "/opt/seeed/development_guide/12_llm_offline/seeed_ws/src/largemodel/MODELS/tts/en/en_US-libritts-high.onnx"
-en_tts_json: "/opt/seeed/development_guide/12_llm_offline/seeed_ws/src/largemodel/MODELS/tts/en/en_US-libritts-high.onnx.json"
-```
-
-### 启动并测试功能
-
-```bash
-pip install ollama dashscope pygame openai piper-tts funasr
-ros2 launch largemodel tts_only.launch.py
-```
-
-![](./images/5-4-offline-speech-pipeline-basics-03.png)
-
-```bash
-ros2 topic pub --once /tts_text_input std_msgs/msg/String '{data: "语音合成测试成功"}'
-```
-
-![](./images/5-4-offline-speech-pipeline-basics-04.png)
-
-### 常见问题与解决方案
-
-### 播放问题
-
-#### 问题1：程序运行正常，没有报错，但听不到任何声音。
-
-#### 解决方案:
-
-![](./images/5-4-offline-speech-pipeline-basics-05.png)
-
-## 11.04-04 AI大模型语音交互
-
-### 概念介绍
-
-### “AI大模型语音交互”是什么？
-
-AI大模型语音交互是指将大语言模型（LLM）与语音识别（ASR）和语音合成（TTS）技术结合，使用户能够通过自然语音与智能系统进行交流。系统先将用户的语音输入转换为文本（ASR），再由大模型理解意图并生成响应内容，最后通过语音合成（TTS）将文字转化为可听语音输出。通过这种方式，AI大模型不仅能进行对话，还能理解多轮上下文，实现更自然、流畅、类人化的人机语音交互体验。
-
-### 实现原理
-
-AI大模型语音交互功能的实现本质上是一个经典的数据流管道（Pipeline），包括以下步骤：
-
-### 代码解析
-
-### 关键代码
-
-#### 语音输入节点(largemodel/largemodel/asr.py)
-
-```bash
-# From largemodel/largemodel/asr.py
-class ASRNode(Node):
-def init(self):
-# ...
-self.asr_pub = self.create_publisher(String, "asr", 5)
-# ...
-def kws_handler(self)->None:
-if self.listen_for_speech(self.mic_index):
-asr_text = self.ASR_conversion(self.user_speechdir)
-if asr_text != 'error':
-self.asr_pub_result(asr_text)
-def asr_pub_result(self,asr_result:str)->None:
-msg=String(data=asr_result)
-self.asr_pub.publish(msg)
-```
-
-#### AI服务与语音输出节点(largemodel/largemodel/model_service.py)
-
-```bash
-# From largemodel/largemodel/model_service.py
-class LargeModelService(Node):
-def init(self):
-# ...
-self.asrsub = self.create_subscription(String,'asr', self.asr_callback,1)
-# ...
-def asr_callback(self,msg):
-"""Callback function for handling ASR messages. / 处理ASR消息的回调函数。"""
-# ...
-result = self.model_client.infer_with_text(msg.data, message=messages_to_use)
-self.process_model_result(result)
-def process_model_result(self, result, from_seewhat=False):
-"""Process the result returned by the model. / 处理模型返回的结果。"""
-# ...
-user_friendly_response = response_json.get("response", "我正在处理...")
-# ...
-self._safe_play_audio(user_friendly_response)
-# ...
-self.execute_tools(tools_list)
-def _safe_play_audio(self, text_to_speak: str):
-"""
-Synthesizes and plays all non-empty messages only in non-text chat mode.
-"""
-if not self.text_chat_mode and text_to_speak:
-try:
-self.model_client.voice_synthesis(text_to_speak, self.tts_out_path)
-self.play_audio_async(self.tts_out_path)
-except Exception as e:
-self.get_logger().error(f"Safe audio playback failed: {e}")
-```
-
-### 代码解析
-
-AI大模型的语音交互功能由asr.py和model_service.py两个独立的ROS节点协同完成，它们之间通过ROS话题/asr进行通信，形成一个完整的处理回路。
-
-### 实践操作
-
-### 配置离线语音交互
-
-要实现一个完全离线的语音交互系统，你需要确保ASR、TTS和LLM三个部分都配置为离线模式。
-
-```bash
-gedit /opt/seeed/development_guide/12_llm_offline/seeed_ws/src/largemodel/config/seeed.yaml
-```
-
-```bash
-asr:
-ros__parameters:
-use_oline_asr: False # 关键: 设为False，启用离线ASR
-regional_setting : "China"
-model_service:
-ros__parameters:
-useolinetts: False # 关键: 设为False，启用离线TTS
-llm_platform: 'ollama' # 关键: 设为'ollama'，启用离线LLM
-regional_setting : "China"
-```
-
-```bash
-gedit /opt/seeed/development_guide/12_llm_offline/seeed_ws/src/largemodel/config/large_model_interface.yaml
-```
-
-```bash
-# large_model_interface.yaml
-# 离线大模型
-ollama_model: "qwen2.5:3b" # 确保这个模型已通过ollama pull下载
-# 离线语音识别
-local_asr_model: "/path/to/your/SenseVoiceSmall" # 确保ASR模型路径正确
-# 离线语音合成
-zh_tts_model: "/path/to/your/zh_CN-huayan-medium.onnx" # 确保TTS模型路径正确
-# ...
-```
-
-### 启动并测试功能
-
-```
-注：Jetson Orin Nano 4GB 由于性能限制，无法运行此案例。如需体验此功能，请参考<在线大模型（语音交互）>对应章节
-```
-
-```bash
-ros2 launch largemodel largemodel_control.launch.py use_respeaker:=true use_wake_word_detection:=true
-```
+Waveform Generation
 
 ![](./images/5-4-offline-speech-pipeline-basics-06.png)

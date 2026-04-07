@@ -2,196 +2,184 @@
 
 [Back to Module 3](../README.MD) | [Back to Table of Contents](../../Table-of-Contents.md)
 
-## 01基础使用
+## Basic use
 
-本篇教程将介绍Linux系统的常用终端操作命令以及文本编辑工具的使用。
+This course will describe the use of commonly used terminal operating commands and text editing tools for the Linux system.
 
-### 终端
+### Terminal
 
-Linux的终端（Terminal）是一个命令行界面，你可以通过它直接输入命令来操作系统，而不依赖图形界面。它可以用来管理文件、运行程序、安装软件、查看系统信息等，是Linux系统中非常核心的工具。简单来说，终端就是与系统“对话”的窗口。进入Jetson桌面后，键盘按下Cltr + Alt + T即可打开一个终端。
+Linux's terminal (Terminal) is a command line interface through which you can directly enter the command to operate the system without relying on a graphical interface. It can be used to manage files, run programs, install software, view system information, etc., and is a very core tool in Linux. In short, the terminal is the window of the dialogue with the system. When entering the Jetson desktop, the keyboard can open a terminal by pressing Cltr + Alt + T.
 
-```
-此外，还可以通过 SSH 远程打开 Jetson 设备的终端窗口。我们将在后续内容中详细介绍。
-```
+> In addition, a terminal window for the Jetson device can be opened remotely through SSH. We will follow up with details.
 
 ![](./images/3-11-linux-terminal-and-editors-01.png)
 
-几乎所有能在图形界面上做的事情，都可以在终端里用命令完成，而且通常更高效、更直接。例如：基础文件操作、系统管理与监控、软件包管理、文件内容编辑等等。下面将介绍在终端中经常使用的命令。
+Almost all the things that can be done in the graphical interface can be done with commands in the terminals and are usually more efficient and direct. Examples include: basic document operations, system management and monitoring, software package management, document content editing, etc. The orders frequently used in terminals are described below.
 
-### Linux基础命令
+### Linux Base Command
+
+See what is in the current directory
+
+![](./images/3-11-linux-terminal-and-editors-02.png)
 
 ```bash
 ls
 ```
 
-![](./images/3-11-linux-terminal-and-editors-02.png)
-
-```bash
-mkdir test
-# 创建多级文件夹
-mkdir -p test/src
-```
-
 ![](./images/3-11-linux-terminal-and-editors-03.png)
 
-```bash
-# cd + 目录路径
-cd test/
-# 返回上一级目录
-cd ..
-```
+Create a folder in the current directory
 
 ![](./images/3-11-linux-terminal-and-editors-04.png)
 
 ```bash
-touch test.txt
+mkdir test
+# Create nested directories
+mkdir -p test/src
 ```
 
 ![](./images/3-11-linux-terminal-and-editors-05.png)
+
+Enter directory
+
+![](./images/3-11-linux-terminal-and-editors-06.png)
+
+```bash
+# `cd` + directory path
+cd test/
+# Return to the parent directory
+cd ..
+```
+
+![](./images/3-11-linux-terminal-and-editors-07.png)
+
+Create File
+
+```bash
+# touch test.txt
+```
+
+Show Current Directory
 
 ```bash
 pwd
 ```
 
-![](./images/3-11-linux-terminal-and-editors-06.png)
+Delete files and remove folders
 
 ```bash
-# 删除文件
+# Delete a file
 rm test.txt
-# 删除文件夹 -rf 递归强制删除
+# Delete a folder recursively with `-rf`
 rm -rf test/
 ```
 
-![](./images/3-11-linux-terminal-and-editors-07.png)
+Clear the content of the current terminal output
 
 ```bash
 clear
 ```
 
-### 终端窗口中的快捷键
+### Shortcuts in Terminal Window
 
-```
-Ctrl + C
-```
+Termination of current running program/command
 
-```
-Tab
-```
+> Ctrl + C
 
-```
-Ctrl + Z
-```
-
-鼠标选中终端文本,进行复制、粘贴
-
-```
-Ctrl + Shift + C
-```
-
-```
-Ctrl + Shift + V
-```
-
-### 文本编辑工具
-
-### Gedit
-
-Gedit是Linux下的简单图形化文本编辑器，用于编辑代码和文本文件。有图像GUI。在终端窗口中输入下面的命令即可创建并打开一个文件：
-
-```bash
-# gedit + 文件名
-gedit test.txt
-```
+Automatically complete file name or folder name
 
 ![](./images/3-11-linux-terminal-and-editors-08.png)
 
-### Nano
+> Tab
 
-Nano是一款在终端中使用的轻量级文本编辑器，操作简便，适合快速编辑文件。无图形化的GUI：
+Suspend Current Process
 
-```bash
-# 安装nano
-sudo apt update
-sudo apt-get install nano -y
-# 编辑文本
-nano test.txt
-```
+> Ctrl +Z
 
 ![](./images/3-11-linux-terminal-and-editors-09.png)
 
-### Vim/Vi
+Mouse selects terminal text for copying, pasting
 
-vi是Unix/Linux系统中最经典的命令行文本编辑器，从1976年开始就存在，是几乎所有Unix系统的标准编辑器。Vim是vi的增强版，兼容vi但功能更强大。
+Copy
 
-```bash
-# 打开编辑页面
-vim test.txt
-```
+> Ctrl+Shift+C
 
-```
-进入编辑器后按i键才能进行文本编辑
-```
+Paste
 
 ![](./images/3-11-linux-terminal-and-editors-10.png)
 
-```
-编辑完成后，输入: 选择编辑模式进行下一步操作
-常用模式命令：
-保存文件
-:w
-退出
-:q
-保存并退出
-:wq
-强制退出不保存
-:q!
-强制保存并退出
-:wq!
-删除所有内容
-:%d
-查找文本 :/xxx xxx为查找的文本，按回车确认，按n进行下一个匹配到的条目的选择
-```
+> Ctrl + Shift + V
 
 ![](./images/3-11-linux-terminal-and-editors-11.png)
 
-## 14使用Vim编辑器
+## Text editing tool
 
-### Vim基础使用
+### Gedit
 
-Vim是Linux/Unix系统中常用的命令行文本编辑器，具有高效、轻量、无需鼠标即可完成编辑的特点，广泛用于服务器、嵌入式和开发环境。
+Gedit is a simple graphical text editor under Linux for editing code and text files. There's the image GUI. Enter the following command in the terminal window to create and open a file:
 
-在正式介绍Vim的基本使用之前，先说明Vim的工作模式，这是理解Vim操作的关键。
+```bash
+# `gedit` + file name
+gedit test.txt
+```
 
-#### Vim的三种常用模式
+#### Nano.
 
-### 1、打开文件
+Nano is a lightweight text editor used in terminals that is simple and suitable for rapid editing of files. No graphical GUI:
 
-vim filename
+```bash
+#Installnano
+sudo apt update
+sudo apt-get install nano -y
+# Edit the text
+nano test.txt
+```
 
-### 2、进入插入模式
+### Vim/Vi
 
-在普通模式下，键盘按下i
+vi is the most classic command line editor in the Unix/Linux system, which has existed since 1976 and is the standard editor for almost all Unix systems. Vim is an enhanced version of vi, compatible vi but more powerful.
 
-进入插入模式后即可输入文本。
+```bash
+# Open the editing page
+vim test.txt
+```
 
-### 3、退出插入模式
+> Press i to edit text after entering the editor
 
-按下键盘的Esc返回普通模式。
+> After editing, enter: Select edit mode for next action
+> Common mode command:
+> Save File
+> Other Organiser
+> Exit
+> :q
+> Save and exit
+> :wq
+> Force exit without saving
+> :q!
+> Force saving and exit
+> :wq!
+> Remove All
+> %d
+> Find Text
+> : /xxx xx as the text to be found, confirm on return and select the next matching entry by n
 
-### 4、保存与退出（命令模式）
+### 14 Use Vim Editor
 
-在普通模式下键盘输入:进入命令模式：
+## Vim Basic
 
-### 5、常用光标移动（普通模式）
+Vim is a command-line text editor commonly used in Linux/Unix. It is highly efficient, lightweight, and can be edited without mouse and is widely used in server, embedded and development environments.
 
-h左l右j下k上
+Before formally introducing the basic use of Vim, describe the mode of work of Vim, which is key to understanding the operation of Vim.
 
-### 6、删除操作（普通模式）
+Three common modes for Vim
 
-### 7、复制与粘贴（普通模式）
+Normal Mode (Normal Mode)
+Vim's startup default mode, which is used to move, delete, copy, etc.
 
-### 8、查找内容
+Insert Mode
+to enter and edit text.
 
-查找内容可在键盘输入/关键字（关键字替换为你想查找的字符）
+Command Mode
+to save, exit, search, replace, etc.
 
 [Back to Module 3](../README.MD)

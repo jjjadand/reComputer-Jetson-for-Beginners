@@ -1,62 +1,74 @@
 # Practical Applications of the Jetson Platform
 
-## 第十章Nvidia Isaac ROS
+## Chapter X Nvidia Isaac ROS
 
-## 01环境搭建
+This chapter brings together practical Isaac ROS workflows on Jetson, including environment setup, depth perception, segmentation, detection, pose estimation, 3D mapping, and visual SLAM.
 
-### Isaac ROS环境搭建
+## Contents
 
-```
-注：SEEED部分出厂镜像已经配置好环境，无需自己搭建，可以跳过此步骤
-```
+- 01 Environment Setup
+- 02 Depth Segmentation
+- 03 DNN Stereo Depth
+- 04 Free Space Segmentation
+- 05 Image Rectification
+- 06 Image Segmentation
+- 07 3D Scene Reconstruction and Mapping
+- 08 Object Detection
+- 09 3D Pose Estimation
+- 10 Visual SLAM
+- Appendix: Running A-LOAM 3D SLAM on Jetson
 
-你可以在jetson上运行下面指令查看系统是否预装Isaac ROS：
+### 01 Environmental construction
 
-```bash
-sudo docker images
-```
+## Isaac ROS Environment
+
+> Note: The SEED component is equipped with an environment that does not need to be built on its own.
+
+You can run the following instructions on jetson to see if the system presets Isaac ROS:
 
 ![](./images/9-practical-applications-of-the-jetson-platform-01.png)
 
-### Isaac ROS环境简介
+```bash
 
-Isaac ROS套件由NVIDIA开发并发布，旨在利用NVIDIA Jetson和独立GPU上的NVIDIA加速功能，开发标准的机器人应用程序。
+sudo docker images
+```
 
-Isaac ROS在输入和输出方面使用标准ROS接口，因此非常易于上手，可以作为机器人开发者所熟悉的常用CPU ROS实现的直接替代品。
+## Isaac ROS Environmental Profile
 
-### 系统要求
+Isaac ROS packages were developed and published by NVIDIA to develop standard robotic applications using NVIDIA Jetson and the NVIDIA acceleration on independent GPU.
+
+Isaac ROS uses a standard ROS interface for input and output, and is therefore very easy to handle as a direct alternative to CPU ROS, which robot developers are familiar with.
 
 ![](./images/9-practical-applications-of-the-jetson-platform-02.gif)
 
-#### 点击图片可查看完整电子表格
+#### System requirements
 
-### 适配的ROS版本
+Click on a picture to view the complete spreadsheet
 
-所有Isaac ROS软件包均经过设计和测试，与ROS 2 Humble兼容。
+## Matchable ROS version
 
-如果使用 是ROS 1 Noetic构建的，可以使用Isaac ROS NITROS Bridge集成Isaac ROS软件包，以获得更快的性能。（本节目前只以ROS2为例）
+All Isaac ROS packages have been designed and tested and are compatible with ROS 2 Humble.
 
-Isaac ROS软件包仅针对ROS 2 Humble进行了测试。其他ROS 2版本尚不支持。
+If the use is constructed by ROS 1 Noetic, the Isaac ROS NITROS Bridge integration package can be used to obtain faster performance. (This section currently refers to ROS2 only)
 
-```
-注意：安装失败属于正常情况，安装此环境需要挂代理后才可以正常安装，挂代理的方法需要自行到网上搜。
-```
+The Isaac ROS package was tested only for ROS 2 Humble. Other ROS 2 versions are not yet supported.
 
-### 快速安装
+> Note: The installation failure is normal, the installation of the environment requires a hung agent before it can be installed properly, and the method of hanging agent requires a search on the Internet.
 
-1.确认你的系统已经安装了jertpack6.2的系统，并将系统电源调成MAXN SUPER模式
+## Quick Install
 
 ![](./images/9-practical-applications-of-the-jetson-platform-03.png)
 
-2.安装基础docker
+1. Confirm that your system has installed a jiertpack 6.2 system and adjusted the system power to MAXN SUPER mode
 
-```
-安装dcoker与使用可以回顾：13 安装 Docker与基础使用
-```
+2. Installation base docker
 
-首先Add Docker's official GPG key:
+> Installation of docker and usage to recall: 13 Install Docker and basic usage
+
+Add Docker's official GPG key:
 
 ```bash
+
 sudo apt-get update
 sudo apt-get install ca-certificates curl gnupg
 sudo install -m 0755 -d /etc/apt/keyrings
@@ -64,27 +76,32 @@ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o 
 sudo chmod a+r /etc/apt/keyrings/docker.gpg
 ```
 
-然后Add the repository to Apt sources:
+Add the potential to Apt sources:
 
 ```bash
+
 echo \
 "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
 "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
 sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo apt-get update
+
 sudo apt install docker-buildx-plugin
 ```
 
-3.添加docker用户组
+3. Add docker user group
 
 ```bash
+
 sudo usermod -aG docker $USER
 newgrp docker
 ```
 
-然后Add Jetson public APT repository
+And then Addison public APT repositiry
 
-```sql
+```
+SQL
+
 sudo apt-get update
 sudo apt-get install software-properties-common
 sudo apt-key adv --fetch-key https://repo.download.nvidia.com/jetson/jetson-ota-public.asc
@@ -93,92 +110,97 @@ sudo apt-get update
 sudo apt-get install -y pva-allow-2
 ```
 
-5.设置开发环境
+5. Setting up the development environment
 
-在${ISAAC_ROS_WS}/src下克隆isaac_ros_common。
+Cloning isaac ros common.
 
 ```bash
+
 cd ${ISAAC_ROS_WS}/src && \
-git clone -b release-3.2 https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_common.git isaac_ros_common
+  git clone -b release-3.2 https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_common.git isaac_ros_common
 ```
 
-6.使用run_dev.sh脚本启动Docker容器：
+6. Launch Docker packagings using run_dev.sh scripts:
 
 ```bash
+
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common && ./scripts/run_dev.sh
 ```
 
-等待docker拉取成功就搭建好了环境。
+Waiting for the docker pull to succeed set up the environment.
 
-```
-Isaac ROS的docker镜像需要认证 NVIDIA 的 NGC（NVIDIA GPU Cloud），否则镜像会拉不下来。
-```
+> Isaac ROS's docker mirror requires authentication of the NGC of NVIDIA (NVIDIA GPU Cloud), otherwise it will not be able to pull down.
 
-```
-需要登录 NVIDIA NGC查看api key，使用的是：NGC API Key（不是 GitHub key）
-```
+> Login required for NVIDIA NGC to view api key, using: NGC API Key (not GitHub key)
 
-终端输入docker login nvcr.io进行登录
+Terminal login nvcr.io login
 
-#### 用户名：$oauthtoken
+Other Organiser
 
-#### 密码：你的NGC API Key
+Password: Your NGC API Key
 
-## 02深度分割
+# 02 Depth Segmentation
 
-```
-dcoker的使用指令参考可以回顾： 13 安装 Docker与基础使用
-```
+> The docker use instructions refer to:
+> 13 Install Docker and Basic Use
 
-Isaac ROS深度分割官网链接：https://nvidia-isaac-ros.github.io/repositories_and_packages/isaac_ros_depth_segmentation/index.html
+Isaac ROS deep split official network link: https://nvidia-isaac-ros.github.io/repositories_and_packages/isaac_ros_depth_segmentation/index.html
 
-### 概述
-
-Isaac ROS深度分割提供了NVIDIA加速的深度分割软件包。isaac_ros_bi3d软件包使用优化的Bi3D DNN模型，通过二值化进行立体深度估计，并用于深度分割。深度分割可用于确定障碍物是否位于邻近区域内，并避免在导航过程中与障碍物发生碰撞。
+## Overview
 
 ![](./images/9-practical-applications-of-the-jetson-platform-04.png)
 
-Bi3D用于节点图，从时间同步的输入左右立体图像对中进行深度分割。Bi3D图像需要校正并调整大小以适应合适的输入分辨率。图像的宽高比需要保持；因此，可能需要裁剪和调整大小以保持输入宽高比。DNN编码、DNN推理和DNN解码的图是Bi3D节点的一部分。推理使用TensorRT执行，因为Bi3D DNN模型旨在使用TensorRT支持的优化。
+Isaac ROS Depth Segmentation provides an accelerated NVIDIA deep partition package. The isaac ros bi3d package uses an optimised Bi3D DNN model to provide a stereo Depth estimate by binaryisation and is used for depth separation. Depth partitions can be used to determine whether the barrier is located in an adjacent area and to avoid collisions with the barrier during navigation.
 
-与其他立体视差函数相比，深度分割可以预测障碍物是否位于邻近区域（而非连续深度），同时预测距离地面的自由空间，而其他函数通常无法提供此功能。此外，与Isaac ROS中的其他立体视差函数不同，深度分割在NVIDIA DLA（深度学习加速器）上运行，该加速器独立于GPU。
+Bi3D is used for nodal diagrams that are deep-separated from the time synchronized input of right-and-right stereo images. Bi3D images need to be corrected and resized to fit the appropriate input resolution. The width ratio of the image needs to be maintained; Therefore, it may be necessary to trim and resize to maintain the input width ratio. The DNN code, DNN reasoning and DNN decodes are part of the Bi3D node. The reasoning is executed using TensorRT because the Bi3D DNN model is designed to optimize using TensorRT support.
 
-### 快速体验
+Compared to other stereo visual functions, the depth segmenting predicts whether the barrier is located in an adjacent area (rather than in continuous depth) and at the same time predicts free space at a distance from the ground, which other functions usually do not provide. In addition, unlike other stereo visual functions in Isaac ROS, the depth is separated on the NVIDIA DLA (Deep Learning Accelerator), which is independent of GPU.
 
-为了简化开发，我们主要使用Isaac ROS Dev Docker镜像，并在上面进行效果演示。演示不需要安装任何摄像头设备，通过播放rosbag文件模拟来自摄像头的数据流。
+## Rapid experience
 
-注：如果想要安装在自己设备上，或者连接摄像头开发其他功能，请参照Isaac ROS官网，连接英伟达指定的摄像头型号自行开发。
+In order to simplify development, we mainly use Isaac ROS Dev Docker images and perform impact demonstrations on them. The demonstration does not require the installation of any camera device to simulate data streams from the camera by playing the rosebag file.
 
-打开终端进入工作目录
+Note: If you want to be installed on your own equipment or to connect the camera to develop other features, please refer to the Isaac ROS official network to connect to the camera type specified by Yvida.
+
+Open Terminal to Work Directory
 
 ```bash
+
 cd ${ISAAC_ROS_WS}/src
-进入 Isaac ROS Dev Docke容器
+Enter the Isaac ROS Dev Docker container
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common && \
 ./scripts/run_dev.sh
 ```
 
-运行下面启动命令
+Run the below startup command
 
-```
-注意：拉取官方示例可能需要科学上网，请确保您的网络环境能够正常访问GitHub
-```
+> Note: Taking an official example may require scientific access, ensuring that your network environment has regular access to GitHub
 
 ```bash
+
 cd /workspaces/isaac_ros-dev/src
-# 例子仓库（提供 isaac_ros_examples.launch.py 等 quickstart launch）
+
+# Example repository (provides quickstart launches such as isaac_ros_examples.launch.py)
 git clone -b release-3.2 https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_examples.git
-# bi3d 所在仓库（Depth Segmentation / Bi3D）
+
+# Repository for Bi3D (Depth Segmentation / Bi3D)
 git clone -b release-3.2 https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_depth_segmentation.git
-# 通用工具仓库（run_dev、脚本、一些通用依赖/配置）
+
+# Common utilities repository (run_dev, scripts, and shared dependencies/configuration)
 git clone -b release-3.2 https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_common.git
 cd /workspaces/isaac_ros-dev
-# 确保 rosdep 可用（dev 容器一般已具备）
+
+# Make sure rosdep is available (it is usually preinstalled in the dev container)
 sudo apt-get update
 rosdep update
-# 安装工作空间依赖
+
+# Install workspace dependencies
 rosdep install --from-paths src --ignore-src -r -y
-# 编译
+
+# Build
 colcon build --symlink-install
+
+
 ros2 launch isaac_ros_examples isaac_ros_examples.launch.py \
 launch_fragments:=bi3d \
 interface_specs_file:=${ISAAC_ROS_WS}/isaac_ros_assets/isaac_ros_bi3d/rosbag_quickstart_interface_specs.json \
@@ -187,158 +209,171 @@ segnet_engine_file_path:=${ISAAC_ROS_WS}/isaac_ros_assets/models/bi3d_proximity_
 max_disparity_values:=10
 ```
 
-打开第二个终端，进入容器
+Open the second terminal and enter the container.
 
 ```bash
+
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common && \
 ./scripts/run_dev.sh
 ```
 
-运行以下命令
+Run the following commands
 
 ```bash
+
 ros2 bag play --loop ${ISAAC_ROS_WS}/isaac_ros_assets/isaac_ros_bi3d/bi3dnode_rosbag
 ```
 
-#### 查看运行结果
+View Run Results
 
-打开第三个终端，进入容器
+Open the third terminal and enter the container.
 
 ```bash
+
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common && \
 ./scripts/run_dev.sh
 ```
 
-运行以下命令，查看深度分割图
-
-```bash
-ros2 run isaac_ros_bi3d isaac_ros_bi3d_visualizer.py --max_disparity_value 30
-```
+Run the following commands to see the depth partition
 
 ![](./images/9-practical-applications-of-the-jetson-platform-05.png)
 
-打开第四个终端，进入容器
+```bash
+
+ ros2 run isaac_ros_bi3d isaac_ros_bi3d_visualizer.py --max_disparity_value 30
+```
+
+Open the fourth terminal and enter the container.
 
 ```bash
+
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common && \
 ./scripts/run_dev.sh
 ```
 
-运行以下命令，查看图像
-
-```bash
-ros2 run image_view image_view --ros-args -r image:=right/image_rect
-```
+Run the following commands, see images
 
 ![](./images/9-practical-applications-of-the-jetson-platform-06.png)
 
-## 03 DNN立体深度
+```bash
 
+ros2 run image_view image_view --ros-args -r image:=right/image_rect
 ```
-dcoker的使用指令参考可以回顾： 13 安装 Docker与基础使用
-```
 
-Isaac ROS DNN立体深度官网链接：https://nvidia-isaac-ros.github.io/repositories_and_packages/isaac_ros_dnn_stereo_depth/index.html
+# 03 DNN stereo Depth
 
-### 概述
+> The docker use instructions refer to:
+> 13 Install Docker and Basic Use
 
-视觉深度感知问题在机器人的许多领域都具有普遍的应用，例如在物体操作任务中估计机械臂的姿态、在自主机器人导航中估计静态或移动目标的距离、在送货机器人中跟踪目标等等。Isaac ROS DNN Stereo Depth针对两个Isaac应用程序，即Isaac Manipulator和Isaac Perceptor。在Isaac Manipulator应用程序中，ESS作为插件节点部署在Isaac ROS cuMotion包中，为机械臂运动规划和控制提供深度感知图。在此场景中，将执行桌面任务的工业机械臂的多摄像机立体流传递给ESS以获得相应的深度流。深度流用于分割机械臂与桌面上相应物体的相对距离；从而提供用于避免碰撞和细粒度控制的信号。同样，Isaac Perceptor应用程序使用了几个Isaac ROS包，即Isaac ROS Nova、Isaac ROS Visual Slam、Isaac ROS Stereo Depth (ESS)、Isaac ROS Nvblox和Isaac ROS Image Pipeline。
+Isaac ROS DNN Depth Network Link: https://nvidia-isaac-ros.github.io/repositories_and_packages/isaac_ros_dnn_stereo_depth/index.html
+
+## Overview
 
 ![](./images/9-practical-applications-of-the-jetson-platform-07.png)
 
-### 快速体验
+The problem of visual depth perception is common in many areas of robotics, such as estimating the attitude of the arm in an object operation, estimating the distance of static or moving targets in autonomous robotic navigation, tracking targets in delivery robots, etc. Isaac ROS DNN Stereo Decth is for two Isaac applications, Isaac Manipulator and Isaac Perceptor. In the Isaac Manipulator application, ESS is deployed as a plugin node in the Isaac ROS control package to provide a deep sense of mechanical arm movement planning and control. In this scenario, the multi-camera stereo stream of the industrial mechanical arm performing the desktop task is passed to the ESS for the corresponding depth stream. Depth currents are used to divide the relative distance of the mechanical arm from the corresponding object on the desktop; This provides a signal for collision avoidance and fine particle control. Similarly, the Isaac Perceptor application uses several Isaac ROS packages, namely Isaac ROS Nova, Isaac ROS Visual Slam, Isaac ROS Stereo Deep (ESS), Isaac ROS Nvblox and Isaac ROS Image Pipeline.
 
-为了简化开发，我们主要使用Isaac ROS Dev Docker镜像，并在上面进行效果演示。演示不需要安装任何摄像头设备，通过播放rosbag文件模拟来自摄像头的数据流。
+## Rapid experience
 
-注：如果想要安装在自己设备上，或者连接摄像头开发其他功能，请参照Isaac ROS官网，连接英伟达指定型号的摄像头自行开发。
+In order to simplify development, we mainly use Isaac ROS Dev Docker images and perform impact demonstrations on them. The demonstration does not require the installation of any camera device to simulate data streams from the camera by playing the rosebag file.
 
-打开终端进入工作目录
+Note: If you want to be installed on your own equipment or to connect the camera to develop other features, please refer to the Isaac ROS official network to connect the camera with the specified model of Yveida.
+
+Open Terminal to Work Directory
 
 ```bash
+
 cd ${ISAAC_ROS_WS}/src
-进入 Isaac ROS Dev Docke容器
+Enter the Isaac ROS Dev Docker container
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common && \
 ./scripts/run_dev.sh
 ```
 
-运行下面启动命令，其中threshold:=0.0在启动时可以修改成0.4，将会有不同的效果。
+Runs the following start-up command, of which Threshold: = 0.0 can be modified to 0.4 on start-up, with different effects.
 
 ```bash
+
 ros2 launch isaac_ros_examples isaac_ros_examples.launch.py launch_fragments:=ess_disparity \
 engine_file_path:=${ISAAC_ROS_WS:?}/isaac_ros_assets/models/dnn_stereo_disparity/dnn_stereo_disparity_v4.1.0_onnx/ess.engine \
-threshold:=0.0
+  threshold:=0.0
 ```
 
-打开第二个终端，进入容器
+Open the second terminal and enter the container.
 
 ```bash
+
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common && \
 ./scripts/run_dev.sh
 ```
 
-运行以下命令
+Run the following commands
 
 ```bash
+
 ros2 bag play -l ${ISAAC_ROS_WS}/isaac_ros_assets/isaac_ros_ess/rosbags/ess_rosbag \
---remap /left/camera_info:=/left/camera_info_rect /right/camera_info:=/right/camera_info_rect
+  --remap /left/camera_info:=/left/camera_info_rect /right/camera_info:=/right/camera_info_rect
 ```
 
-#### 查看运行结果
+View Run Results
 
-打开第三个终端，进入容器
+Open the third terminal and enter the container.
 
 ```bash
+
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common && \
 ./scripts/run_dev.sh
 ```
 
-运行以下命令：
+Run the following commands:
 
 ```bash
+
 ros2 run isaac_ros_ess isaac_ros_ess_visualizer.py
 ```
 
-当threshold设置成0.0时,显示结果如下:
-
 ![](./images/9-practical-applications-of-the-jetson-platform-08.png)
 
-、
+When set to 0.0, display the following results:
 
-当threshold设置成0.4时,显示结果如下:
+I don't know.
 
 ![](./images/9-practical-applications-of-the-jetson-platform-09.png)
 
-## 04自由空间分段
+When set to 0.4, the results are shown below:
 
-```
-dcoker的使用指令参考可以回顾： 13 安装 Docker与基础使用
-```
+# 04 Free space segment
 
-Isaac ROS自由空间分段官网链接：https://nvidia-isaac-ros.github.io/repositories_and_packages/isaac_ros_freespace_segmentation/index.html
+> The docker use instructions refer to:
+> 13 Install Docker and Basic Use
 
-### 概述
+Isaac ROS Free Space Division Network link: https://nvidia-isaac-ros.github.io/repositories_and_packages/isaac_ros_freespace_segmentation/index.html
 
-Isaac ROS自由空间分割包含一个ROS 2软件包，用于生成导航的占用网格。Bi3D自由空间通过处理包含机器人相对于地面姿态的自由空间分割掩码，为Nav2生成占用网格，用于在导航过程中避开障碍物。该软件包采用GPU加速，可在机器人应用中提供实时、低延迟的结果。Bi3D自由空间为移动机器人（地面机器人）提供了额外的占用网格源。
+## Overview
 
 ![](./images/9-practical-applications-of-the-jetson-platform-10.png)
 
-### 快速体验
+Isaac ROS free space partition contains a ROS 2 package to generate a navigational occupancy grid. Bi3D Free Space creates an occupied grid for Nav2 by handling free space masks containing robotics relative to the surface to avoid barriers in navigation. The package is accelerated by GPU and provides real-time, low-delayed results in robotic applications. Bi3D Free Space provides an additional occupancy grid source for mobile robots (ground robots).
 
-为了简化开发，我们主要使用Isaac ROS Dev Docker镜像，并在上面进行效果演示。演示不需要安装任何摄像头设备，通过播放rosbag文件模拟来自摄像头的数据流。
+## Rapid experience
 
-注：如果想要安装在自己设备上，或者连接摄像头开发其他功能，请参照Isaac ROS官网，连接英伟达指定型号的摄像头自行开发。
+In order to simplify development, we mainly use Isaac ROS Dev Docker images and perform impact demonstrations on them. The demonstration does not require the installation of any camera device to simulate data streams from the camera by playing the rosebag file.
 
-打开终端进入工作目录，进入Isaac ROS Dev Docke容器
+Note: If you want to be installed on your own equipment or to connect the camera to develop other features, please refer to the Isaac ROS official network to connect the camera with the specified model of Yveida.
+
+Open the terminal to work directory, Isaac ROS Dev Dock container
 
 ```bash
+
 cd ${ISAAC_ROS_WS}/src
+
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common && \
 ./scripts/run_dev.sh
 ```
 
-运行下面启动命令，
+Run the command below.
 
 ```bash
+
 ros2 launch isaac_ros_examples isaac_ros_examples.launch.py \
 launch_fragments:=bi3d,bi3d_freespace \
 interface_specs_file:=${ISAAC_ROS_WS}/isaac_ros_assets/isaac_ros_bi3d_freespace/rosbag_quickstart_interface_specs.json \
@@ -347,615 +382,683 @@ segnet_engine_file_path:=${ISAAC_ROS_WS}/isaac_ros_assets/models/bi3d_proximity_
 max_disparity_values:=10
 ```
 
-打开第二个终端，进入容器
+Open the second terminal and enter the container.
 
 ```bash
+
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common && \
 ./scripts/run_dev.sh
 ```
 
-运行以下命令
+Run the following commands
 
 ```bash
+
 ros2 bag play -l ${ISAAC_ROS_WS}/isaac_ros_assets/isaac_ros_bi3d_freespace/quickstart.bag
 ```
 
-#### 查看运行结果
+View Run Results
 
-打开第三个终端，进入容器
+Open the third terminal and enter the container.
 
 ```bash
+
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common && \
 ./scripts/run_dev.sh
 ```
 
-运行以下命令，查看结果
-
-```bash
-rviz2
-```
+Run the following commands and see the results
 
 ![](./images/9-practical-applications-of-the-jetson-platform-11.png)
 
-## 05图像畸变处理
+```bash
 
+rviz2
 ```
-dcoker的使用指令参考可以回顾： 13 安装 Docker与基础使用
-```
 
-Isaac ROS图像畸变处理：https://nvidia-isaac-ros.github.io/repositories_and_packages/isaac_ros_image_pipeline/index.html
+# 05 Image malformation processing
 
-### 概述
+> The docker use instructions refer to:
+> 13 Install Docker and Basic Use
 
-Isaac ROS图像畸变处理使用是的Isaac ROS图像管道，这是一个图像处理功能的元包。相机输出通常需要预处理，以满足多种不同感知功能的输入要求。这包括裁剪、调整大小、镜像、校正镜头畸变以及色彩空间转换。对于立体相机，需要进行额外的处理，以产生左右图像与点云之间的视差，从而实现深度感知。
+Isaac ROS image malformation processing: https://nvidia-isaac-ros.github.io/repositories_and_packages/isaac_ros_image_pipeline/index.html
+
+## Overview
 
 ![](./images/9-practical-applications-of-the-jetson-platform-12.png)
 
-### 快速体验
+Isaac ROS image malformation processing uses the Isaac ROS image conduit, a package for image processing functions. Camera output usually requires pre-processing to meet input requirements for a variety of sensor functions. This includes tailoring, resizeing, mirroring, correcting lens malformations and colour space conversion. For stereo cameras, additional processing is required to generate a visual difference between the left and right image and the light cloud, thereby achieving a deep perception.
 
-为了简化开发，我们主要使用Isaac ROS Dev Docker镜像，并在上面进行效果演示。演示不需要安装任何摄像头设备，通过播放rosbag文件模拟来自摄像头的数据流。
+## Rapid experience
 
-注：如果想要安装在自己设备上，或者连接摄像头开发其他功能，请参照Isaac ROS官网，连接英伟达指定型号的摄像头自行开发。
+In order to simplify development, we mainly use Isaac ROS Dev Docker images and perform impact demonstrations on them. The demonstration does not require the installation of any camera device to simulate data streams from the camera by playing the rosebag file.
 
-#### Resize:
+Note: If you want to be installed on your own equipment or to connect the camera to develop other features, please refer to the Isaac ROS official network to connect the camera with the specified model of Yveida.
 
-打开终端进入工作目录，进入Isaac ROS Dev Docke容器
+Resize:
+
+Open the terminal to work directory, Isaac ROS Dev Dock container
 
 ```bash
+
 cd ${ISAAC_ROS_WS}/src
+
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common && \
 ./scripts/run_dev.sh
 ```
 
-运行下面启动命令
+Run the below startup command
 
 ```bash
+
 ros2 launch isaac_ros_examples isaac_ros_examples.launch.py launch_fragments:=resize
 ```
 
-打开第二个终端，进入容器
+Open the second terminal and enter the container.
 
 ```bash
+
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common && \
 ./scripts/run_dev.sh
 ```
 
-运行以下命令
+Run the following commands
 
 ```bash
+
 ros2 bag play --loop ${ISAAC_ROS_WS}/isaac_ros_assets/isaac_ros_image_proc/quickstart --remap /hawk_0_left_rgb_image:=/image_raw /hawk_0_left_rgb_camera_info:=/camera_info
 ```
 
-#### 查看运行结果
+View Run Results
 
-打开第三个终端，进入容器
+Open the third terminal and enter the container.
 
 ```bash
+
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common && \
 ./scripts/run_dev.sh
 ```
 
-运行以下命令
-
-```bash
-ros2 run image_view image_view --ros-args --remap image:=resize/image
-```
+Run the following commands
 
 ![](./images/9-practical-applications-of-the-jetson-platform-13.png)
 
-### Color Conversion:
+```bash
 
-打开终端进入工作目录
+ros2 run image_view image_view --ros-args --remap image:=resize/image
+```
 
-注：如果已经开启过容器运行过其他命令，请在第一个终端输入exit退出所有docker容器后再运行命令。
+## Color Congress:
 
-打开终端进入工作目录，并进入Isaac ROS Dev Docke容器
+Open Terminal to Work Directory
+
+Note: If the container has been opened and other commands have been operated, then start the command after the first terminal enter exit exit from all docker containers.
+
+Open the terminal to work directory and enter Isaac ROS Dev Dock container
 
 ```bash
+
 cd ${ISAAC_ROS_WS}/src
+
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common && \
 ./scripts/run_dev.sh
 ```
 
-运行下面启动命令：
+Run the following start-up command:
 
 ```bash
+
 ros2 launch isaac_ros_examples isaac_ros_examples.launch.py launch_fragments:=color_conversion interface_specs_file:=${ISAAC_ROS_WS}/isaac_ros_assets/isaac_ros_image_proc/quickstart_interface_specs.json
 ```
 
-打开第二个终端，进入容器
+Open the second terminal and enter the container.
 
 ```bash
+
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common && \
 ./scripts/run_dev.sh
 ```
 
-运行以下命令：
+Run the following commands:
 
 ```bash
+
 ros2 bag play --loop ${ISAAC_ROS_WS}/isaac_ros_assets/isaac_ros_image_proc/quickstart --remap /hawk_0_left_rgb_image:=/image_raw /hawk_0_left_rgb_camera_info:=/camera_info
 ```
 
-#### 查看运行结果
+View Run Results
 
-打开第三个终端，进入容器
+Open the third terminal and enter the container.
 
 ```bash
+
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common && \
 ./scripts/run_dev.sh
 ```
 
-运行以下命令
-
-```bash
-ros2 run image_view image_view --ros-args --remap image:=image_mono
-```
+Run the following commands
 
 ![](./images/9-practical-applications-of-the-jetson-platform-14.png)
 
-### Crop:
+```bash
 
-打开终端进入工作目录，并进入Isaac ROS Dev Docke容器
+ros2 run image_view image_view --ros-args --remap image:=image_mono
+```
+
+## Crop:
+
+Open the terminal to work directory and enter Isaac ROS Dev Dock container
 
 ```bash
+
 cd ${ISAAC_ROS_WS}/src
+
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common && \
 ./scripts/run_dev.sh
 ```
 
-运行下面启动命令
+Run the below startup command
 
 ```bash
+
 ros2 launch isaac_ros_examples isaac_ros_examples.launch.py launch_fragments:=crop interface_specs_file:=${ISAAC_ROS_WS}/isaac_ros_assets/isaac_ros_image_proc/quickstart_interface_specs.json
 ```
 
-打开第二个终端，进入容器
+Open the second terminal and enter the container.
 
 ```bash
+
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common && \
 ./scripts/run_dev.sh
 ```
 
-运行以下命令
+Run the following commands
 
 ```bash
+
 ros2 bag play --loop ${ISAAC_ROS_WS}/isaac_ros_assets/isaac_ros_image_proc/quickstart --remap /hawk_0_left_rgb_image:=/image_raw /hawk_0_left_rgb_camera_info:=/camera_info
 ```
 
-#### 查看运行结果
+View Run Results
 
-打开第三个终端，进入容器
+Open the third terminal and enter the container.
 
 ```bash
+
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common && \
 ./scripts/run_dev.sh
 ```
 
-运行以下命令
-
-```bash
-ros2 run image_view image_view --ros-args --remap image:=crop/image
-```
+Run the following commands
 
 ![](./images/9-practical-applications-of-the-jetson-platform-15.png)
 
-### Rectify:
+```bash
 
-打开终端进入工作目录并进入Isaac ROS Dev Docke容器
+ros2 run image_view image_view --ros-args --remap image:=crop/image
+```
+
+## Recify:
+
+Open the terminal into the work directory and enter Isaac ROS Dev Dock container
 
 ```bash
+
 cd ${ISAAC_ROS_WS}/src
+
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common && \
 ./scripts/run_dev.sh
 ```
 
-运行下面启动命令
+Run the below startup command
 
 ```bash
+
 ros2 launch isaac_ros_examples isaac_ros_examples.launch.py launch_fragments:=rectify_mono interface_specs_file:=${ISAAC_ROS_WS}/isaac_ros_assets/isaac_ros_image_proc/quickstart_interface_specs.json
 ```
 
-打开第二个终端，进入容器
+Open the second terminal and enter the container.
 
 ```bash
+
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common && \
 ./scripts/run_dev.sh
 ```
 
-运行以下命令
+Run the following commands
 
 ```bash
+
 ros2 bag play --loop ${ISAAC_ROS_WS}/isaac_ros_assets/isaac_ros_image_proc/quickstart --remap /hawk_0_left_rgb_image:=/image_raw /hawk_0_left_rgb_camera_info:=/camera_info
 ```
 
-#### 查看运行结果
+View Run Results
 
-打开第三个终端，进入容器
+Open the third terminal and enter the container.
 
 ```bash
+
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common && \
 ./scripts/run_dev.sh
 ```
 
-运行以下命令
-
-```bash
-ros2 run image_view image_view --ros-args --remap image:=image_rect
-```
+Run the following commands
 
 ![](./images/9-practical-applications-of-the-jetson-platform-16.png)
 
-### Flip:
+```bash
 
-打开终端进入工作目录并进入Isaac ROS Dev Docke容器
+ros2 run image_view image_view --ros-args --remap image:=image_rect
+```
+
+## Flip:
+
+Open the terminal into the work directory and enter Isaac ROS Dev Dock container
 
 ```bash
+
 cd ${ISAAC_ROS_WS}/src
+
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common && \
 ./scripts/run_dev.sh
 ```
 
-运行下面启动命令
+Run the below startup command
 
 ```bash
+
 ros2 launch isaac_ros_examples isaac_ros_examples.launch.py launch_fragments:=flip
 ```
 
-打开第二个终端，进入容器
+Open the second terminal and enter the container.
 
 ```bash
+
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common && \
 ./scripts/run_dev.sh
 ```
 
-运行以下命令
+Run the following commands
 
 ```bash
+
 ros2 bag play --loop ${ISAAC_ROS_WS}/isaac_ros_assets/isaac_ros_image_proc/quickstart --remap /hawk_0_left_rgb_image:=/image_raw /hawk_0_left_rgb_camera_info:=/camera_info
 ```
 
-#### 查看运行结果
+View Run Results
 
-打开第三个终端，进入容器
+Open the third terminal and enter the container.
 
 ```bash
+
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common && \
 ./scripts/run_dev.sh
 ```
 
-运行以下命令
-
-```bash
-ros2 run image_view image_view --ros-args --remap image:=image_flipped
-```
+Run the following commands
 
 ![](./images/9-practical-applications-of-the-jetson-platform-17.png)
 
-## 06图像分割
+```bash
 
+ros2 run image_view image_view --ros-args --remap image:=image_flipped
 ```
-dcoker的使用指令参考可以回顾： 13 安装 Docker与基础使用
-```
 
-Isaac ROS图像分割官网链接：https://nvidia-isaac-ros.github.io/repositories_and_packages/isaac_ros_image_segmentation/index.html
+# 06 Image Segmentation
 
-### 概述
+> The docker use instructions refer to:
+> 13 Install Docker and Basic Use
 
-Isaac ROS图像分割包含用于语义图像分割的ROS软件包。
+Isaac ROS image split official web link: https://nvidia-isaac-ros.github.io/repositories_and_packages/isaac_ros_image_segmentation/index.html
 
-这些软件包通过在DNN模型上运行GPU加速推理，提供对输入图像进行像素级分类的方法。输入图像的每个像素都被预测属于一组定义的类别。感知函数可以使用输出预测来理解每个类别在二维图像中的空间位置，或将其与三维场景中相应的深度位置融合。
+## Overview
+
+Isaac ROS image partition contains a ROS package for semantic image partition.
 
 ![](./images/9-practical-applications-of-the-jetson-platform-18.png)
 
-### 快速体验
+These packages provide a pixel-level classification of input images by running GPU acceleration reasoning on the DNN model. Each pixel that enters an image is projected to fall into a defined group of categories. The sensor function can use output predictions to understand the spatial position of each category in a two-dimensional image or to integrate it with the corresponding depth position in a three-dimensional scene.
 
-为了简化开发，我们主要使用Isaac ROS Dev Docker镜像，并在上面进行效果演示。演示不需要安装任何摄像头设备，通过播放rosbag文件模拟来自摄像头的数据流。
+## Rapid experience
 
-注：如果想要安装在自己设备上，或者连接摄像头开发其他功能，请参照Isaac ROS官网，连接英伟达指定的摄像头型号自行开发。
+In order to simplify development, we mainly use Isaac ROS Dev Docker images and perform impact demonstrations on them. The demonstration does not require the installation of any camera device to simulate data streams from the camera by playing the rosebag file.
 
-打开终端进入工作目录并进入Isaac ROS Dev Docke容器
+Note: If you want to be installed on your own equipment or to connect the camera to develop other features, please refer to the Isaac ROS official network to connect to the camera type specified by Yvida.
+
+Open the terminal into the work directory and enter Isaac ROS Dev Dock container
 
 ```bash
+
 cd ${ISAAC_ROS_WS}/src
+
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common && \
 ./scripts/run_dev.sh
 ```
 
-运行下面启动命令
+Run the below startup command
 
 ```bash
+
 ros2 launch isaac_ros_examples isaac_ros_examples.launch.py launch_fragments:=segformer interface_specs_file:=${ISAAC_ROS_WS}/isaac_ros_assets/isaac_ros_segformer/quickstart_interface_specs.json model_name:=peoplesemsegformer model_repository_paths:=[${ISAAC_ROS_WS}/isaac_ros_assets/models]
 ```
 
-打开第二个终端，进入容器
+Open the second terminal and enter the container.
 
 ```bash
+
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common && \
 ./scripts/run_dev.sh
 ```
 
-运行以下命令
+Run the following commands
 
 ```bash
+
 ros2 bag play -l isaac_ros_assets/isaac_ros_segformer/segformer_sample_data
 ```
 
-#### 查看运行结果
+View Run Results
 
-打开第三个终端，进入容器
+Open the third terminal and enter the container.
 
 ```bash
+
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common && \
 ./scripts/run_dev.sh
 ```
 
-运行以下命令，查看结果
-
-```bash
-ros2 run rqt_image_view rqt_image_view /segformer/colored_segmentation_mask
-```
+Run the following commands and see the results
 
 ![](./images/9-practical-applications-of-the-jetson-platform-19.png)
 
-## 07 3D场景重建和映射
+```bash
 
+ros2 run rqt_image_view rqt_image_view /segformer/colored_segmentation_mask
 ```
-dcoker的使用指令参考可以回顾： 13 安装 Docker与基础使用
-```
 
-Isaac ROS 3D场景重建和映射官网链接：https://nvidia-isaac-ros.github.io/repositories_and_packages/isaac_ros_nvblox/index.html
+# 07 3D scene reconstruction and mapping
 
-### 概述
+> The docker use instructions refer to:
+> 13 Install Docker and Basic Use
 
-Isaac ROS Nvblox包含用于导航的3D重建和代价地图的ROS 2软件包。isaac_ros_nvblox处理深度和姿态数据，实时重建3D场景，并输出用于Nav2的2D代价地图。代价地图用于导航规划，作为一种基于视觉的解决方案来规避障碍物。
+Isaac ROS 3D scene reconstruction and map network link: https://nvidia-isaac-ros.github.io/repositories_and_packages/isaac_ros_nvblox/index.html
 
-isaac_ros_nvblox旨在与深度摄像头和/或3D激光雷达配合使用。该软件包利用GPU加速，使用独立于底层框架的C++库nvblox来计算3D重建和2D代价地图。
+## Overview
+
+Isaac ROS Nvblox contains a 3D reconstruction and cost map for navigation. isaac ros nvblox handles depth and attitude data, reconstructs 3D scenes in real time and outputs 2D cost maps for Nav2. Cost maps are used for navigation planning as a visual-based solution to circumvent barriers.
 
 ![](./images/9-practical-applications-of-the-jetson-platform-20.png)
 
-### 快速体验
+Isaac ros nvblox is designed for use in conjunction with depth cameras and/or 3D laser radars. The package is accelerated using GPU, using the C++ library nvblox independent of the bottom frame to calculate the 3D reconstruction and 2D cost maps.
 
-为了简化开发，我们主要使用Isaac ROS Dev Docker镜像，并在上面进行效果演示。演示不需要安装任何摄像头设备，通过播放rosbag文件模拟来自摄像头的数据流。
+## Rapid experience
 
-注：如果想要安装在自己设备上，或者连接摄像头开发其他功能，请参照Isaac ROS官网，连接英伟达指定的摄像头型号自行开发。
+In order to simplify development, we mainly use Isaac ROS Dev Docker images and perform impact demonstrations on them. The demonstration does not require the installation of any camera device to simulate data streams from the camera by playing the rosebag file.
 
-打开终端进入工作目录并进入Isaac ROS Dev Docke容器
+Note: If you want to be installed on your own equipment or to connect the camera to develop other features, please refer to the Isaac ROS official network to connect to the camera type specified by Yvida.
+
+Open the terminal into the work directory and enter Isaac ROS Dev Dock container
 
 ```bash
+
 cd ${ISAAC_ROS_WS}/src
+
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common && \
 ./scripts/run_dev.sh
 ```
 
-运行下面启动命令
+Run the below startup command
 
 ```bash
+
 ros2 launch nvblox_examples_bringup isaac_sim_example.launch.py \
 rosbag:=${ISAAC_ROS_WS}/isaac_ros_assets/isaac_ros_nvblox/quickstart \
 navigation:=False
 ```
 
-运行结果
-
 ![](./images/9-practical-applications-of-the-jetson-platform-21.png)
 
-## 08对象检测
+Run Results
 
-```
-dcoker的使用指令参考可以回顾： 13 安装 Docker与基础使用
-```
+# 08 Object Detection
 
-Isaac ROS对象检测官网链接：https://nvidia-isaac-ros.github.io/repositories_and_packages/isaac_ros_object_detection/index.html
+> The docker use instructions refer to:
+> 13 Install Docker and Basic Use
 
-### 概述
+Isaac ROS Object Checker Network Link: https://nvidia-isaac-ros.github.io/repositories_and_packages/isaac_ros_object_detection/index.html
 
-Isaac ROS物体检测包含ROS 2中用于执行物体检测的软件包。isaac_ros_rtdetr、isaac_ros_detectnet和isaac_ros_yolov8分别提供了一种使用边界框对输入图像进行空间分类的方法。分类由相应架构的GPU加速模型执行：
+## Overview
 
-isaac_ros_rtdetr：RT-DETR模型
+Isaac ROS object detection includes software packages in ROS 2 to perform object detection. Isaac ros rtdetr, Isaac ros dectnet and isaac ros yolov8, respectively, provide a method for spatial classification of input images using boundary frames. The classification is implemented by the GPU acceleration model of the corresponding structure:
 
-isaac_ros_detectnet：DetectNet模型
+isac ros rtdetr: RT-DTR model
 
-isaac_ros_yolov8：YOLOv8模型
+isac ros dectnet:DetectNet model
 
-输出预测可供感知函数用来理解图像中物体的存在及其空间位置。
+isac ros yolov8:YOLOv8 model
 
 ![](./images/9-practical-applications-of-the-jetson-platform-22.png)
 
-### 快速体验
+Output predictions can be used to understand the existence of objects in images and their spatial location.
 
-为了简化开发，我们主要使用Isaac ROS Dev Docker镜像，并在上面进行效果演示。演示不需要安装任何摄像头设备，通过播放rosbag文件模拟来自摄像头的数据流。
+## Rapid experience
 
-注：如果想要安装在自己设备上，或者连接摄像头开发其他功能，请参照Isaac ROS官网，连接英伟达指定的摄像头型号自行开发。
+In order to simplify development, we mainly use Isaac ROS Dev Docker images and perform impact demonstrations on them. The demonstration does not require the installation of any camera device to simulate data streams from the camera by playing the rosebag file.
 
-打开终端进入工作目录并进入Isaac ROS Dev Docke容器
+Note: If you want to be installed on your own equipment or to connect the camera to develop other features, please refer to the Isaac ROS official network to connect to the camera type specified by Yvida.
+
+Open the terminal into the work directory and enter Isaac ROS Dev Dock container
 
 ```bash
+
 cd ${ISAAC_ROS_WS}/src
+
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common && \
 ./scripts/run_dev.sh
 ```
 
-运行下面启动命令
+Run the below startup command
 
 ```bash
+
 ros2 launch isaac_ros_examples isaac_ros_examples.launch.py launch_fragments:=detectnet interface_specs_file:=${ISAAC_ROS_WS}/isaac_ros_assets/isaac_ros_detectnet/quickstart_interface_specs.json
 ```
 
-打开第二个终端，进入容器
+Open the second terminal and enter the container.
 
 ```bash
+
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common && \
 ./scripts/run_dev.sh
 ```
 
-运行以下命令
+Run the following commands
 
 ```bash
+
 ros2 bag play -l ${ISAAC_ROS_WS}/isaac_ros_assets/isaac_ros_detectnet/rosbags/detectnet_rosbag --remap image:=image_rect camera_info:=camera_info_rect
 ```
 
-#### 查看运行结果
+View Run Results
 
-打开第三个终端，进入容器
+Open the third terminal and enter the container.
 
 ```bash
+
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common && \
 ./scripts/run_dev.sh
 ```
 
-运行以下命令
+Run the following commands
 
 ```bash
+
 ros2 run isaac_ros_detectnet isaac_ros_detectnet_visualizer.py --ros-args --remap image:=detectnet_encoder/resize/image
 ```
 
-打开第四个终端，进入容器
+Open the fourth terminal and enter the container.
 
 ```bash
+
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common && \
 ./scripts/run_dev.sh
 ```
 
-运行以下命令，查看结果
-
-```bash
-ros2 run rqt_image_view rqt_image_view /detectnet_processed_image
-```
+Run the following commands and see the results
 
 ![](./images/9-practical-applications-of-the-jetson-platform-23.png)
 
-## 09 3D姿态估计
+```bash
 
+ros2 run rqt_image_view rqt_image_view /detectnet_processed_image
 ```
-dcoker的使用指令参考可以回顾： 13 安装 Docker与基础使用
-```
 
-Isaac ROS 3D姿态估计官网链接：https://nvidia-isaac-ros.github.io/repositories_and_packages/isaac_ros_pose_estimation/isaac_ros_centerpose/index.html
+# 09 3D Pose Estimation
 
-### 概述
+> The docker use instructions refer to:
+> 13 Install Docker and Basic Use
 
-Isaac ROS姿态估计包含三个ROS 2包，用于预测物体的姿态。请参考下表了解它们之间的区别：
+Isaac ROS 3D attitude estimation official network link: https://nvidia-isaac-ros.github.io/repositories_and_packages/isaac_ros_pose_estimation/isaac_ros_centerpose/index.html
+
+## Overview
 
 ![](./images/9-practical-applications-of-the-jetson-platform-24.gif)
 
-#### 点击图片可查看完整电子表格
+Isaac ROS Posture is estimated to contain three ROS 2 packages for predicting the object's attitude. Please refer to the table below to understand their differences:
 
-这些软件包使用GPU加速进行DNN推理，以估计物体的姿态。感知函数可以使用输出预测与相应的深度融合，从而提供物体的3D姿态和距离，以便进行导航或操作。
+Click on a picture to view the complete spreadsheet
 
 ![](./images/9-practical-applications-of-the-jetson-platform-25.png)
 
-### 快速体验
+These packages use GPU to accelerate DNN reasoning to estimate the object's attitude. The sensor function can use output predictions to integrate with the corresponding depth, thus providing the 3D attitude and distance of the object for navigation or operation.
 
-为了简化开发，我们主要使用Isaac ROS Dev Docker镜像，并在上面进行效果演示。演示不需要安装任何摄像头设备，通过播放rosbag文件模拟来自摄像头的数据流。
+## Rapid experience
 
-注：如果想要安装在自己设备上，或者连接摄像头开发其他功能，请参照Isaac ROS官网，连接英伟达指定的摄像头型号自行开发。
+In order to simplify development, we mainly use Isaac ROS Dev Docker images and perform impact demonstrations on them. The demonstration does not require the installation of any camera device to simulate data streams from the camera by playing the rosebag file.
 
-打开终端进入工作目录并进入Isaac ROS Dev Docke容器
+Note: If you want to be installed on your own equipment or to connect the camera to develop other features, please refer to the Isaac ROS official network to connect to the camera type specified by Yvida.
+
+Open the terminal into the work directory and enter Isaac ROS Dev Dock container
 
 ```bash
+
 cd ${ISAAC_ROS_WS}/src
+
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common && \
 ./scripts/run_dev.sh
 ```
 
-运行下面启动命令
+Run the below startup command
 
 ```bash
+
 ros2 launch isaac_ros_examples isaac_ros_examples.launch.py launch_fragments:=centerpose,centerpose_visualizer interface_specs_file:=${ISAAC_ROS_WS}/isaac_ros_assets/isaac_ros_centerpose/quickstart_interface_specs.json model_name:=centerpose_shoe model_repository_paths:=[${ISAAC_ROS_WS}/isaac_ros_assets/models]
 ```
 
-打开第二个终端，进入容器
+Open the second terminal and enter the container.
 
 ```bash
+
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common && \
 ./scripts/run_dev.sh
 ```
 
-运行以下命令
+Run the following commands
 
 ```bash
+
 ros2 bag play -l ${ISAAC_ROS_WS}/isaac_ros_assets/isaac_ros_centerpose/quickstart.bag
 ```
 
-#### 查看运行结果
+View Run Results
 
-打开第三个终端，进入容器
+Open the third terminal and enter the container.
 
 ```bash
+
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common && \
 ./scripts/run_dev.sh
 ```
 
-运行以下命令，查看结果
-
-```bash
-ros2 run rqt_image_view rqt_image_view /centerpose/image_visualized
-```
+Run the following commands and see the results
 
 ![](./images/9-practical-applications-of-the-jetson-platform-26.png)
 
-## 10视觉SLAM
+```bash
 
+ros2 run rqt_image_view rqt_image_view /centerpose/image_visualized
 ```
-dcoker的使用指令参考可以回顾： 13 安装 Docker与基础使用
-```
 
-Isaac ROS视觉SLAM官网链接：https://nvidia-isaac-ros.github.io/repositories_and_packages/isaac_ros_visual_slam/index.html
+# 10 Visual SLAM
 
-### 概述
+> The docker use instructions refer to:
+> 13 Install Docker and Basic Use
 
-Isaac ROS Visual SLAM为VSLAM（视觉同步定位与地图构建）提供了一个高性能、一流的ROS 2软件包。该软件包使用一个或多个立体摄像头以及可选的IMU来估算里程，并将其作为导航的输入。它采用GPU加速，可在机器人应用中提供实时、低延迟的结果。VSLAM为移动机器人（地面）提供了额外的里程计源，并且可以作为无人机的主要里程计源。
+Isaac ROS Visual SLAM Network Link: https://nvidia-isaac-ros.github.io/repositories_and_packages/isaac_ros_visual_slam/index.html
+
+## Overview
 
 ![](./images/9-practical-applications-of-the-jetson-platform-27.png)
 
-### 快速体验
+Isaac ROS Vision SLAM provides a high-performance, first-class ROS 2 software package for VSLAM. The package uses one or more stereo cameras and optional IMUs to estimate the mileage and uses it as a navigation input. It uses GPU acceleration to provide real-time, low-delayed results in robotic applications. VSLAM provides an additional mileage source for mobile robots (ground) and can serve as the main mileage source for drones.
 
-为了简化开发，我们主要使用Isaac ROS Dev Docker镜像，并在上面进行效果演示。演示不需要安装任何摄像头设备，通过播放rosbag文件模拟来自摄像头的数据流。
+## Rapid experience
 
-注：如果想要安装在自己设备上，或者连接摄像头开发其他功能，请参照Isaac ROS官网，连接英伟达指定的摄像头型号自行开发。
+In order to simplify development, we mainly use Isaac ROS Dev Docker images and perform impact demonstrations on them. The demonstration does not require the installation of any camera device to simulate data streams from the camera by playing the rosebag file.
 
-打开终端进入工作目录并进入Isaac ROS Dev Docke容器
+Note: If you want to be installed on your own equipment or to connect the camera to develop other features, please refer to the Isaac ROS official network to connect to the camera type specified by Yvida.
+
+Open the terminal into the work directory and enter Isaac ROS Dev Dock container
 
 ```bash
+
 cd ${ISAAC_ROS_WS}/src
+
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common && \
 ./scripts/run_dev.sh
 ```
 
-运行下面启动命令
+Run the below startup command
 
 ```bash
+
 rviz2 -d $(ros2 pkg prefix isaac_ros_visual_slam --share)/rviz/default.cfg.rviz
 ```
 
-打开第二个终端，进入容器
+Open the second terminal and enter the container.
 
 ```bash
+
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common && \
 ./scripts/run_dev.sh
 ```
 
-运行以下命令
+Run the following commands
 
 ```bash
+
 ros2 launch isaac_ros_examples isaac_ros_examples.launch.py launch_fragments:=visual_slam \
 interface_specs_file:=${ISAAC_ROS_WS}/isaac_ros_assets/isaac_ros_visual_slam/quickstart_interface_specs.json \
 rectified_images:=false
 ```
 
-#### 查看运行结果
+View Run Results
 
-打开第三个终端，进入容器
+Open the third terminal and enter the container.
 
 ```bash
+
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common && \
 ./scripts/run_dev.sh
 ```
 
-运行以下命令，可以看到rviz2显示。如果没有出现图像，可以再次运行这个命令。
+Runs the following command, as shown in rviz2. If no image appears, you can run this command again.
+
+![](./images/9-practical-applications-of-the-jetson-platform-28.png)
 
 ```bash
-ros2 bag play ${ISAAC_ROS_WS}/isaac_ros_assets/isaac_ros_visual_slam/quickstart_bag --remap \
+
+ros2 bag play ${ISAAC_ROS_WS}/isaac_ros_assets/isaac_ros_visual_slam/quickstart_bag --remap  \
 /front_stereo_camera/left/image_raw:=/left/image_rect \
 /front_stereo_camera/left/camera_info:=/left/camera_info_rect \
 /front_stereo_camera/right/image_raw:=/right/image_rect \
@@ -966,44 +1069,66 @@ ros2 bag play ${ISAAC_ROS_WS}/isaac_ros_assets/isaac_ros_visual_slam/quickstart_
 /back_stereo_camera/right/camera_info:=/rear_right/camera_info_rect
 ```
 
-![](./images/9-practical-applications-of-the-jetson-platform-28.png)
+### 01 How to Run A-LOAM 3D SLAM on Jetson
 
-## 01如何在Jetson上运行A-LOAM 3D SLAM
+## A-LOAM Profile
 
-### A-LOAM简介
+A-LOAM is advanced by the original LOAM algorithms proposed by J. Zhang and S. Singh. The main features of A-LOAM include:
 
-A-LOAM是由J. Zhang和S. Singh提出的原始LOAM（实时激光雷达里程计与建图）算法的高级实现。A-LOAM的主要特点包括：
-
-A-LOAM可用于自动驾驶、机器人和3D建图等多种应用。
-
-本文档提供了在reComputer Jetson系列上使用RoboSense RS32 LiDAR传感器设置并运行A-LOAM（高级LOAM）算法的详细步骤。A-LOAM是LOAM的高级实现，利用Eigen和Ceres Solver实现高效的实时建图与定位。
+Real-time laser radar mileage and construction maps.
 
 ![](./images/9-practical-applications-of-the-jetson-platform-29.gif)
 
-### 前置条件
+Simplify the code structure using Eigen and Céres Solver.
 
-```
-下面的内容仅在 Ubuntu 20.04 和 ROS Noetic 上进行了测试。请参考 8.01.01 ROS1 简介 完成 ROS 环境设置。
-```
+High performance and robustness in many environments.
 
-```
-请参考这里安装 RoboSense RS32 LiDAR 的 SDK。
-```
+A-LOAM can be used for various applications such as autopilot, robotics and 3D construction maps.
 
-### 开始使用
+This document provides detailed steps to set and run the A-LOAM (Advanced LOAM) algorithm using the RoboSense RS32 LiDAR sensor on the reComputer Jetson series. A-LOAM is an advanced achievement for LOAM, using Eigen and Céres Solver to achieve efficient real-time mapping and positioning.
 
-### 环境设置
+### Precondition
 
-在Jetson的终端中执行下面的步骤。
+Nvidia Jetson Orin Nano Super Kit
+
+RoboSense RS32 Lidar
+
+> The following is only tested on Ubuntu 20.04 and ROS Noetic. Please refer to 8.01.01 ROS1 Profile to complete the ROS environment settings.
+
+> Please refer to the SDK where RoboSense RS32 Lidar is installed.
+
+## Start Use
+
+### Environment Settings
+
+![](./images/9-practical-applications-of-the-jetson-platform-30.png)
+
+![](./images/9-practical-applications-of-the-jetson-platform-31.png)
+
+![](./images/9-practical-applications-of-the-jetson-platform-32.png)
+
+Implement the following steps in the Jetson terminal.
+
+Step 1: Install gflags, google-glog, suitesparse and cxsparse3.
+
+![](./images/9-practical-applications-of-the-jetson-platform-33.png)
+
+![](./images/9-practical-applications-of-the-jetson-platform-34.png)
+
+![](./images/9-practical-applications-of-the-jetson-platform-35.png)
 
 ```bash
 sudo apt-get install libgflags-dev libgoogle-glog-dev
 sudo apt-get install libsuitesparse-dev libcxsparse3 libcxsparse-dev
 ```
 
+Step 2: Install PCL.
+
 ```bash
 sudo apt install libpcl-dev
 ```
+
+Step 3: Install Ceres.
 
 ```bash
 wget ceres-solver.org/ceres-solver-1.14.0.tar.gz
@@ -1014,53 +1139,6 @@ cd build
 cmake ..
 make -j4
 sudo make install
-```
-
-```bash
-cd ~/catkin_ws/src
-git clone https://github.com/HKUST-Aerial-Robotics/A-LOAM.git
-```
-
-### 修改配置文件
-
-![](./images/9-practical-applications-of-the-jetson-platform-30.png)
-
-![](./images/9-practical-applications-of-the-jetson-platform-31.png)
-
-![](./images/9-practical-applications-of-the-jetson-platform-32.png)
-
-```
-C++
-# include <opencv/cv.h>
-```
-
-```
-C++
-# include <opencv2/opencv.hpp>
-```
-
-![](./images/9-practical-applications-of-the-jetson-platform-33.png)
-
-![](./images/9-practical-applications-of-the-jetson-platform-34.png)
-
-![](./images/9-practical-applications-of-the-jetson-platform-35.png)
-
-### 编译包
-
-```bash
-cd ~/catkin_ws
-catkin_make
-source ~/catkin_ws/devel/setup.bash
-```
-
-### 启动3D SLAM
-
-```bash
-roslaunch rslidar_sdk start.launch
-```
-
-```bash
-roslaunch aloam_velodyne aloam_velodyne_HDL_32.launch
 ```
 
 ![](./images/9-practical-applications-of-the-jetson-platform-36.png)

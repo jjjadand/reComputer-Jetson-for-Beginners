@@ -1,637 +1,740 @@
 # ROS2 Tools, Launch, and Visualization
 
-## 17常用命令工具
+## 17 Common command tool
 
-### 17常用命令工具(CLI Tools)
+### 17 Common Command Tool (CLI Tools)
 
-### 17.1包管理工具ros2 pkg
+### 17.1 Package management tool ros2 pkg
 
-### 17.1.1 ros2 pkg create
+### 17.1.1 rose2 pkg create
 
-功能：创建功能包，创建时候需要指定包名、编译方式、依赖项等。
+Function: Create a functional package, which requires the name of the package, the way it is compiled, the dependencies, etc.
 
-格式：
+Format:
 
 ```bash
 ros2 pkg create <package_name> --build-type <build-type> --dependencies <dependencies>
 ```
 
-ros2命令中：
+In the ros2 command:
+
+pkg: indicates functions associated with the functional kit;
+
+create: indicates the creation of a functional package;
+
+Package name: must: name of the new functional package;
+
+bild-type: must be: indicates whether the newly created feature kit is C++ or Python, if C++ or C is used, then this is ament cmake, and if Python is used, ament python;
+
+![](./images/7-3-4-ros2-tools-launch-and-visualization-01.png)
+
+Options: the C++ feature package needs to contain rclcpp, the Python feature package needs to contain rclpy, and other dependents;
 
 ### 17.1.2 ros2 pkg list
 
-功能：查看系统中功能包列表
+Function: View the list of functional packages in the system
 
-格式：
+Format:
+
+![](./images/7-3-4-ros2-tools-launch-and-visualization-02.png)
 
 ```bash
 ros2 pkg list
 ```
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-01.png)
+### 17.1.3 ros2 pkg executes
 
-### 17.1.3 ros2 pkg executeables
+Function: View all executables in a package
 
-功能：查看某个包内所有可执行文件
+Format:
 
-格式：
+![](./images/7-3-4-ros2-tools-launch-and-visualization-03.png)
 
 ```bash
 ros2 pkg executables <pkg_name>
 ```
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-02.png)
+### 17.2 Node Runs ros2 run
 
-### 17.2节点运行ros2 run
+Function: Run the functional package node program
 
-功能：运行功能包节点程序
-
-格式：
+Format:
 
 ```bash
 ros2 run <pkg_name> <node_name>
 ```
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-03.png)
+![](./images/7-3-4-ros2-tools-launch-and-visualization-04.png)
 
-### 17.3节点相关工具ros2 node
+pkg name: Functional package name
 
-### 17.3.1 ros2 node list
+Node name: Name of executable
 
-功能： 罗列出所有在当前域内节点名称
+## 17.3 Node-related tools
 
-格式：
+### 17.3.1 rose2 node list
+
+![](./images/7-3-4-ros2-tools-launch-and-visualization-05.png)
+
+Function: List all nodes in the current domain
+
+Format:
 
 ```bash
 ros2 node list
 ```
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-04.png)
+### 17.3.2 rose2 nodeinfo
 
-### 17.3.2 ros2 node info
+Function: View node details, including subscriptions, published messages, services and actions, etc.
 
-功能： 查看节点详细信息，包括订阅、发布的消息，开启的服务和动作等
+![](./images/7-3-4-ros2-tools-launch-and-visualization-06.png)
 
-格式：
+Format:
 
 ```bash
 ros2 node info <node_name>
 ```
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-05.png)
+Node name: Node name to see
 
-### 17.4话题相关工具ros2 topic
+## 17.4 Topic-related tools
 
-### 17.4.1 ros2 topic list
+![](./images/7-3-4-ros2-tools-launch-and-visualization-07.png)
 
-功能：罗列出当前域内的所有话题
+### 17.4.1 rose2 topic list
 
-格式：
+Function: List all topics in the current domain
+
+Format:
 
 ```bash
 ros2 topic list
 ```
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-06.png)
+![](./images/7-3-4-ros2-tools-launch-and-visualization-08.png)
 
-### 17.4.2 ros2 topic info
+### 17.4.2 rose2 topicinfo
 
-功能：显示话题消息类型，订阅者/发布者数量
+Function: Display the subject message type, number of subscribers/issuers
 
-格式：
+Format:
 
 ```bash
 ros2 topic info <topic_name>
 ```
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-07.png)
+![](./images/7-3-4-ros2-tools-launch-and-visualization-09.png)
 
-### 17.4.3 ros2 topic type
+Topic name: name of topic to search for
 
-功能：查看话题的消息类型
+### 17.4.3 rose2 topic type
 
-格式：
+Function: Type of message to view the topic
+
+Format:
+
+![](./images/7-3-4-ros2-tools-launch-and-visualization-10.png)
 
 ```bash
 ros2 topic type <topic_name>
 ```
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-08.png)
+Topic name: Name of subject type to search for
 
 ### 17.4.4 ros2 topic hz
 
-功能：显示话题平均发布频率
+Function: Show the average frequency of topic release
 
-格式：
+Format:
 
 ```bash
 ros2 topic hz <topic_name>
 ```
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-09.png)
+Topic name: Name of subject frequency to query
 
-### 17.4.5 ros2 topic echo
+![](./images/7-3-4-ros2-tools-launch-and-visualization-11.png)
 
-功能：在终端打印话题消息，类似于一个订阅者
+### 17.4.5 ros2 topic epho
 
-格式：
+Function: Print topic messages at terminal, similar to a subscriber
+
+Format:
 
 ```bash
 ros2 topic echo <topic_name>
 ```
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-10.png)
+Topic name: The name of the subject for which you need to print the message
 
-### 17.4.6 ros2 topic pub
+![](./images/7-3-4-ros2-tools-launch-and-visualization-12.png)
 
-功能：在终端发布指定话题消息
+### 17.4.6 rose2 topic pub
 
-格式：
+Function: Send specified topic messages at terminal
+
+Format:
 
 ```bash
 ros2 topic pub <topic_name> <message_type> <message_content>
 ```
 
-默认是以1Hz的频率循环发布，可以设置以下参数，
+![](./images/7-3-4-ros2-tools-launch-and-visualization-13.png)
 
-示例：
+Topic name: The name of the subject that needs to be published
+
+message type: data type of topic
+
+message content: message content
+
+The default is published at a frequency of 1 Hz, setting the following parameters:
+
+Parameter 1 is published once, ros2 topic pub-1 topic name message  type message content
+
+![](./images/7-3-4-ros2-tools-launch-and-visualization-14.png)
+
+Parameter-t count loop release count end, ros2 topic pub-t count topic name message type message content
+
+Arguments-r count published at the frequency of the count Hz, ros2 topic pub-r count topic name message  type message content
+
+Example:
+
+Issue speed commands by command line
+
+What needs to be noted here is that there's a space behind each colon, or else there's an error in format.
 
 ```bash
 ros2 topic pub turtle1/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.5, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.2}}"
 ```
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-11.png)
+![](./images/7-3-4-ros2-tools-launch-and-visualization-15.png)
 
-### 17.5接口相关工具ros2 interface
+### 17.5 Ros2 interface-related tools
 
-### 17.5.1 ros2 interface list
+### 17.5.1 rose2 interface list
 
-功能：罗列当前系统的所有接口，包括话题、服务、动作。
+Function: Lists all interfaces of the current system, including topics, services, actions.
 
-格式：
+Format:
 
 ```bash
 ros2 interface list
 ```
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-12.png)
+### 17.5.2 rose2 interface show
 
-### 17.5.2 ros2 interface show
+Function: Show details of the specified interface
 
-功能：显示指定接口的详细内容
-
-格式：
+Format:
 
 ```bash
 ros2 interface show <interface_name>
 ```
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-13.png)
+Interface name: name of interface content to display
 
-### 17.6服务相关工具ros2 service
+## 17.6 Services-related tools
 
-### 17.6.1 ros2 service list
+### 17.6.1 rose2 service list
 
-功能：罗列出当前域内所有的服务
+Function: List all services in the current domain
 
-格式：
+Format:
+
+![](./images/7-3-4-ros2-tools-launch-and-visualization-16.png)
 
 ```bash
 ros2 service list
 ```
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-14.png)
+### 17.6.2 rose2 service call
 
-### 17.6.2 ros2 service call
+Function: Call specified service
 
-功能：调用指定服务
+Format:
 
-格式：
+![](./images/7-3-4-ros2-tools-launch-and-visualization-17.png)
 
 ```bash
 ros2 interface call <service_name> <service_Type> <arguments>
 ```
 
-例如，调用生成海龟服务
+Service name: service to be called
 
-```bash
-ros2 service call /spawn turtlesim/srv/Spawn "{x: 2, y: 2, theta: 0.2, name: 'turtle10'}"
-```
-
-![](./images/7-3-4-ros2-tools-launch-and-visualization-15.png)
-
-### 17.7下一步
-
-1.18 RViz2使用-学习RViz2可视化
-
-2.19 Rqt工具箱-学习Rqt工具
-
-## 18 RViz2使用
-
-### 18 RViz2使用(RViz2 Visualization)
-
-### 18.1 RViz2概述
-
-Rviz2是ROS 2中最常用的三维可视化工具，用于直观展示机器人系统的运行状态。它可以订阅并显示各种ROS 2话题数据，例如激光雷达点云、地图、机器人模型（URDF）、TF坐标变换、路径规划轨迹以及相机图像等，帮助开发者快速验证感知、定位、导航等功能是否正常工作。通过Rviz2，用户可以在同一个界面中实时观察机器人与环境的关系，大幅提升调试和开发效率。
-
-### 18.2准备工作
-
-注意：以下的安装步骤非必须，如果手中有实体机器人，设置好多机通信之后可以直接使用实机的雷达信息，可以自行选择使用实机雷达或虚拟仿真机器人；以下内容适合没有实机的用户使用。
-
-```bash
-sudo apt install ros-${ROS_DISTRO}-turtlebot3*
-```
-
-```bash
-sudo apt install ros-humble-ros-gz -y
-```
-
-```bash
-export TURTLEBOT3_MODEL=waffle
-```
-
-```bash
-source /opt/ros/humble/setup.bash
-ros2 launch turtlebot3_gazebo turtlebot3_world.launch.py
-```
-
-```
-注意：Jetson上可能启动不了，本操作在X86 PC上运行
-```
-
-![](./images/7-3-4-ros2-tools-launch-and-visualization-16.png)
-
-### 18.3 Rviz2启动
-
-启动一个终端，使用如下命令即可启动：
-
-```bash
-rviz2
-```
-
-```
-注意：如果是在 docker 中启动，请务必确保已经开启了 GUI 显示。
-```
-
-![](./images/7-3-4-ros2-tools-launch-and-visualization-17.png)
-
-### 18.4图像数据可视化
-
-在左侧Displays窗口中点击Add，找到Image显示项，OK确认后就可以加入显示列表啦，然后配置好该显示项订阅的图像话题，就可以顺利看到机器人的摄像头图像啦。
-
-#### [图片下载失败]
+Service Type: service data type
 
 ![](./images/7-3-4-ros2-tools-launch-and-visualization-18.png)
 
-### 18.5雷达数据可视化
+Arguments: parameters for service delivery
 
-在左侧Displays窗口中点击Add，选择Laserscan，然后配置订阅的话题名，此时就可以看到激光点啦
+For example, calling to generate turtle services
 
 ![](./images/7-3-4-ros2-tools-launch-and-visualization-19.png)
 
 ![](./images/7-3-4-ros2-tools-launch-and-visualization-20.png)
 
-### 18.6机器人模型可视化
+```bash
+ros2 service call /spawn turtlesim/srv/Spawn "{x: 2, y: 2, theta: 0.2, name: 'turtle10'}"
+```
 
-在左侧Displays窗口中点击Add，选择RobotModel
+## 17.7 Next steps
 
 ![](./images/7-3-4-ros2-tools-launch-and-visualization-21.png)
 
 ![](./images/7-3-4-ros2-tools-launch-and-visualization-22.png)
 
-### 18.7其它数据可视化
+18 RViz2 Use - Learning RViz2 Visualization
 
-rivz_default_plugins中列举了很多常用的数据可视化插件，大家可以一一尝试使用。
+2. 19 Rqt Toolbox - Learning Rqt Tool
 
 ![](./images/7-3-4-ros2-tools-launch-and-visualization-23.png)
 
-### 18.8下一步
+### 18 RViz2 Use
 
-1.19 Rqt工具箱-学习Rqt工具
+## 18 RViz2 Usage (RViz2 Vision)
 
-2.20 Launch配置-学习Launch配置
+## 18.1 RViz2 Overview
 
-## 19 Rqt工具箱
+Rviz2 is the most commonly used three-dimensional visualization tool in ROS 2 to visualize the operational status of robotic systems. It can subscribe to and display a variety of ROS 2 subject data, such as laser radar cloud, maps, robotic model (URDF), TF coordinate conversion, path-planning trajectory and camera images, and help developers quickly verify whether sensor, positioning, navigation, etc. are working. Through Rviz2, users can observe the relationship between robots and the environment in real time in the same interface, significantly increasing the efficiency of commissioning and development.
 
-### 19 Rqt工具箱(Rqt Tools)
+### 18.2 Preparatory work
 
-### 19.1 Rqt概述
+If there's a real robot that can start the rviz exercise at the robot master control end, if there's no real robot, we can start the turtlebot3 in a real way by gazebo, imitating laser radar, camera, etc., so that the next data can be visualized.
 
-| rqt 是 ROS 里一个基于 Qt 的 图形化工具框架 ，它通过插件化方式把很多常用功能整合到一个可视化界面中。开发者可以用 rqt 来直观地查看和调试系统，比如查看 Topic 的发布 / 订阅情况 、监控 节点与通信拓扑（ rqt_graph ） 、实时查看 日志（ rqt_console ） 、动态调参（ rqt_reconfigure ）以及绘图分析数据（ rqt_plot ）等。简单说， rqt 就像 ROS 的“多功能可视化调试工作台”，能大幅提升开发、排错和系统理解效率。 |  |
+Note that the following installation steps are not necessary, and if there are physical robots in their hands, with a large number of machine communications that allow direct use of real machine radar information, they can use real radar or virtual simulation robots of their choice; The following are suitable for users who do not have a live machine.
+
+This section of the curriculum uses simulation robots as an example, teaching rviz2 visualization, real or mimic robots, and rviz2 processes are the same.
+
+Install Tutlebot3 emulator kit
+
+```bash
+sudo apt install ros-${ROS_DISTRO}-turtlebot3*
+```
+
+Installation of ros and gazebo bridges
+
+```bash
+sudo apt install ros-humble-ros-gz -y
+```
+
+Set the turtlebot3 environment variable
+
+```bash
+export TURTLEBOT3_MODEL=waffle
+```
+
+![](./images/7-3-4-ros2-tools-launch-and-visualization-24.png)
+
+Start gazebo simulation environment
+
+![](./images/7-3-4-ros2-tools-launch-and-visualization-25.png)
+
+```bash
+# source /opt/ros/humble/setup.bash
+ros2 launch turtlebot3_gazebo turtlebot3_world.launch.py
+```
+
+> Note: Jetson may not be able to start, this operation is running on X86 PC
+
+## 18.3 Rviz2 start
+
+Starts a terminal and can be activated with the following command:
+
+![](./images/7-3-4-ros2-tools-launch-and-visualization-26.gif)
+
+```bash
+rviz2
+```
+
+> Note: If started in docker, make sure that the GUI display has been opened.
+
+## 18.4 Visualization of image data
+
+![](./images/7-3-4-ros2-tools-launch-and-visualization-27.gif)
+
+Click on Add in the left Displays window to find the Image display item, OK to add the display list after confirmation, and then configure the image topic for the display item, so that you can see the robot's camera image.
+
+[ Picture download failed]
+
+Select Fixed Frame to base footprint coordinates
+
+Select Camera Color Topic
+
+Now, we can see the vision of the current simulation robot in the Camera window.
+
+![](./images/7-3-4-ros2-tools-launch-and-visualization-28.gif)
+
+### 18.5 Radar data visualization
+
+Click on Add in the Displays window to the left, select Laserscan, and configure the subject name for the subscription.
+
+Topic selection for LaserScan
+
+At this point, we can see the contours of the laser radar.
+
+### 18.6 Visualization of robotic models
+
+Click Add in the left Displays window, select RobotModel
+
+Select the topic for robotDescriptionTopic
+
+We can see the visualization of robots in Rviz2.
+
+### 18.7 Visualization of other data
+
+The rivz default plugins list many commonly used data visualization plugins that you can use at one time or another.
+
+### 18.8 Next steps
+
+1. 19 Rqt Toolbox - Learning Rqt Tool
+
+2. 20 Launch Configuration - Learn Launch Configuration
+
+![](./images/7-3-4-ros2-tools-launch-and-visualization-29.png)
+
+### 19 Rqt Toolbox
+
+## 19 Rqt Toolbox (Rqt Tools)
+
+## 19.1 Rqt Overview
+
+![](./images/7-3-4-ros2-tools-launch-and-visualization-30.png)
+
+| rqt is a graphical Qt-based tool frame in ROS that integrates many common functions into a visual interface by plugining. The developers can visualize and debug the system by viewing rqt, e.g. the distribution/subscription of Topic, monitoring nodes and communications (rqt graph), real-time viewing of logs (rqt console), dynamic referencing (rqt reconfigure) and drawing analysis data (rqt plot). Simply put, rqt, like ROS's Multifunctional Visualized Debug Sheet, can significantly increase the efficiency of development, miscalculation and system understanding. |  |
 | --- | --- |
 
-```
-Plain Text
-Rqt 插件生态：
-┌─────────────────────────────────────────────────┐
-│ Rqt 框架
-│
-├─────────────────────────────────────────────────┤
-│ │
-│ ┌─────────┐ ┌─────────┐ ┌─────────┐ │
-│ │rqt_graph│ │rqt_plot │ │rqt_console│ │
-│ │(节点图) │ │(数据绘图)│ │(日志查看)│ │
-│ └─────────┘ └─────────┘ └─────────┘ │
-│ │
-│ ┌─────────┐ ┌─────────┐ ┌─────────┐ │
-│ │rqt_reconfigure│ │rqt_tf_tree│ │rqt_bag│ │
-│ │(参数配置)│ │(TF树) │ │(数据包) │ │
-│ └─────────┘ └─────────┘ └─────────┘ │
-│ │
-└─────────────────────────────────────────────────┘
-```
+> Plain Text
+> Rqt plugin ecology:
+>
+> That's right. That's right.
+> Rqt frame
+> I'm sorry.
+> Zenium
+>
+> │rqt graph│rqt plot│rqt console│
+> │ (nodes) │ (data drawing) │ (log view) │
+>
+> Zenium
+>
+> │rqt reconfigure
+> │ (parameter configuration) T (TF tree) T (data package) │
+>
+> Zenium
 
-### 19.2安装
+![](./images/7-3-4-ros2-tools-launch-and-visualization-31.png)
 
-一般只要安装的是desktop版本就会默认安装rqt工具箱；如果安装ros2时不是安装的完整版本需要安装可以以如下方式安装
+### 19.2 Installation
+
+The rqt toolbox is usually installed by default as long as the desktop version is installed; If the installation of ros2 is not a complete version of the installation, it may be installed as follows:
+
+![](./images/7-3-4-ros2-tools-launch-and-visualization-32.png)
 
 ```bash
 sudo apt install ros-${ROS_DISTRO}-rqt*
 ```
 
-### 19.3启动
+## 19.3 Commencement
 
-常用的rqt启动命令有：
+Common rqt start-up orders are:
 
 ```bash
-# 方式1终端运行：rqt
+# Method 1: run `rqt` in the terminal
 rqt
 ```
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-24.png)
-
 ```bash
-# 方式2
+# Method 2
 ros2 run rqt_gui rqt_gui
 ```
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-25.png)
+## 19.4 Use of plugins
 
-### 19.4插件使用
+After starting rqt, you can add the required plugins through plugins:
 
-启动rqt之后，可以通过plugins添加所需的插件：
-
-打开小乌龟示例来查看节点的订阅关系:
+Open a small turtle example to see subscriptions to nodes:
 
 ```bash
-# 终端1:
+# Terminal 1:
 ros2 run turtlesim turtlesim_node
-# 终端2:
+# Terminal 2:
 ros2 run turtlesim turtle_teleop_key
-# 终端3:
+# Terminal 3:
 rqt
 ```
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-26.gif)
+The plugins contain topics, services, actions, parameters, logs, etc., which can be adapted to facilitate the ROS2 debugging. The following examples are used.
 
-在plugins中包含了话题、服务、动作、参数、日志等等相关的插件，我们可以按需选用，方便的实现ROS2程序调试。使用示例如下。
+### 19.4.1 topic plugins
 
-### 19.4.1 topic插件
+Add topic plugins and send speed commands to control turtle movement.
 
-添加topic插件并发送速度指令控制乌龟运动。
+### 19.4.2 service plugin
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-27.gif)
+Adds a service plugin and sends a request to create a turtle at a given location.
 
-### 19.4.2 service插件
+![](./images/7-3-4-ros2-tools-launch-and-visualization-33.png)
 
-添加service插件并发送请求，在指定位置生成一只乌龟。
+[ Picture download failed]
 
-#### [图片下载失败]
+### 19.4.3 Parameter plugins
 
-### 19.4.3参数插件
+![](./images/7-3-4-ros2-tools-launch-and-visualization-34.png)
 
-通过参数插件动态修改乌龟窗体背景颜色。
+Changes the background colour of the turtle form through the parameter plugin dynamically.
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-28.gif)
+## 19.5 Next steps
 
-### 19.5下一步
+![](./images/7-3-4-ros2-tools-launch-and-visualization-35.png)
 
-1.20 Launch配置-学习Launch配置
+1. 20 Launch Configuration - Learn Launch Configuration
 
-2.21录制回放-学习数据包录制
+Record and Playback - learning package recording
 
-## 20 Launch配置
+### 20 Launch Configuration
 
-### 20 Launch配置(Launch Files)
+### 20 Launch Configuration (Launch Files)
 
-### 20.1 Launch概述
+## 20.1 Launch Overview
 
-ROS中的Launch启动文件用于统一管理和启动多个节点/组件，本质上是一套“系统级启动脚本”。它可以用Python（最常见）、XML或YAML来编写，支持同时启动多个节点、设置参数、重映射话题、加载命名空间、配置环境变量，并且还能做更高级的逻辑控制，比如条件启动、延迟启动、按事件触发启动等。简单来说，Launch文件就是ROS 2项目里把一堆节点和配置“打包成一键启动”的核心工具，特别适合复杂机器人系统的部署和调试。
+The Launch startup file in ROS is used for the integrated management and activation of multiple nodes/components and is essentially a system-level startup script. It can be prepared by Python (most commonly), XML or YAML, supporting the simultaneous activation of multiple nodes, setting parameters, remapping topics, loading namespaces, configuration of environment variables, and making more advanced logical controls, such as conditional start-up, delayed start-up, trigger-by-incident, etc. In short, the Launch file is the core tool of the ROS 2 project to package and configure "start in one key" a set of nodes, especially for the deployment and commissioning of complex robotic systems.
 
-### 20.2单个Node节点的launch
+![](./images/7-3-4-ros2-tools-launch-and-visualization-36.png)
 
-### 20.2.1准备工作包
+### 20.2 Launch of a single Node node
+
+### 20.2.1 Preparatory kits
+
+![](./images/7-3-4-ros2-tools-launch-and-visualization-37.png)
 
 ```bash
 cd ~/workspaces/src
 ros2 pkg create learn_launch --build-type ament_python
 ```
 
-### 20.2.2新建launch文件
+### 20.2.2 New launch file
 
-在功能包下新建一个launch文件夹，然后在launch文件夹内新建single_node_launch.py文件，把以下内容复制到该文件中：
+Creates a new lanch folder under the functional package, then creates a new single node launch.py file in the launch folder to copy the following:
+
+![](./images/7-3-4-ros2-tools-launch-and-visualization-38.png)
 
 ```bash
 from launch import LaunchDescription
 from launch_ros.actions import Node
+
 def generate_launch_description():
-node = Node(
-package='pkg_helloworld_py',
-executable='helloworld',
-output='screen'
-)
-return LaunchDescription([node])
+  node = Node(
+  package='pkg_helloworld_py',
+  executable='helloworld',
+  output='screen'
+  )
+  return LaunchDescription([node])
 ```
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-29.png)
+### 20.2.3 Configuration setup.py files
 
-### 20.2.3配置setup.py文件
+![](./images/7-3-4-ros2-tools-launch-and-visualization-39.png)
 
-launch文件命名常以LaunchName_launch.py，其中，LaunchName自定义，_launch.py是常认为固定的。需要修改功能包下的setup.py文件，修改内容为添加launch路径下的文件，编译才能生成执行的.py文件
+The launch file is often named after LaunchName launch.py, where LaunchName is customised and  launch.py is often considered fixed. You need to modify the setup.py file under the functional package to add the document under the launch path so that you can compile the .py file for execution
 
 ```bash
-# 1、导入相关的头文件
+# 1. Import the required header files
 import os
 from glob import glob
-# 2、在data_files的列表中，加上launch路径以及路径下的launch.py文件
+
+# 2. Add the `launch` path and its `launch.py` file to the `data_files` list
 (os.path.join('share',package_name,'launch'),glob(os.path.join('launch','*launch.py')))
 ```
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-30.png)
-
-### 20.2.4编译功能包
+### 20.2.4 Compiler functional kit
 
 ```bash
 cd ~/workspaces
 colcon build --packages-select learn_launch
 ```
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-31.png)
-
-### 20.2.5运行程序
+### 20.2.5 Operational procedures
 
 ```bash
-# 刷新环境变量
+# Refresh environment variables
 source install/setup.bash
 ros2 launch learn_launch single_node_launch.py
 ```
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-32.png)
+### 20.2.6 Source analysis
 
-### 20.2.6源码分析
-
-导入相关库
+Import Related Library
 
 ```bash
 from launch import LaunchDescription
 from launch_ros.actions import Node
 ```
 
-定义一个函数generate_launch_description，并且返回一个launch_description
+![](./images/7-3-4-ros2-tools-launch-and-visualization-40.png)
+
+Defines a function generate launch description and returns a launch description
 
 ```bash
 def generate_launch_description():
-node = Node(
-package='pkg_helloworld_py',
-executable='helloworld',
-)
-return LaunchDescription([node])
+  node = Node(
+  package='pkg_helloworld_py',
+  executable='helloworld',
+  )
+  return LaunchDescription([node])
 ```
 
-定义了一个变量node作为一个节点启动的返回值，调用Node函数，启动重要的两个参数，package和executable。
+![](./images/7-3-4-ros2-tools-launch-and-visualization-41.png)
 
-最后调用LaunchDescription函数传入node参数执行返回。
+Defines the return value that a variable Node starts as a node, calls the Node function and starts two important parameters, type and exitable.
+
+Package: indicates the functional package, representing the name of the functional package.
+
+![](./images/7-3-4-ros2-tools-launch-and-visualization-42.png)
+
+Executable: indicates the procedure performed, the name of the enforceable procedure.
+
+The last call to the LaunchDescription function is to enter the node parameter to execute the return.
 
 ```bash
 return LaunchDescription([node])
 ```
 
-### 20.3多个Node节点的launch
+### 20.3 lanch of multiple Node nodes
 
-### 20.3.1新建launch文件
+### 20.3.1 New lanch file
 
-新建multi_node_launch.py文件，添加如下内容：
+New multi node launch.py file, add the following:
+
+![](./images/7-3-4-ros2-tools-launch-and-visualization-43.png)
 
 ```bash
 from launch import LaunchDescription
 from launch_ros.actions import Node
+
 def generate_launch_description():
-publisher_node = Node(
-package='pkg_topic',
-executable='publisher_demo',
-output='screen'
-)
-subscriber_node = Node(
-package='pkg_topic',
-executable='subscriber_demo',
-output='screen'
-)
-return LaunchDescription([
-publisher_node,
-subscriber_node
-])
+  publisher_node = Node(
+  package='pkg_topic',
+  executable='publisher_demo',
+  output='screen'
+  )
+  subscriber_node = Node(
+  package='pkg_topic',
+  executable='subscriber_demo',
+  output='screen'
+  )
+  return LaunchDescription([
+  publisher_node,
+  subscriber_node
+  ])
 ```
 
-### 20.3.2编译功能包
+### 20.3.2 Compiler functional kit
+
+![](./images/7-3-4-ros2-tools-launch-and-visualization-44.png)
 
 ```bash
 colcon build --packages-select learn_launch
 ```
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-33.png)
-
-### 20.3.3运行程序
+### 20.3.3 Operational procedures
 
 ```bash
-# 刷写环境变量
+# Refresh environment variables
 source install/setup.bash
 ros2 launch learn_launch multi_node_launch.py
 ```
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-34.png)
+![](./images/7-3-4-ros2-tools-launch-and-visualization-45.png)
 
-如果终端没有打印内容，可以查看哪些节点启动 来验证是否有启动成功，终端输入：
+![](./images/7-3-4-ros2-tools-launch-and-visualization-46.png)
+
+If the terminal does not print the contents, you can see which nodes are activated to verify whether the startup has been successful.
+
+![](./images/7-3-4-ros2-tools-launch-and-visualization-47.png)
 
 ```bash
 ros2 node list
 ```
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-35.png)
+### 20.3.4 Source resolution
 
-### 20.3.4源码解析
+It's like simple node launch.py, just another node!
 
-与simple_node_launch.py内容差不多，只是多了一个节点！
+## 20.4 Topical re-mapping cases
 
-### 20.4话题重映射案例
+### 20.4.1 New launch file
 
-### 20.4.1新建launch文件
-
-在multi_node_launch.py同级目录下新建remap_name_launch.py文件，添加如下内容：
+Create a new remap name launch.py file under the multi node launch.py directory, adding the following:
 
 ```bash
 from launch import LaunchDescription
 from launch_ros.actions import Node
+
 def generate_launch_description():
-publisher_node = Node(
-package='pkg_topic',
-executable='publisher_demo',
-output='screen',
-remappings=[("/topic_demo", "/topic_update")]
-)
-return LaunchDescription([
-publisher_node
-])
+  publisher_node = Node(
+  package='pkg_topic',
+  executable='publisher_demo',
+  output='screen',
+  remappings=[("/topic_demo", "/topic_update")]
+  )
+  return LaunchDescription([
+  publisher_node
+  ])
 ```
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-36.png)
-
-### 20.4.2编译功能包
+### 20.4.2 Compiler functional kit
 
 ```bash
 colcon build --packages-select learn_launch
 ```
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-37.png)
+### 20.4.3 Operational procedures
 
-### 20.4.3运行程序
+Let's see what the publicsher demo nodes are saying before they re-map the topic:
 
-我们先看看没有重映射话题前，publisher_demo节点发布的话题是什么：
+![](./images/7-3-4-ros2-tools-launch-and-visualization-48.png)
 
 ```bash
-ros2 launch learn_launch multi_node_launch.py
+# ros2 launch learn_launch multi_node_launch.py
 ros2 topic list
 ```
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-38.png)
+Here's the topic: /topic_demo.
 
-这里的话题是/topic_demo
+![](./images/7-3-4-ros2-tools-launch-and-visualization-49.png)
 
 ```bash
-# 刷新环境变量，运行重映射话题后的程序，看看变化：
+# Refresh the environment variables and run the remapped-topic program to observe the changes:
 source install/setup.bash
 ros2 launch learn_launch remap_name_launch.py
 ros2 topic list
 ```
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-39.png)
+Re-map the subject name /topic_update
 
-重映射了话题名称为/topic_update
+![](./images/7-3-4-ros2-tools-launch-and-visualization-50.png)
 
-### 20.4.4源码分析
+### 20.4.4 Source analysis
 
-主要是加了以下部分：
+In particular, the following sections have been added:
+
+![](./images/7-3-4-ros2-tools-launch-and-visualization-51.png)
 
 ```bash
 remappings=[("/topic_demo", "/topic_update")]
 ```
 
-这里就是把原来的/topic_demo话题重映射成/topic_update
+![](./images/7-3-4-ros2-tools-launch-and-visualization-52.png)
 
-### 20.5 launch文件嵌套启动另一个launch文件
+Here's to remix the original XIAITOKEN0 topic into /topic_update.
 
-### 20.5.1新建launch文件
+### 20.5 Launch File Embedding Starts another launch file
 
-在multi_node_launch.py同级目录下新建include_launch.py文件，添加如下内容：
+### 20.5.1 New launch file
+
+New include launch.py under multi-de launch.py directory, add the following:
+
+![](./images/7-3-4-ros2-tools-launch-and-visualization-53.png)
 
 ```bash
 from launch import LaunchDescription
@@ -640,48 +743,57 @@ import os
 from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from ament_index_python.packages import get_package_share_directory
+
 def generate_launch_description():
-hello_launch = IncludeLaunchDescription(PythonLaunchDescriptionSource(
-[os.path.join(get_package_share_directory('learn_launch'), 'launch'),
-'/multi_node_launch.py']),
-)
-return LaunchDescription([
-hello_launch
-])
+  hello_launch = IncludeLaunchDescription(PythonLaunchDescriptionSource(
+  [os.path.join(get_package_share_directory('learn_launch'), 'launch'),
+  '/multi_node_launch.py']),
+  )
+  return LaunchDescription([
+  hello_launch
+  ])
 ```
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-40.png)
+### 20.5.2 Compiler functional kit
 
-### 20.5.2编译功能包
+![](./images/7-3-4-ros2-tools-launch-and-visualization-54.png)
 
 ```bash
 colcon build --packages-select learn_launch
 ```
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-41.png)
+### 20.5.3 Operational procedures
 
-### 20.5.3运行程序
+![](./images/7-3-4-ros2-tools-launch-and-visualization-55.png)
 
 ```bash
-# 刷新环境变量
+# Refresh environment variables
 source install/setup.bash
 ros2 launch learn_launch include_launch.py
 ```
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-42.png)
+### 20.5.4 Source analysis
 
-### 20.5.4源码分析
+![](./images/7-3-4-ros2-tools-launch-and-visualization-56.png)
 
-### 20.6综合launch文件示例
+Embedding the launch file requires the use of the lunch system's IncludeLaunchDescription and PythonLaunchDescriptionsource categories
 
-这个demo主要展示如何编写复杂的launch文件，程序的功能可忽略。
+os.path.join (get package share directory('learn launch'): take the position of the functional package, where the name of the functional package is Learn launch;
 
-### 20.6.1新建launch文件
+(a) launch': means a folder containing launch files under a functional kit;
 
-在multi_node_launch.py同级目录下新建complex_launch.py文件，添加如下内容：
+/multi_node_launch.py': denotes a /multi_node_launch.py file under the launch folder.
+
+## 20.6 Examples of composite launch documents
+
+This demo mainly shows how complex lanch files are prepared, and the functionality of the program is negligible.
+
+### 20.6.1 New launch file
+
+Create a new complex launch.py file under the multi node launch.py directory, adding the following:
 
 ```bash
-complex_launch.py
+# complex_launch.py
 import os
 from ament_index_python import get_package_share_directory
 from launch import LaunchDescription
@@ -693,458 +805,315 @@ from launch.substitutions import LaunchConfiguration
 from launch.substitutions import TextSubstitution
 from launch_ros.actions import Node
 from launch_ros.actions import PushRosNamespace
+
+
 def generate_launch_description():
-# args that can be set from the command line or a default will be used
-background_r_launch_arg = DeclareLaunchArgument(
-"background_r", default_value=TextSubstitution(text="0")
-)
-background_g_launch_arg = DeclareLaunchArgument(
-"background_g", default_value=TextSubstitution(text="255")
-)
-background_b_launch_arg = DeclareLaunchArgument(
-"background_b", default_value=TextSubstitution(text="0")
-)
-chatter_ns_launch_arg = DeclareLaunchArgument(
-"chatter_ns", default_value=TextSubstitution(text="my/chatter/ns")
-)
-# include another launch file
-launch_include = IncludeLaunchDescription(
-PythonLaunchDescriptionSource(
-os.path.join(
-get_package_share_directory('demo_nodes_cpp'),
-'launch/topics/talker_listener.launch.py'))
-)
-# include another launch file in the chatter_ns namespace
-launch_include_with_namespace = GroupAction(
-actions=[
-# push-ros-namespace to set namespace of included nodes
-PushRosNamespace(LaunchConfiguration('chatter_ns')),
-IncludeLaunchDescription(
-PythonLaunchDescriptionSource(
-os.path.join(
-get_package_share_directory('demo_nodes_cpp'),
-'launch/topics/talker_listener.launch.py'))
-),
-]
-)
-# start a turtlesim_node in the turtlesim1 namespace
-turtlesim_node = Node(
-package='turtlesim',
-namespace='turtlesim1',
-executable='turtlesim_node',
-name='sim'
-)
-# start another turtlesim_node in the turtlesim2 namespace
-# and use args to set parameters
-turtlesim_node_with_parameters = Node(
-package='turtlesim',
-namespace='turtlesim2',
-executable='turtlesim_node',
-name='sim',
-parameters=[{
-"background_r": LaunchConfiguration('background_r'),
-"background_g": LaunchConfiguration('background_g'),
-"background_b": LaunchConfiguration('background_b'),
-}]
-)
-# perform remap so both turtles listen to the same command topic
-forward_turtlesim_commands_to_second_turtlesim_node = Node(
-package='turtlesim',
-executable='mimic',
-name='mimic',
-remappings=[
-('/input/pose', '/turtlesim1/turtle1/pose'),
-('/output/cmd_vel', '/turtlesim2/turtle1/cmd_vel'),
-]
-)
-return LaunchDescription([
-background_r_launch_arg,
-background_g_launch_arg,
-background_b_launch_arg,
-chatter_ns_launch_arg,
-launch_include,
-launch_include_with_namespace,
-turtlesim_node,
-turtlesim_node_with_parameters,
-forward_turtlesim_commands_to_second_turtlesim_node,
-])
+
+  # args that can be set from the command line or a default will be used
+  background_r_launch_arg = DeclareLaunchArgument(
+  "background_r", default_value=TextSubstitution(text="0")
+  )
+  background_g_launch_arg = DeclareLaunchArgument(
+  "background_g", default_value=TextSubstitution(text="255")
+  )
+  background_b_launch_arg = DeclareLaunchArgument(
+  "background_b", default_value=TextSubstitution(text="0")
+  )
+  chatter_ns_launch_arg = DeclareLaunchArgument(
+  "chatter_ns", default_value=TextSubstitution(text="my/chatter/ns")
+  )
+
+  # include another launch file
+  launch_include = IncludeLaunchDescription(
+  PythonLaunchDescriptionSource(
+  os.path.join(
+  get_package_share_directory('demo_nodes_cpp'),
+  'launch/topics/talker_listener.launch.py'))
+  )
+  # include another launch file in the chatter_ns namespace
+  launch_include_with_namespace = GroupAction(
+  actions=[
+  # push-ros-namespace to set namespace of included nodes
+  PushRosNamespace(LaunchConfiguration('chatter_ns')),
+  IncludeLaunchDescription(
+  PythonLaunchDescriptionSource(
+  os.path.join(
+  get_package_share_directory('demo_nodes_cpp'),
+  'launch/topics/talker_listener.launch.py'))
+  ),
+  ]
+  )
+
+  # start a turtlesim_node in the turtlesim1 namespace
+  turtlesim_node = Node(
+  package='turtlesim',
+  namespace='turtlesim1',
+  executable='turtlesim_node',
+  name='sim'
+  )
+
+  # start another turtlesim_node in the turtlesim2 namespace
+  # and use args to set parameters
+  turtlesim_node_with_parameters = Node(
+  package='turtlesim',
+  namespace='turtlesim2',
+  executable='turtlesim_node',
+  name='sim',
+  parameters=[{
+  "background_r": LaunchConfiguration('background_r'),
+  "background_g": LaunchConfiguration('background_g'),
+  "background_b": LaunchConfiguration('background_b'),
+  }]
+  )
+
+  # perform remap so both turtles listen to the same command topic
+  forward_turtlesim_commands_to_second_turtlesim_node = Node(
+  package='turtlesim',
+  executable='mimic',
+  name='mimic',
+  remappings=[
+  ('/input/pose', '/turtlesim1/turtle1/pose'),
+  ('/output/cmd_vel', '/turtlesim2/turtle1/cmd_vel'),
+  ]
+  )
+
+  return LaunchDescription([
+  background_r_launch_arg,
+  background_g_launch_arg,
+  background_b_launch_arg,
+  chatter_ns_launch_arg,
+  launch_include,
+  launch_include_with_namespace,
+  turtlesim_node,
+  turtlesim_node_with_parameters,
+  forward_turtlesim_commands_to_second_turtlesim_node,
+  ])
 ```
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-43.png)
-
-### 20.6.2编译工作空间
+### 20.6.2 Compilation workspace
 
 ```bash
 colcon build --packages-select learn_launch
 ```
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-44.png)
-
-### 20.6.3运行程序
+### 20.6.3 Operational procedures
 
 ```bash
-source install/setup.bash
+# source install/setup.bash
 ros2 launch learn_launch complex_launch.py
 ```
 
-在Jetson上会显示两只小乌龟。
+Two turtles will be shown on Jetson.
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-45.png)
-
-![](./images/7-3-4-ros2-tools-launch-and-visualization-46.png)
+Start keyboard control node and add naming space (because we added naming space when starting node in launch files)
 
 ```bash
 ros2 run turtlesim turtle_teleop_key --ros-args -r __ns:=/turtlesim1
 ```
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-47.png)
+Use the right and left buttons to control turtle 1 movement. Sea turtle 2 is a perfect copy of turtle 1.
 
-### 20.6.4程序说明
+### 20.6.4 Description of the procedure
 
-程序主要是启动：
+The process consisted mainly of initiation:
 
-1、demo_nodes_cpp的talker_listener节点，
+One, demo nodes cpp talker lister,
 
-2、带命名空间的talker_listener节点
+2. Talker lister node with namespace
 
-3、turtlesim1为命名空间的小乌龟1
+Three, turtlesim1 is a little turtle in a named space.
 
-4、turtlesim2为命名空间的小乌龟2
+4 and Turtlesim2 are named spaces for turtles2
 
-5、执行重映射，使两只乌龟都能听到相同的命令主题
+Five, remagnify so that both turtles can hear the same command theme.
 
-### 20.7 xml实现
+## 20.7 xml achieved
 
-### 20.7.1新建launch文件
+### 20.7.1 New launch file
 
-在complex_launch.py同级目录下新建complex_launch.xml文件，添加如下内容：
+New Complex Launch.py file under the directory of complex launch.xml, add the following:
 
 ```bash
 <launch>
-<!-- args that can be set from the command line or a default will be used -->
-<arg name="background_r" default="0"/>
-<arg name="background_g" default="255"/>
-<arg name="background_b" default="0"/>
-<arg name="chatter_ns" default="my/chatter/ns"/>
-<!-- include another launch file -->
-<include file="$(find-pkg-share demo_nodes_cpp)/launch/topics/talker_listener.launch.py"/>
-<!-- include another launch file in the chatter_ns namespace-->
-<group>
-<!-- push-ros-namespace to set namespace of included nodes -->
-<push-ros-namespace namespace="$(var chatter_ns)"/>
-<include file="$(find-pkg-share demo_nodes_cpp)/launch/topics/talker_listener.launch.py"/>
-</group>
-<!-- start a turtlesim_node in the turtlesim1 namespace -->
-<node pkg="turtlesim" exec="turtlesim_node" name="sim" namespace="turtlesim1"/>
-<!-- start another turtlesim_node in the turtlesim2 namespace
-and use args to set parameters -->
-<node pkg="turtlesim" exec="turtlesim_node" name="sim" namespace="turtlesim2">
-<param name="background_r" value="$(var background_r)"/>
-<param name="background_g" value="$(var background_g)"/>
-<param name="background_b" value="$(var background_b)"/>
-</node>
-<!-- perform remap so both turtles listen to the same command topic -->
-<node pkg="turtlesim" exec="mimic" name="mimic">
-<remap from="/input/pose" to="/turtlesim1/turtle1/pose"/>
-<remap from="/output/cmd_vel" to="/turtlesim2/turtle1/cmd_vel"/>
-</node>
+
+  <!-- args that can be set from the command line or a default will be used -->
+  <arg name="background_r" default="0"/>
+  <arg name="background_g" default="255"/>
+  <arg name="background_b" default="0"/>
+  <arg name="chatter_ns" default="my/chatter/ns"/>
+
+  <!-- include another launch file -->
+  <include file="$(find-pkg-share demo_nodes_cpp)/launch/topics/talker_listener.launch.py"/>
+  <!-- include another launch file in the chatter_ns namespace-->
+  <group>
+  <!-- push-ros-namespace to set namespace of included nodes -->
+  <push-ros-namespace namespace="$(var chatter_ns)"/>
+  <include file="$(find-pkg-share demo_nodes_cpp)/launch/topics/talker_listener.launch.py"/>
+  </group>
+
+  <!-- start a turtlesim_node in the turtlesim1 namespace -->
+  <node pkg="turtlesim" exec="turtlesim_node" name="sim" namespace="turtlesim1"/>
+  <!-- start another turtlesim_node in the turtlesim2 namespace
+  and use args to set parameters -->
+  <node pkg="turtlesim" exec="turtlesim_node" name="sim" namespace="turtlesim2">
+  <param name="background_r" value="$(var background_r)"/>
+  <param name="background_g" value="$(var background_g)"/>
+  <param name="background_b" value="$(var background_b)"/>
+  </node>
+  <!-- perform remap so both turtles listen to the same command topic -->
+  <node pkg="turtlesim" exec="mimic" name="mimic">
+  <remap from="/input/pose" to="/turtlesim1/turtle1/pose"/>
+  <remap from="/output/cmd_vel" to="/turtlesim2/turtle1/cmd_vel"/>
+  </node>
 </launch>
 ```
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-48.png)
+### 20.7.2 setup.py file configuration
 
-### 20.7.2 setup.py文件配置
+The system needs to configure the compiled file and copy our .xml lanch files to the install installation directory to find our files
 
 ```bash
 (os.path.join('share',package_name,'launch'),glob(os.path.join('launch','*launch.xml'))),
 ```
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-49.png)
-
-### 20.7.3编译功能包
+### 20.7.3 Compiler functional kit
 
 ```bash
 cd ~/workspaces
 colcon build --packages-select learn_launch
 ```
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-50.png)
-
-### 20.7.4运行程序
+### 20.7.4 Operational procedures
 
 ```bash
-ros2 launch learn_launch complex_launch.xml
+# ros2 launch learn_launch complex_launch.xml
 ```
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-51.png)
+Two little turtles are expected, and the terminal prints log information.
+
+Start keyboard control node and add namespace
 
 ```bash
 ros2 run turtlesim turtle_teleop_key --ros-args -r __ns:=/turtlesim1
 ```
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-52.png)
+## 20.8 Yaml achieved
 
-### 20.8 yaml实现
+### 20.8.1 New launch file
 
-### 20.8.1新建launch文件
-
-在complex_launch.py同级目录下新建complex_launch.yaml文件，添加如下内容：
+New Complex Launch.pyaml file under the directory of complex launch.py, add the following:
 
 ```bash
 launch:
+
 # args that can be set from the command line or a default will be used
 - arg:
-name: "background_r"
-default: "0"
+  name: "background_r"
+  default: "0"
 - arg:
-name: "background_g"
-default: "255"
+  name: "background_g"
+  default: "255"
 - arg:
-name: "background_b"
-default: "0"
+  name: "background_b"
+  default: "0"
 - arg:
-name: "chatter_ns"
-default: "my/chatter/ns"
+  name: "chatter_ns"
+  default: "my/chatter/ns"
+
+
 # include another launch file
 - include:
-file: "$(find-pkg-share demo_nodes_cpp)/launch/topics/talker_listener.launch.py"
+  file: "$(find-pkg-share demo_nodes_cpp)/launch/topics/talker_listener.launch.py"
+
 # include another launch file in the chatter_ns namespace
 - group:
-- push-ros-namespace:
-namespace: "$(var chatter_ns)"
-- include:
-file: "$(find-pkg-share demo_nodes_cpp)/launch/topics/talker_listener.launch.py"
+  - push-ros-namespace:
+  namespace: "$(var chatter_ns)"
+  - include:
+  file: "$(find-pkg-share demo_nodes_cpp)/launch/topics/talker_listener.launch.py"
+
 # start a turtlesim_node in the turtlesim1 namespace
 - node:
-pkg: "turtlesim"
-exec: "turtlesim_node"
-name: "sim"
-namespace: "turtlesim1"
+  pkg: "turtlesim"
+  exec: "turtlesim_node"
+  name: "sim"
+  namespace: "turtlesim1"
+
 # start another turtlesim_node in the turtlesim2 namespace and use args to set parameters
 - node:
-pkg: "turtlesim"
-exec: "turtlesim_node"
-name: "sim"
-namespace: "turtlesim2"
-param:
--
-name: "background_r"
-value: "$(var background_r)"
--
-name: "background_g"
-value: "$(var background_g)"
--
-name: "background_b"
-value: "$(var background_b)"
+  pkg: "turtlesim"
+  exec: "turtlesim_node"
+  name: "sim"
+  namespace: "turtlesim2"
+  param:
+  -
+  name: "background_r"
+  value: "$(var background_r)"
+  -
+  name: "background_g"
+  value: "$(var background_g)"
+  -
+  name: "background_b"
+  value: "$(var background_b)"
+
 # perform remap so both turtles listen to the same command topic
 - node:
-pkg: "turtlesim"
-exec: "mimic"
-name: "mimic"
-remap:
--
-from: "/input/pose"
-to: "/turtlesim1/turtle1/pose"
--
-from: "/output/cmd_vel"
-to: "/turtlesim2/turtle1/cmd_vel"
+  pkg: "turtlesim"
+  exec: "mimic"
+  name: "mimic"
+  remap:
+  -
+  from: "/input/pose"
+  to: "/turtlesim1/turtle1/pose"
+  -
+  from: "/output/cmd_vel"
+  to: "/turtlesim2/turtle1/cmd_vel"
 ```
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-53.png)
+### 20.8.2 Configuration
 
-### 20.8.2配置
+You need to configure the compiled file to copy our .yaml-format launch files to the Install installation directory before the ros system can find our files
 
 ```bash
 (os.path.join('share',package_name,'launch'),glob(os.path.join('launch','*launch.yaml'))),
 ```
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-54.png)
+### 20.8.3 Compiler functional kit
 
-### 20.8.3编译功能包
+![](./images/7-3-4-ros2-tools-launch-and-visualization-57.png)
 
 ```bash
 colcon build --packages-select learn_launch
 ```
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-55.png)
-
-### 20.8.4运行程序
+### 20.8.4 Operational procedures
 
 ```bash
-# 刷新环境变量
+# Refresh environment variables
 source install/setup.bash
 ros2 launch learn_launch complex_launch.yaml
 ```
 
-![](./images/7-3-4-ros2-tools-launch-and-visualization-56.png)
+![](./images/7-3-4-ros2-tools-launch-and-visualization-58.png)
+
+Start keyboard control node and add namespace
 
 ```bash
 ros2 run turtlesim turtle_teleop_key --ros-args -r __ns:=/turtlesim1
 ```
 
-使用键盘控制启动海龟1进行运行，海龟2会完全模仿海龟1的行为
+Using keyboard control to activate turtle one, turtle two is a perfect imitation of turtle one.
 
-### 20.9下一步
+## 20.9 Next steps
 
-1.21录制回放-学习数据包录制
+1.21 Record and Playback - learning package recording
 
-2.22 URDF模型-学习机器人建模
-
-## 21录制回放
-
-### 21录制回放(Rosbag2)
-
-### 21.1 Rosbag2概述
-
-ROS 2的录制回放工具主要是ros2 bag（基于rosbag2），用于把运行中的Topic数据录制成bag文件，之后再按时间顺序回放复现，方便调试、算法验证和离线分析。它支持选择性录制指定话题、设置存储格式（常见如sqlite3）、控制录制时长/分段，并且回放时还能调节播放速度、暂停、循环播放等。简单说，ros2 bag就是ROS 2里“把现场数据存下来、之后再重放”的标准工具，是做机器人开发和排错非常关键的一环。
-
-```
-Plain Text
-Rosbag2 工作流程：
-┌─────────────┐ 录制 ┌─────────────┐
-│ 运行节点 │ ────────────► │ 数据包 │
-│ (传感器数据) │ │ (.db3) │
-└─────────────┘ └─────────────┘
-│
-│ 回放
-▼
-┌─────────────┐
-│ 测试节点 │
-│ (算法验证) │
-└─────────────┘
-```
-
-### 21.2使用教程
-
-### 21.2.1启动要录制的话题节点
-
-如ros2 demo中的talker：
-
-```bash
-ros2 run demo_nodes_py talker
-```
-
-### 21.2.2记录
-
-/topic-name为话题名字
-
-```bash
-# 记录单个话题
-ros2 bag record /topic-name
-# 记录多个话题
-ros2 bag record topic-name1 topic-name2
-# 记录所有话题
-ros2 bag record -a
-```
-
-其它选项
-
--o name自定义输出文件的名字
-
-```bash
-ros2 bag record -o file-name topic-name
-```
-
--s存储格式
-
-目前仅支持sqllite3 ,其他还带拓展
-
-### 21.3查看录制出话题的信息
-
-我们在播放一个视频前，可以通过文件信息查看视频的相关信息，比如话题记录的时间，大小，类型，数量
-
-```bash
-# 假设录制的file为rosbag2_2026_02_09-17_20_58
-ros2 bag info rosbag2_2026_02_09-17_20_58
-```
-
-### 21.4播放并查看
-
-### 21.4.1播放
-
-接着我们就可以重新播放数据，使用下面的指令可以播放数据
-
-```bash
-ros2 bag play rosbag2_2026_02_09-17_20_58
-```
-
-### 21.4.2查看
-
-使用ros2的topic的指令来查看数据
-
-```bash
-ros2 topic echo /chatter
-```
-
-#### 21.4.3播放选项
-
-倍速播放-r
-
--r选项可以修改播放速率，比如-r值，比如-r 10,就是10倍速，十倍速播放话题
-
-```bash
-ros2 bag play rosbag2_2026_02_09-17_20_58 -r 10
-```
-
-循环播放-l
-
-单曲循环就是它了
-
-```bash
-ros2 bag play rosbag2_2026_02_09-17_20_58 -l
-```
-
-播放单个话题
-
-```bash
-ros2 bag play rosbag2_2026_02_09-17_20_58 --topics /chatter
-```
-
-### 21.5示例
-
-### 21.5.1运行talker节点
-
-```bash
-ros2 run demo_nodes_py talker
-```
-
-### 21.5.2录制
-
-```bash
-# 记录所有话题
-ros2 bag record -a
-```
-
-![](./images/7-3-4-ros2-tools-launch-and-visualization-57.png)
-
-如何停止录制呢？我们直接在终端中使用Ctrl+C指令打断录制即可
-
-接着你会在终端中发现多处一个文件夹，名字叫做rosbag2_2026_02_09-17_20_58
-
-打开文件夹，可以看到内容
-
-![](./images/7-3-4-ros2-tools-launch-and-visualization-58.png)
-
-这样我们就完成了录制。
-
-### 21.6播放并查看
-
-这里我们循环播放
-
-```bash
-ros2 bag play rosbag2_2026_02_09-17_20_58 -l
-```
-
-开启另一个终端查看topic：
-
-```bash
-ros2 topic echo /chatter
-```
+2. 22 URL models - learning robotic modelling
 
 ![](./images/7-3-4-ros2-tools-launch-and-visualization-59.png)
 
-### 21.7下一步
+### 21 Record and Playback
 
-1.22 URDF模型-学习机器人建模
+## 21 Record Back
 
-2.23 Gazebo仿真-学习物理仿真
+## 21.1 Rosbag2 Overview

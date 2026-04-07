@@ -2,69 +2,67 @@
 
 [Back to Module 3](../README.MD) | [Back to Table of Contents](../../Table-of-Contents.md)
 
-## 15安装uv环境管理工具
+## 15 Installation of uv environmental management tool
 
-uv是一个用Rust编写的Python包管理和虚拟环境工具。它的目标非常明确：
+uv is a Python package management and virtual environment tool developed with Rust. Its objectives are very clear:
 
-```
-让 Python 的依赖管理又快又省心。
-```
+> It's not easy for Python to rely on management.
 
-你可以把uv理解为：pip（安装包）、venv（虚拟环境）、pip-tools（依赖锁定）这三者的合体升级版。
+You can read uv as a combination of pip, venv, pip-tools.
 
-### 安装uv工具
+### Install uv tools
 
-在jetson设备的终端窗口中运行下面的命令安装uv：
+Install uv:
 
 ```bash
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-安装完成后，确认：
+Upon installation, confirm:
 
 ```bash
 uv --version
 ```
 
-### 基础使用
+### Basic use
 
-### 管理Python版本
+### Manage Python Versions
 
-uv可以轻松管理多个Python版本，无需额外安装pyenv等工具。
+uv can easily manage several Python versions without additional tools such as pyenv.
 
-查看可用的Python版本：
+View available Python versions:
 
 ```bash
 uv python list
 ```
 
-```
-使用 uv python install 3.11 命令可以安装特定版本的 Python.
-```
+> The uv python command 3.11 can install a specific version of Python.
 
-### 创建虚拟环境
+### Create virtual environments
 
 ```bash
 uv venv .opencv --python 3.10.12
 ```
 
-其中.opencv是虚拟环境的名称；3.10.12是虚拟环境中python的版本。
+Of which .opencv is the name of the virtual environment; 3.10.12 is a python version of the virtual environment.
 
-### 激活虚拟环境
+### Activate Virtual Environment
 
 ```bash
 source .venv/bin/activate
 ```
 
-### 包管理
+### Package management
 
 ```bash
-# 安装新的包:
+# Install new packages:
 uv pip install opencv-python
 # uv pip install -r requirements.txt
-# 卸载包：
+
+# Uninstall packages:
 uv pip uninstall requests
-# 导出当前环境的依赖
+
+# Export the dependencies of the current environment
 uv pip freeze > requirements.txt
 ```
 

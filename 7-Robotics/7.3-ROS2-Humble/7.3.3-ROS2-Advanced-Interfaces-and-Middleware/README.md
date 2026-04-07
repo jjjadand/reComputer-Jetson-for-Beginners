@@ -1,81 +1,80 @@
 # ROS2 Advanced Interfaces and Middleware
 
-## 10 TF2坐标变换
+## 10 TF2 Coordinate Transformation
 
-### 10 TF2坐标变换(TF2 Transform)
+### 10 TF2 Coordinate Transformation (TF2 Transform)
 
-### 10.1 TF2概述
+### 10.1 TF2 Overview
 
-### 10.1.1什么是TF2
+### 10.1.1 What is TF2
 
-TF2 (Transform 2)是ROS 2中用于管理坐标变换的库。它跟踪多个坐标系之间的关系，允许开发者在不同坐标系之间转换数据（如点、向量、姿态）。
+TF2 (Transform 2) is the library used in ROS 2 to manage coordinate changes. It tracks relationships between multiple coordinate systems and allows developers to convert data (e.g. point, vector, attitude) between different coordinate systems.
 
-```
-Plain Text
-TF2 坐标系树示例：
-map (世界坐标系)
-|
-| (2D 平面变换)
-|
-odom (里程计坐标系)
-|
-| (Z轴平移)
-|
-base_link (机器人基座)
-|
-┌────────┼────────┐
-| | |
-camera laser base_footprint
-(相机) (激光) (底盘)
-```
+> Plain Text
+> Example of TF2 coordinates tree:
+>
+> Map (World Coordinate System)
+> Zenium
+> | (2D floor transformation)
+> Zenium
+> odom (mileometer coordinates)
+> Zenium
+> | (Z-axis horizontal shift)
+> Zenium
+> Base link
+> Zenium
+> {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FF00}
+> I'm sorry.
+> Camera laser base footprint
+> ( camera) (laser) ( chassis)
 
-### 10.1.2 TF2的用途
+### 10.1.2 Use of TF2
 
-| 应用 | 说明 |
+| Apply | Annotations |
 | --- | --- |
-| 传感器融合 | 将不同传感器的数据转换到统一坐标系 |
-| 导航 | 将地图坐标系的目标转换为机器人坐标系 |
-| 机械臂 | 计算末端执行器相对于基座的姿态 |
-| 可视化 | 在 RViz2 中正确显示机器人状态 |
+| Sensor Integration | Convert data from different sensors to the unified coordinate system |
+| Navigation | Convert the map coordinates system to robotic coordinates. |
+| Mechanical arm | Calculates the attitude of the terminal implementer over the base |
+| Visualise | Show the robot state correctly in RViz2 |
 
-### 10.1.3坐标系命名规范
+### 10.1.3 Designation of coordinates
 
-| 命名 | 用途 |
+| Name | Purpose |
 | --- | --- |
-| map | 全局 / 世界坐标系，固定不变 |
-| odom | 里程计坐标系，用于定位 |
-| base_link | 机器人基座坐标系 |
-| base_footprint | 机器人底盘投影到地面 |
-| camera_link | 相机坐标系 |
-| laser_link | 激光雷达坐标系 |
+| Map | Global/world coordinates, fixed and unchanged |
+| I don't know. | The mileage coordinate system for positioning. |
+| base link | The robot base coordinates. |
+| base footprint | The robot's chassis project to the ground. |
+| Camera link | Camera Coordinate System |
+| Laser link | Laser Radar Coordinate System |
 
-### 23、ROS2 TF2坐标变换
+### 23, ROS2 TF2 coordinates converted.
 
-### 1、TF2简介
+### Introduction to TF2
 
-坐标系是我们非常熟悉的一个概念，也是机器人学中的重要基础，在一个完整的机器人系统中，会存在很多坐标系，这些坐标系之间的位置关系该如何管理？ROS给我们提供了一个坐标系的管理神器：TF2
+Coordinated systems are a very familiar concept and an important foundation in robotics, and there will be many coordination systems in a complete robotic system, and how should the location of these coordinates be managed? ROS provided us with a co-ordinated decorator: TF2
 
-TF系统参考文献：tf: The transform library | IEEE Conference Publication | IEEE Xplore
+TF System References: tf: The transport library
 
-### 2、机器人中的坐标系
+### 2. Coordinate systems in robots
 
-在移动机器人系统中，坐标系一样至关重要，比如一个移动机器人的中心点是基坐标系Base Link，雷达所在的位置叫做雷达坐标系laser link，机器人要移动，里程计会累积位置，这个位置的参考系叫做里程计坐标系odom，里程计又会有累积误差和漂移，绝对位置的参考系叫做地图坐标系map。
+Coordinates are equally important in mobile robotic systems, such as the central point of a mobile robot is Base Link, the position of the radar is called radar coordinate islaser link, where the robot moves, and the cubic meter accumulates, which is called odom, which in turn has cumulative error and drift, and the absolute location is called map coordinates Map Map.
 
-一层一层坐标系之间关系复杂，有一些是相对固定的，也有一些是不断变化的，看似简单的坐标系也在空间范围内变得复杂，良好的坐标系管理系统就显得格外重要。
+The relationship between one layer of coordinates is complex and some are relatively fixed and some are constantly changing, and seemingly simple coordinates become complex within space, and a good system of coordinate system is particularly important.
 
 ![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-01.png)
 
-关于坐标系变换关系的基本理论，在每一本机器人学的教材中都会有讲解，可以分解为平移和旋转两个部分，通过一个四乘四的矩阵进行描述，在空间中画出坐标系，那两者之间的变换关系，其实就是向量的数学描述。
+With regard to the basic theory of the shift in the coordinate system, there is an explanation in each of the robotics teaching materials, which can be broken down into a smoothing and rotational part, described through a four-by-four matrix, drawing the coordinate system in space, and the alternation between the two, which is in fact a mathematical description of the vector.
 
-ROS中TF功能的底层原理，就是对这些数学变换进行了封装，详细的理论知识大家可以参考机器人学的教材，我们主要讲解TF坐标管理系统的使用方法。
+The bottom principle of the TF function in ROS is that these mathematical variations are encapsulated, and detailed theoretical knowledge is available to all of you in the curriculum of robotics, and we mainly explain how TF coordinate management systems are used.
 
-### 3、TF命令行操作
+### 3 TF command line operations
 
-我们先通过两只小海龟的示例，了解下基于坐标系的一种机器人跟随算法。为方便演示，本节课程最好选择在虚拟机中操作
+Let's start with the example of two little turtles and learn about a calculus of robots based on coordinates. In order to facilitate the demonstration, this section of the course would be better suited to operate on a virtual machine.
 
-### 3.1、安装相关工具
+### 3.1. Installation of tools
 
-这个示例需要我们先安装相应的功能包、tf海龟模拟器案例、tf树可视化工具
+This example requires that we first install functional packages, tf turtle simulators, tf tree visualization tools.
 
 ```bash
 sudo apt install ros-${ROS_DISTRO}-turtle-tf2-py ros-humble-tf2-tools
@@ -85,405 +84,481 @@ sudo apt install ros-${ROS_DISTRO}-rqt-tf-tree
 
 ![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-02.png)
 
-### 3.2、启动
+### 3.2. Start
 
-然后就可以通过一个launch文件启动，之后我们可以控制其中的一只小海龟，另外一只小海龟会自动跟随运动。打开两个终端分别运行如下命令:
+Then we can start with a lanch file, and then we can control one of the little turtles, and the other will follow the movement automatically. Open two terminals to run the following commands:
 
 ```bash
-ros2 launch turtle_tf2_py turtle_tf2_demo.launch.py
+# ros2 launch turtle_tf2_py turtle_tf2_demo.launch.py
 ros2 run turtlesim turtle_teleop_key
 ```
 
-当我们控制一只海龟运动时，另外一只海龟也会跟随运动。
+When we control a turtle movement, another turtle follows it.
 
 ![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-03.png)
 
-### 3.3、查看TF树
+### 3.3. View the TF tree
 
 ```bash
 ros2 run rqt_tf_tree rqt_tf_tree
 ```
 
-可以在rqt窗口中看到TF变换树
+TF transform tree can be seen in rqt window
 
 ![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-04.png)
 
-### 3.4、查询坐标变换信息
+### 3.4. Query coordinates to change information
 
-只看到坐标系的结构还不行，如果我们想要知道某两个坐标系之间的具体关系，可以通过tf2_echo这个工具查看：
+If we want to know the specific relationship between one or two coordinates, we can see it through this tool tf2 echo:
 
 ```bash
 ros2 run tf2_ros tf2_echo turtle2 turtle1
 ```
 
-运行成功后，终端中就会循环打印坐标系的变换数值了
+Once it's running successfully, the end will circulate the transformation of the coordinates system.
 
 ![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-05.png)
 
-### 3.5、坐标系可视化
+### 3.5. Visualization of coordinates
+
+Run rviz2, then add TF display plugin
 
 ```bash
 rviz2
 ```
 
-rivz2中设置参考坐标系为：world，添加TF显示，再让小海龟动起来，Rviz中的坐标轴就会开始运动，这样是不是更加直观了呢！
-
 ![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-06.png)
 
-### 4、静态坐标变换
+The reference coordinates in rivz2 are: world, add TF displays, and if the turtle moves, the axis in Rviz will start to move, so is it more intuitive?
 
-所谓静态坐标变换，是指两个坐标系之间的相对位置是固定的。如雷达和base_link之间的位置是固定的。
+## 4. Static coordinates conversion
 
-#### 示例：为方便演示，本节课程最好选择在虚拟机中操作
+The so-called static coordinate conversion means that the relative position between the two coordinates is fixed. For example, the position between radar and base link is fixed.
 
-### 4.1、发布A到B的位姿
+Example: For demonstration purposes, this section of the course is better suited to operate on a virtual machine
+
+### 4.1. Distribution of A to B positions
+
+![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-07.png)
 
 ```bash
 ros2 run tf2_ros static_transform_publisher 0 0 3 0 0 3.14 A B
 ```
 
-![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-07.png)
-
-### 4.2、监听/获取TF关系
+### 4.2. Interception/access TF relations
 
 ```bash
 ros2 run tf2_ros tf2_echo A B
 ```
 
-### 4.3、rivz可视化
+### 4.3, rivz visualization
+
+![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-08.png)
+
+Run rviz2, then add TF display plugin
 
 ```bash
 rviz2
 ```
 
-![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-08.png)
+## 5. Presentation of cases
 
-### 5、案例介绍
+The TF relationship that the system provides to turtles was explained in the last session, and we're doing it ourselves.
 
-上节课程中讲解了系统提供的小海龟跟随案例中的TF关系，这节课我们自己实现该功能。
-
-课程内容：
-
-进阶内容：
-
-### 6、海龟跟随案例实现原理分析
+Course content:
 
 ![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-09.png)
 
-在两只海龟的仿真器中，我们可以定义三个坐标系，比如仿真器的全局参考系叫做world，turtle1和turtle2坐标系在两只海龟的中心点，这样，turtle1和world坐标系的相对位置，就可以表示海龟1的位置，海龟2也同理。
+Programmation of small turtles to follow cases
 
-要实现海龟2向海龟1运动，我们在两者中间做一个连线，再加一个箭头，怎么样，是不是有想起高中时学习的向量计算？我们说坐标变换的描述方法就是向量，所以在这个跟随例程中，用TF就可以很好的解决。
+Mastery of programming for dynamic broadcasters
 
-向量的长度表示距离，方向表示角度，有了距离和角度，我们随便设置一个时间，不就可以计算得到速度了么，然后就是速度话题的封装和发布，海龟2也就可以动起来了。
+Control the programming of the transfer of coordinates between the listening coordinates
 
-所以这个例程的核心就是通过坐标系实现向量的计算，两只海龟还会不断运动，这个向量也得按照某一个周期计算，这就得用上TF的动态广播与监听了。
+Controlled conversion of physical volume (range, angle) to speed control through PID control
 
-### 7、新建功能包
+Progress:
+
+Understand the TF system's inter-temporal dimension transformation coordinates function
+
+## Analysis of the principle of realization of sea turtles following cases
+
+Among the two turtle emulators, we can define three coordinates, such as the global reference systems for the emulator, known as the world, the turtle 1 and the turtle 2 coordinates, at the centre of the two turtles, so that the relative position of the turtle 1 and the world coordinates represents the position of the turtle 1 and the turtle 2 is the same.
+
+In order to move turtle two to turtle one, we'll make a connection between the two, add an arrow. How about that? We say the coordinates are transposed by vector, so in this follow-up routine, it's a good solution with TF.
+
+The length of the vector means distance, direction means angle, distance and angle, so that we can calculate speed by setting a single time, and then the cover and release of the speed topic, and turtles can move.
+
+So the core of this routine is the calculation of the vector through the coordinate system, and the two turtles will continue to move, and this vector will have to be calculated on a given cycle, which will require the use of TF's live broadcast and listening.
+
+## 7. New functionality package
+
+Create a new functionality to store our files in ~/workspace/src directory
 
 ```bash
 ros2 pkg create pkg_tf --build-type ament_python --dependencies rclpy --node-name turtle_tf_broadcaster
 ```
 
-执行完上述命令，会创建pkg_tf功能包，同时会创建一个turtle_tf_broadcaster的节点，并且已经配置好相关的配置文件，在turtle_tf_broadcaster.py文件中添加如下代码：
+Upon completion of the above-mentioned command, the pkg tf kit will be created, and a node will be created for the turtle tf broadcaster, and the relevant configuration files have been configured to add the following code to the turtle tf broadcaster.py file:
 
 ```bash
 import math
-import rclpy # ROS2 Python接口库
-from rclpy.node import Node # ROS2 节点类
-from geometry_msgs.msg import TransformStamped # 坐标变换消息
-from tf2_ros import TransformBroadcaster # TF坐标变换广播器
-from turtlesim.msg import Pose # turtlesim小海龟位置消息
+import rclpy  # ROS 2 Python client library
+from rclpy.node import Node  # ROS 2 node class
+from geometry_msgs.msg import TransformStamped  # transform message
+from tf2_ros import TransformBroadcaster  # TF transform broadcaster
+from turtlesim.msg import Pose  # turtlesim pose message
+
 def quaternion_from_euler(roll, pitch, yaw):
-"""Return quaternion from Euler angles (roll, pitch, yaw)."""
-cy = math.cos(yaw * 0.5)
-sy = math.sin(yaw * 0.5)
-cp = math.cos(pitch * 0.5)
-sp = math.sin(pitch * 0.5)
-cr = math.cos(roll * 0.5)
-sr = math.sin(roll * 0.5)
-w = cr * cp * cy + sr * sp * sy
-x = sr * cp * cy - cr * sp * sy
-y = cr * sp * cy + sr * cp * sy
-z = cr * cp * sy - sr * sp * cy
-return (x, y, z, w)
+  """Return quaternion from Euler angles (roll, pitch, yaw)."""
+  cy = math.cos(yaw * 0.5)
+  sy = math.sin(yaw * 0.5)
+  cp = math.cos(pitch * 0.5)
+  sp = math.sin(pitch * 0.5)
+  cr = math.cos(roll * 0.5)
+  sr = math.sin(roll * 0.5)
+
+  w = cr * cp * cy + sr * sp * sy
+  x = sr * cp * cy - cr * sp * sy
+  y = cr * sp * cy + sr * cp * sy
+  z = cr * cp * sy - sr * sp * cy
+
+  return (x, y, z, w)
+
 class TurtleTFBroadcaster(Node):
-def __init__(self, name):
-super().__init__(name) # ROS2节点父类初始化
-# 创建一个海龟名称的参数（若外部未提供则使用默认'turtle'）
-self.turtlename = self.declare_parameter('turtlename', 'turtle').value
-self.tf_broadcaster = TransformBroadcaster(self) # 创建一个TF坐标变换的广播对象并初始化
-self.subscription = self.create_subscription( # 创建一个订阅者，订阅海龟的位置消息
-Pose,
-f'/{self.turtlename}/pose', # 使用参数中获取到的海龟名称
-self.turtle_pose_callback, 1)
-def turtle_pose_callback(self, msg): # 创建一个处理海龟位置消息的回调函数，将位置消息转变成坐标变换
-transform = TransformStamped() # 创建一个坐标变换的消息对象
-transform.header.stamp = self.get_clock().now().to_msg() # 设置坐标变换消息的时间戳
-transform.header.frame_id = 'world' # 设置一个坐标变换的源坐标系
-transform.child_frame_id = self.turtlename # 设置一个坐标变换的目标坐标系
-transform.transform.translation.x = msg.x # 设置坐标变换中的X、Y、Z向的平移
-transform.transform.translation.y = msg.y
-transform.transform.translation.z = 0.0
-q = quaternion_from_euler(0, 0, msg.theta) # 将欧拉角转换为四元数（roll, pitch, yaw）
-transform.transform.rotation.x = q[0] # 设置坐标变换中的X、Y、Z向的旋转（四元数）
-transform.transform.rotation.y = q[1]
-transform.transform.rotation.z = q[2]
-transform.transform.rotation.w = q[3]
-# Send the transformation
-self.tf_broadcaster.sendTransform(transform) # 广播坐标变换，海龟位置变化后，将及时更新坐标变换信息
+  def __init__(self, name):
+  super().__init__(name)  # initialize the ROS 2 node base class
+
+  # create a turtle-name parameter (default to 'turtle' if not provided externally)
+  self.turtlename = self.declare_parameter('turtlename', 'turtle').value
+
+  self.tf_broadcaster = TransformBroadcaster(self)  # create and initialize a TF transform broadcaster
+
+  self.subscription = self.create_subscription(  # create a subscriber for the turtle pose message
+  Pose,
+  f'/{self.turtlename}/pose',  # use the turtle name obtained from the parameter
+  self.turtle_pose_callback, 1)
+
+  def turtle_pose_callback(self, msg):  # create a callback that converts turtle pose messages into transforms
+  transform = TransformStamped()  # create a transform message object
+
+  transform.header.stamp = self.get_clock().now().to_msg()  # set the transform message timestamp
+  transform.header.frame_id = 'world'  # set the source frame of the transform
+  transform.child_frame_id = self.turtlename  # set the target frame of the transform
+  transform.transform.translation.x = msg.x  # set the X, Y, and Z translations of the transform
+  transform.transform.translation.y = msg.y
+  transform.transform.translation.z = 0.0
+  q = quaternion_from_euler(0, 0, msg.theta) # convert Euler angles to a quaternion (roll, pitch, yaw)
+  transform.transform.rotation.x = q[0]  # set the X, Y, and Z rotations of the transform (quaternion)
+  transform.transform.rotation.y = q[1]
+  transform.transform.rotation.z = q[2]
+  transform.transform.rotation.w = q[3]
+
+  # Send the transformation
+  self.tf_broadcaster.sendTransform(transform)  # broadcast the transform so it updates whenever the turtle pose changes
+
 def main(args=None):
-rclpy.init(args=args) # ROS2 Python接口初始化
-node = TurtleTFBroadcaster("turtle_tf_broadcaster") # 创建ROS2节点对象并进行初始化
-rclpy.spin(node) # 循环等待ROS2退出
-node.destroy_node() # 销毁节点对象
-rclpy.shutdown() # 关闭ROS2 Python接口
+  rclpy.init(args=args)  # initialize the ROS 2 Python interface
+  node = TurtleTFBroadcaster("turtle_tf_broadcaster")  # create and initialize the ROS 2 node object
+  rclpy.spin(node)  # keep spinning until ROS 2 exits
+  node.destroy_node()  # destroy the node object
+  rclpy.shutdown()  # Shut down the ROS 2 Python client library
 ```
 
-2、接下来在turtle_tf_broadcaster.py同级目录下新建turtle_following.py文件，添加如下代码：
+![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-10.png)
+
+2. Add the following code to the next turtle tf broadcaster.py directory:
 
 ```python
 import math
-import rclpy # ROS2 Python接口库
-from rclpy.node import Node # ROS2 节点类
-import tf_transformations # TF坐标变换库
-from tf2_ros import TransformException # TF左边变换的异常类
-from tf2_ros.buffer import Buffer # 存储坐标变换信息的缓冲类
-from tf2_ros.transform_listener import TransformListener # 监听坐标变换的监听器类
-from geometry_msgs.msg import Twist # ROS2 速度控制消息
-from turtlesim.srv import Spawn # 海龟生成的服务接口
+import rclpy  # ROS 2 Python client library
+from rclpy.node import Node  # ROS 2 node class
+import tf_transformations  # TF transform library
+from tf2_ros import TransformException  # exception class for TF transform lookup
+from tf2_ros.buffer import Buffer  # buffer for storing transform information
+from tf2_ros.transform_listener import TransformListener  # listener class for transforms
+from geometry_msgs.msg import Twist  # ROS 2 velocity-control message
+from turtlesim.srv import Spawn  # service interface for spawning turtles
 class TurtleFollowing(Node):
-def init(self, name):
-super().init(name) # ROS2节点父类初始化
-self.declare_parameter('source_frame', 'turtle1') # 创建一个源坐标系名的参数
-self.source_frame = self.get_parameter( # 优先使用外部设置的参数值，否则用默认值
-'source_frame').get_parameter_value().string_value
-self.tf_buffer = Buffer() # 创建保存坐标变换信息的缓冲区
-self.tf_listener = TransformListener(self.tf_buffer, self) # 创建坐标变换的监听器
-self.spawner = self.create_client(Spawn, 'spawn') # 创建一个请求产生海龟的客户端
-self.turtle_spawning_service_ready = False # 是否已经请求海龟生成服务的标志位
-self.turtle_spawned = False # 海龟是否产生成功的标志位
-self.publisher = self.create_publisher(Twist, 'turtle2/cmd_vel', 1) # 创建跟随运动海龟的速度话题
-self.timer = self.create_timer(1.0, self.on_timer) # 创建一个固定周期的定时器，控制跟随海龟的运动
-def on_timer(self):
-from_frame_rel = self.source_frame # 源坐标系
-to_frame_rel = 'turtle2' # 目标坐标系
-if self.turtle_spawning_service_ready: # 如果已经请求海龟生成服务
-if self.turtle_spawned: # 如果跟随海龟已经生成
-try:
-now = rclpy.time.Time() # 获取ROS系统的当前时间
-trans = self.tf_buffer.lookup_transform( # 监听当前时刻源坐标系到目标坐标系的坐标变换
-to_frame_rel,
-from_frame_rel,
-now)
-except TransformException as ex: # 如果坐标变换获取失败，进入异常报告
-self.get_logger().info(
-f'Could not transform {to_frame_rel} to {from_frame_rel}: {ex}')
-return
-msg = Twist() # 创建速度控制消息
-scale_rotation_rate = 1.0 # 根据海龟角度，计算角速度
-msg.angular.z = scale_rotation_rate * math.atan2(
-trans.transform.translation.y,
-trans.transform.translation.x)
-scale_forward_speed = 0.5 # 根据海龟距离，计算线速度
-msg.linear.x = scale_forward_speed * math.sqrt(
-trans.transform.translation.x ** 2 +
-trans.transform.translation.y ** 2)
-self.publisher.publish(msg) # 发布速度指令，海龟跟随运动
-else: # 如果跟随海龟没有生成
-if self.result.done(): # 查看海龟是否生成
-self.get_logger().info(
-f'Successfully spawned {self.result.result().name}')
-self.turtle_spawned = True
-else: # 依然没有生成跟随海龟
-self.get_logger().info('Spawn is not finished')
-else: # 如果没有请求海龟生成服务
-if self.spawner.service_is_ready(): # 如果海龟生成服务器已经准备就绪
-request = Spawn.Request() # 创建一个请求的数据
-request.name = 'turtle2' # 设置请求数据的内容，包括海龟名、xy位置、姿态
-request.x = float(4)
-request.y = float(2)
-request.theta = float(0)
-self.result = self.spawner.call_async(request) # 发送服务请求
-self.turtle_spawning_service_ready = True # 设置标志位，表示已经发送请求
-else:
-self.get_logger().info('Service is not ready') # 海龟生成服务器还没准备就绪的提示
+
+  def init(self, name):
+  super().init(name)  # initialize the ROS 2 node base class
+
+  self.declare_parameter('source_frame', 'turtle1')  # create a source-frame parameter
+  self.source_frame = self.get_parameter(  # use the externally provided parameter value when available, otherwise use the default
+  'source_frame').get_parameter_value().string_value
+
+  self.tf_buffer = Buffer()  # create a buffer that stores transform information
+  self.tf_listener = TransformListener(self.tf_buffer, self)  # create a transform listener
+
+  self.spawner = self.create_client(Spawn, 'spawn')  # create a client that requests turtle spawning
+  self.turtle_spawning_service_ready = False  # flag indicating whether the turtle-spawn request has been sent
+  self.turtle_spawned = False  # flag indicating whether the turtle was spawned successfully
+
+  self.publisher = self.create_publisher(Twist, 'turtle2/cmd_vel', 1) # create the velocity topic for the follower turtle
+
+  self.timer = self.create_timer(1.0, self.on_timer)  # create a periodic timer to control the follower turtle motion
+
+  def on_timer(self):
+  from_frame_rel = self.source_frame  # source frame
+  to_frame_rel  = 'turtle2'  # target frame
+
+  if self.turtle_spawning_service_ready:  # if the turtle-spawn service has already been requested
+  if self.turtle_spawned:  # if the follower turtle has already been spawned
+  try:
+  now = rclpy.time.Time()  # get the current ROS time
+  trans = self.tf_buffer.lookup_transform(  # look up the transform from the source frame to the target frame at the current time
+  to_frame_rel,
+  from_frame_rel,
+  now)
+  except TransformException as ex:  # if the transform lookup fails, handle the exception
+  self.get_logger().info(
+  f'Could not transform {to_frame_rel} to {from_frame_rel}: {ex}')
+  return
+
+  msg = Twist()  # create a velocity-control message
+  scale_rotation_rate = 1.0  # calculate angular velocity from the turtle angle
+  msg.angular.z = scale_rotation_rate * math.atan2(
+  trans.transform.translation.y,
+  trans.transform.translation.x)
+
+  scale_forward_speed = 0.5  # calculate linear velocity from the turtle distance
+  msg.linear.x = scale_forward_speed * math.sqrt(
+  trans.transform.translation.x ** 2 +
+  trans.transform.translation.y ** 2)
+
+  self.publisher.publish(msg)  # publish velocity commands so the turtle follows
+  else:  # if the follower turtle has not been spawned yet
+  if self.result.done():  # check whether the turtle has been spawned
+  self.get_logger().info(
+  f'Successfully spawned {self.result.result().name}')
+  self.turtle_spawned = True
+  else:  # the follower turtle still has not been spawned
+  self.get_logger().info('Spawn is not finished')
+  else:  # if the turtle-spawn service has not been requested
+  if self.spawner.service_is_ready():  # if the turtle-spawn server is ready
+  request = Spawn.Request()  # create the request data object
+  request.name = 'turtle2'  # set the request data, including turtle name, xy position, and pose
+  request.x = float(4)
+  request.y = float(2)
+  request.theta = float(0)
+
+  self.result = self.spawner.call_async(request)  # send the service request
+  self.turtle_spawning_service_ready = True  # set the flag to show the request has been sent
+  else:
+  self.get_logger().info('Service is not ready')  # message indicating that the turtle-spawn server is not ready yet
+
 def main(args=None):
-rclpy.init(args=args) # ROS2 Python接口初始化
-node = TurtleFollowing("turtle_following") # 创建ROS2节点对象并进行初始化
-rclpy.spin(node) # 循环等待ROS2退出
-node.destroy_node() # 销毁节点对象
-rclpy.shutdown() # 关闭ROS2 Python接口
+  rclpy.init(args=args)  # initialize the ROS 2 Python interface
+  node = TurtleFollowing("turtle_following")  # create and initialize the ROS 2 node object
+  rclpy.spin(node)  # keep spinning until ROS 2 exits
+  node.destroy_node()  # destroy the node object
+  rclpy.shutdown()  # Shut down the ROS 2 Python client library
 ```
 
-在pkg_tf功能包下新建launch文件夹，在launch文件夹内新建turtle_following.launch.py文件，添加如下内容：
+Create new lanch folders under the pkg tf kit and create new turtle following.launch.py files in the lanch folder, adding the following:
 
 ```python
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
+
 def generate_launch_description():
-return LaunchDescription([
-DeclareLaunchArgument('source_frame', default_value='turtle1', description='Target frame name.'),
-Node(
-package='turtlesim',
-executable='turtlesim_node',
-),
-Node(
-package='pkg_tf',
-executable='turtle_tf_broadcaster',
-name='broadcaster1',
-parameters=[
-{'turtlename': 'turtle1'}
-]
-),
-Node(
-package='pkg_tf',
-executable='turtle_tf_broadcaster',
-name='broadcaster2',
-parameters=[
-{'turtlename': 'turtle2'}
-]
-),
-Node(
-package='pkg_tf',
-executable='turtle_following',
-name='listener',
-parameters=[
-{'source_frame': LaunchConfiguration('source_frame')}
-]
-),
-])
+
+  return LaunchDescription([
+  DeclareLaunchArgument('source_frame', default_value='turtle1', description='Target frame name.'),
+  Node(
+  package='turtlesim',
+  executable='turtlesim_node',
+  ),
+  Node(
+  package='pkg_tf',
+  executable='turtle_tf_broadcaster',
+  name='broadcaster1',
+  parameters=[
+  {'turtlename': 'turtle1'}
+  ]
+  ),
+  Node(
+  package='pkg_tf',
+  executable='turtle_tf_broadcaster',
+  name='broadcaster2',
+  parameters=[
+  {'turtlename': 'turtle2'}
+  ]
+  ),
+  Node(
+  package='pkg_tf',
+  executable='turtle_following',
+  name='listener',
+  parameters=[
+  {'source_frame': LaunchConfiguration('source_frame')}
+  ]
+  ),
+  ])
 ```
 
-### 8、编辑配置文件
+## 8. Edit Profiles
 
-### 8.1、setup.py中配置
+### 8.1, setup.py configuration
+
+![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-11.png)
+
+Import Related Library
+
+![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-12.png)
+
+![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-13.png)
 
 ```bash
 import os
 from glob import glob
 ```
 
+Add turtle following node information and add a command to copy launch files into install 's shared directory
+
 ```bash
 (os.path.join('share',package_name,'launch'),glob('launch/*')),
 ```
 
-![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-10.png)
-
-### 9、编译功能包
+## 9. Compiler functional package
 
 ```bash
 colcon build --packages-select pkg_tf
 ```
 
-### 10、运行程序
+## Operational procedures
+
+![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-14.png)
+
+Refresh terminal environment variables, then run
 
 ```bash
-source install/setup.bash
+# source install/setup.bash
 ros2 launch pkg_tf turtle_following.launch.py
 ```
+
+Activate the turtle keyboard control node, control the first little turtle movement, and the second will follow automatically.
 
 ```bash
 ros2 run turtlesim turtle_teleop_key
 ```
 
-在此终端内按键盘的上下左右键可以控制其中的一个小乌龟运动，然后另外一个小乌龟会跟着运动直到它们重合。
+Up and down of the keyboard in this terminal can control one of the little turtles' movements, and the other will follow them until they overlap.
 
-![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-11.png)
+### 11. Progress
 
-### 11、进阶内容
+Understand the TF 's trans-temporal variation
 
-![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-12.png)
-
-![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-13.png)
-
-## 11自定义接口消息
-
-### 11自定义接口消息(Custom Interfaces)
-
-在ROS系统中，话题（Topic）、服务（Service）和动作（Action）这三类通信机制，都依赖于一个核心概念——通信接口。
-
-通信的本质是多方之间的信息交换，而非单向的自说自话。要实现高效、可靠的交互，参与通信的节点必须对数据的格式和语义达成共识。为此，ROS引入了标准化的通信接口，为各类消息定义清晰、统一的数据结构，确保不同节点之间能够准确理解彼此传递的信息。
-
-这种接口设计不仅规范了数据交换的方式，更在架构层面解耦了程序模块：开发者无需了解对方的内部实现，只需遵循接口约定，即可实现模块间的无缝协作。这既便于集成他人开发的功能组件，也方便自己的代码被复用，从而显著提升开发效率。
-
-归根结底，通信接口是ROS“避免重复造轮子”理念的技术基石——通过标准化与解耦，推动机器人软件的模块化、复用化与生态化发展。
-
-![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-14.png)
-
-ROS有三种常用的通信机制，分别是话题、服务、动作，通过每一种通信种定义的接口，各种节点才能有机的联系到一起。
-
-### 11.1创建自定义接口流程
-
-主要步骤如下：
-
-### 11.2创建动作通信自定义接口
-
-在09动作通讯的案例中，我们已经演示过如果创建动作通讯接口的完整流程，大家可以先回去复习一下，这里就不再赘述。
-
-### 11.3创建话题通信自定义接口
-
-在09动作通讯中我们已经创建了自定义接口功能包，现在我们在功能包pkg_interfaces下新建msg文件夹，msg文件夹下新建Person.msg文件，文件中输入如下内容：
-
-```bash
-string name
-int32 age
-float64 height
-```
+Buffer was able to automatically cache all TF conversions in the TF system in the past 10s through the buffer zone (which can be set up by Buffer for its own arbitrary duration), and all changes in the buffer zone are time-stamped in time, all of which are continuously traceable, and even if the two coordinates are at different points in time, the coordinates can be traced to one another. This can be done by reference to the literature that designed the TF system, with detailed rationale (the literature is linked under this section of the course folder or at the beginning of this section).
 
 ![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-15.png)
 
-在package.xml和CMakeLists.txt中添加如下配置：
+The following is an addition to our case of the turtle following us, where the red arrow indicates that it is possible to search over time for changes between the two coordinates at different points in time.
+
+# Custom interface message
+
+## 11 Custom Interface Messages
+
+![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-16.png)
+
+In the ROS system, the three types of communication mechanisms, Topic, Service and Action, all rely on a core concept — communication interface.
+
+The essence of communications is the exchange of information between multiple parties, not one-way self-expression. In order to achieve efficient and reliable interaction, the nodes involved in communications must have a common understanding of the format and semantics of the data. To this end, ROS has introduced standardized communication interfaces that define clear and harmonized data structures for all types of messages, ensuring that information transmitted between different nodes is accurately understood.
+
+![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-17.png)
+
+This interface design not only regulates the way in which data are exchanged, but also decorates programme modules at the structural level: developers need not be aware of each other ' s internal realization, but simply follow the interface agreement to achieve seamless collaboration between modules. This allows for the integration of functional components developed by others and the re-use of their own codes, thereby significantly increasing the development efficiency.
+
+In the final analysis, the communication interface is the technological building block of the ROS concept of "duplication of wheeling" - the promotion of modularization, reuse and ecological development of robotic software through standardization and decoupling.
+
+ROS has three common communication mechanisms: topics, services, actions, and through each defined interface, the various nodes are organically linked.
+
+## 11.1 Create a custom interface process
+
+The main steps are as follows:
+
+Create interface functional package
+
+![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-18.png)
+
+Create and edit .msg files, .srv files,.action files
+
+Edit Profile
+
+Compile
+
+![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-19.png)
+
+Test
+
+## 11.2 Create a custom interface for action communications
+
+In the case of action communication 09, we have demonstrated that if you create a complete process for action communication interfaces, you can go back and review them, and we will not repeat them here.
+
+![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-20.png)
+
+## 11.3 Create a custom interface for topic communications
+
+We have created a custom interface kit in the 09 action newsletter, and now we are creating a new msg folder under the functional package pkg interfaces, and a new Person.msg file under the msg folder, with the following input:
 
 ```bash
-CMakeLists.txt
+string  name
+int32  age
+float64  height
+```
+
+Add the following configuration to package.xml and CMakeLists.txt:
+
+```bash
+# CMakeLists.txt
 rosidl_generate_interfaces(${PROJECT_NAME}
-"action/Progress.action"
-"msg/Person.msg"
+  "action/Progress.action"
+  "msg/Person.msg"
 )
 ```
 
-```bash
+![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-21.png)
+
 package.xml
+
+```bash
+# package.xml
 <buildtool_depend>rosidl_default_generators</buildtool_depend>
 <exec_depend>rosidl_default_runtime</exec_depend>
 <depend>action_msgs</depend>
 <member_of_group>rosidl_interface_packages</member_of_group>
 ```
 
-![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-16.png)
-
-终端中进入当前工作空间，编译功能包：
+Terminal enters the current workspace, compiles functional packages:
 
 ```bash
 cd ~/workspace
 colcon build --packages-select pkg_interfaces
 ```
 
-![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-17.png)
+Test interface normal
 
-测试接口是否正常
-
-先刷新环境变量
+Refresh environment variables first
 
 ```bash
-source install/setup.bash
+# source install/setup.bash
 ```
 
-查看接口类型
+View interface type
 
 ```bash
 ros2 interface show pkg_interfaces/msg/Person
 ```
 
-正常情况下，终端将会输出与Person.msg文件一致的内容。
+Under normal circumstances, the terminal will export content consistent with the Person.msg file.
 
-![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-18.png)
+## 11.4 Create a custom interface for service communications
 
-### 11.4创建服务通信自定义接口
+In the course of [ROS2 Action Communication Service Achievement], we have created a custom interface functional kit, a new srv folder under the package pkg interfaces, and a new Add.srv file under the srv folder, where the following contents are entered:
 
-在【ROS2动作通讯服务端实现】课程中我们已经创建了自定义接口功能包，功能包pkg_interfaces下新建srv文件夹，srv文件夹下新建Add.srv文件，文件中输入如下内容：
+![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-22.png)
 
 ```bash
 int32 num1
@@ -492,17 +567,21 @@ int32 num2
 int32 sum
 ```
 
-![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-19.png)
+Add the following configuration to package.xml and CMakeLists.txt:
 
-在package.xml和CMakeLists.txt中添加如下配置：
+![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-23.png)
+
+CMakeLists.txt
 
 ```bash
 rosidl_generate_interfaces(${PROJECT_NAME}
-"action/Progress.action"
-"msg/Person.msg"
-"srv/Add.srv"
+  "action/Progress.action"
+  "msg/Person.msg"
+  "srv/Add.srv"
 )
 ```
+
+package.xml
 
 ```bash
 <buildtool_depend>rosidl_default_generators</buildtool_depend>
@@ -511,9 +590,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
 <member_of_group>rosidl_interface_packages</member_of_group>
 ```
 
-![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-20.png)
-
-终端中进入当前工作空间，编译功能包：
+Terminal enters the current workspace, compiles functional packages:
 
 ```bash
 cd ~/workspace
@@ -521,895 +598,591 @@ colcon build --packages-select pkg_interfaces
 source install/setup.bash
 ```
 
-测试
+Test
 
 ```bash
 ros2 interface show pkg_interfaces/srv/Add
 ```
 
-正常情况下，终端将会输出与Person.msg文件一致的内容。
+Under normal circumstances, the terminal will export content consistent with the Person.msg file.
 
-![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-21.png)
+## 11.5 Next steps
 
-### 11.5下一步
+1.12 Parameter Service Cases - Learning Parameter Service
 
-1.12参数服务案例-学习参数服务
+![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-24.png)
 
-2.13元功能包-学习功能包
+2.13 meta-functional packages - learning kits
 
-## 12参数服务案例
+# 12 Parameter service cases
 
-### 12参数服务(Parameters)
+## 12 Parameter Services (Parameters)
 
-### 12.1参数概述
+### 12.1 Overview of parameters
 
-在ROS机器人系统中，参数扮演着类似C++全局变量的角色，为多个节点提供便捷的数据共享机制。这些参数以全局字典的形式存储于系统中——所谓"字典"，即由"键"（参数名称）与"值"（参数数据）构成的映射关系，类似于编程语言中的变量赋值（参数名=参数值），使用时只需通过名称即可访问对应数值。
+In ROS robotic systems, parameters act as C++ global variables and provide easy data-sharing mechanisms for multiple nodes. These parameters are stored in the system in the form of a global dictionary — the so-called dictionaries, i.e. map relationships consisting of "key" (parameter name) and "value" (parameter data), similar to variable endowments in programming languages (parameter name = parameter value) and can be accessed only by name.
 
-参数系统具备强大的分布式特性：一旦某个节点声明或更新了参数，其他节点不仅能够实时读取该数据，还能通过监控机制即时感知数值变化，确保整个系统始终同步于最新状态。这种设计实现了跨节点的无缝数据协作，无需复杂的点对点通信即可维护全局一致性。
+![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-25.png)
 
-### 12.2小海龟例程中的参数
+The parameter system has strong distributed characteristics: once the parameter has been declared or updated, the other nodes not only have real-time access to the data, but also ensure that the entire system is kept up to date through the monitoring mechanism. Such a design achieves seamless data collaboration across nodes and maintains global consistency without complex point-to-point communications.
 
-在小海龟的例程中，仿真器也提供了不少参数，通过这个例程，熟悉下参数的含义和命令行的使用方法。
+## 12.2 Parameters in the small turtle routine
 
-在Jetson上启动两个终端，分别运行小海龟仿真器和键盘控制节点：
+Simulators also provide many parameters in the small turtle routine, through which they are familiar with the meaning of the parameters and how command lines are used.
+
+![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-26.png)
+
+Start two terminals on Jetson to run the turtle simulation and keyboard control nodes:
 
 ```bash
 ros2 run turtlesim turtlesim_node
-# 第二个终端
+# Second terminal
 ros2 run turtlesim turtle_teleop_key
 ```
 
-![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-22.png)
+Start another terminal and view the list of parameters with the following command
 
-再启动一个终端，并使用如下命令查看参数列表
+![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-27.png)
 
 ```bash
 ros2 param list
 ```
 
-![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-23.png)
+Parameter queries and modifications
 
-参数查询与修改
-
-如果想要查询或者修改某个参数的值，可以在param命令后边跟get或者set子命令：
+If you want to query or modify the value of a parameter, you can follow the Get or Set sub-command behind the Param command:
 
 ```bash
-ros2 param describe turtlesim background_b # 查看某个参数的描述信息
-ros2 param get turtlesim background_b # 查询某个参数的值
-ros2 param set turtlesim background_b 10 # 修改某个参数的值
+ros2 param describe turtlesim background_b  # view the description of a parameter
+ros2 param get turtlesim background_b  # query the value of a parameter
+ros2 param set turtlesim background_b 10  # modify the value of a parameter
 ```
 
-参数文件保存与加载
+Parameter File Save and Load
 
-一个一个查询/修改参数太麻烦了，不如试一试参数文件，ROS中的参数文件使用yaml格式，可以在param命令后边跟dump子命令，将某个节点的参数都保存到文件中，或者通过load命令一次性加载某个参数文件中的所有内容：
+A query/modification of parameters is too much of a problem to try a parameter file. The ROS parameter file is in Yaml format and can be followed by the dump sub-command behind the param command, save all the parameters of a node to the file, or load all the contents of a parameter file once and for all by the load command:
 
 ```bash
-ros2 param dump turtlesim >> turtlesim.yaml # 将某个节点的参数保存到参数文件中
-ros2 param load turtlesim turtlesim.yaml # 一次性加载某一个文件中的所有参数
+ros2 param dump turtlesim >> turtlesim.yaml  # save a node parameter set to a parameter file
+ros2 param load turtlesim turtlesim.yaml  # load all parameters from a file at once
 ```
 
-### 12.3参数案例
+## 12.3 Parameter cases
 
-### 12.3.1新建功能包
+### 12.3.1 New functionality package
 
-在工作空间的src目录下新建功能包
+New functionality package under src directory in workspace
 
 ```bash
 ros2 pkg create pkg_param --build-type ament_python --dependencies rclpy --node-name param_demo
 ```
 
-执行完上述命令，会创建pkg_param功能包，同时会创建一个param_demo的节点，并且已经配置好相关的配置文件
+Following the above-mentioned command, a pkg param kit will be created, and a param demo node will be created, and the relevant profile will be configured
 
-![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-24.png)
+### 12.3.2 Code realization
 
-### 12.3.2代码实现
-
-接下来编辑param_demo.py实现发布方的功能，添加如下代码：
+The editor then edits Param demo.py to perform the functions of the publisher by adding the following code:
 
 ```bash
-import rclpy # ROS2 Python接口库
-from rclpy.node import Node # ROS2 节点类
+import rclpy  # ROS 2 Python client library
+from rclpy.node import Node  # ROS 2 node class
+
 class ParameterNode(Node):
-def __init__(self, name):
-super().__init__(name) # ROS2节点父类初始化
-self.timer = self.create_timer(2.0, self.timer_callback) # 创建一个定时器（单位为秒的周期，定时执行的回调函数）
-self.declare_parameter('robot_name', 'muto') # 创建一个参数，并设置参数的默认值
-def timer_callback(self): # 创建定时器周期执行的回调函数
-robot_name_param = self.get_parameter('robot_name').get_parameter_value().string_value # 从ROS2系统中读取参数的值
-self.get_logger().info('Hello %s!' % robot_name_param) # 输出日志信息，打印读取到的参数值
-def main(args=None): # ROS2节点主入口main函数
-rclpy.init(args=args) # ROS2 Python接口初始化
-node = ParameterNode("param_declare") # 创建ROS2节点对象并进行初始化
-rclpy.spin(node) # 循环等待ROS2退出
-node.destroy_node() # 销毁节点对象
-rclpy.shutdown() # 关闭ROS2 Python接口
+  def __init__(self, name):
+  super().__init__(name)  # initialize the ROS 2 node base class
+  self.timer = self.create_timer(2.0, self.timer_callback)  # create a timer (period in seconds) that runs the callback regularly
+  self.declare_parameter('robot_name', 'muto')  # create a parameter and set its default value
+
+  def timer_callback(self):  # create the timer callback function
+  robot_name_param = self.get_parameter('robot_name').get_parameter_value().string_value  # read the parameter value from ROS 2
+  self.get_logger().info('Hello %s!' % robot_name_param)  # log the parameter value that was read
+
+def main(args=None):  # main entry function of the ROS 2 node
+  rclpy.init(args=args)  # initialize the ROS 2 Python interface
+  node = ParameterNode("param_declare")  # create and initialize the ROS 2 node object
+  rclpy.spin(node)  # keep spinning until ROS 2 exits
+  node.destroy_node()  # destroy the node object
+  rclpy.shutdown()  # Shut down the ROS 2 Python client library
 ```
 
-### 12.3.3编译功能包
+### 12.3.3 Compiler functional kit
 
 ```bash
 colcon build --packages-select pkg_param
 ```
 
-![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-25.png)
+### 12.3.4 Operational procedures
 
-### 12.3.4运行程序
-
-先刷新环境变量，然后运行节点
+Refresh environmental variables first, then run nodes
 
 ```bash
-source install/setup.bash
+# source install/setup.bash
 ros2 run pkg_param param_demo
 ```
 
-![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-26.png)
-
-开启另一个终端，将robot_name设置为robot：
+Open another terminal and set robot name to robot:
 
 ```bash
 ros2 param set param_declare robot_name robot
 ```
 
-终端中可以看到循环打印的日志信息，其中的muto是我们默认设置的一个参数值，参数名称是robot_name，通过命令行修改这个参数后，看到终端中也跟着变化了。
+The log information can be found in the terminal, where muto is a parameter value that we set by default. The parameter name is robot name. Once you change this parameter by command line, the terminal changes.
 
-![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-27.png)
+![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-28.png)
 
-### 12.4下一步
+## 12.4 Next steps
 
-1.13元功能包-学习元功能包
+1.13 meta-function packages - learning meta-function packages
 
-2.14分布式通讯-学习分布式通信
+![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-29.png)
 
-## 13元功能包
+2.14 Distributed Communication - learning distributed communications
 
-### 13元功能包(Metapackages)
+# 13 meta-pack
 
-### 13.1元功能包概述
+![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-30.png)
 
-### 13.1.1什么是元功能包
+### 13 Metapackages
 
-在ROS2中，一个完整的功能模块往往由多个功能包协同构成。以机器人导航为例，该模块通常包含地图服务、定位算法、路径规划、运动控制等多个子功能包。如果用户需要逐一手动安装这些分散的包，不仅效率低下，还容易因遗漏依赖导致系统无法正常运行。
+## 13.1 Summary of meta-function packages
 
-为解决这一问题，ROS2引入了元功能包（Metapackage）机制。这一概念源自Linux文件管理系统，本质上是一个"虚包"——其本身不包含任何实质性代码或节点，而是通过声明依赖关系，将一组相关的功能包有机整合。可以将其理解为功能集合的"目录索引"：它清晰标示了该模块包含哪些子包，并指导包管理工具自动完成批量安装。
+### 13.1.1 What is a meta-functional kit
 
-典型应用场景是ROS2的安装命令：
+In ROS2, a complete functional module is often composed of multiple functional packages. In the case of robotic navigation, this module usually contains several sub-function packages such as map services, positioning algorithms, path planning, movement control, etc. If users need to install these decentralized packages manually, it is not only inefficient, but also prone to the failure of the system to function as a result of missing reliance.
+
+To address this problem, ROS2 introduced the Metapackage mechanism. The concept is derived from Linux's document management system and is essentially a "fake bag" — it does not contain any substantive code or node per se, but organically integrates a set of related functional packages by declaring dependency. It can be understood as a "catalogue index" for functional clusters: it clearly indicates which subpackages the module contains and guides the package management tool to automatically complete batch installation.
+
+The typical application scenario is the installation order for ROS2:
 
 ```bash
 sudo apt install ros-humble-desktop
 ```
 
-这里的ros-humble-desktop就是一个元功能包，它依赖了ROS2核心工具、常用库及仿真组件等数十个包，执行该命令即可一次性完成整套系统的部署。
+The ros-humble-desktop here is a meta-function kit that relies on dozens of packages such as the ROS2 core tool, the common-use library and simulation components, and the implementation of this order will allow the full system to be deployed once and for all.
 
-在机器人开发领域，Navigation2是元功能包的经典实践。该仓库通过元包结构，将AMCL定位、代价地图、规划器、控制器等十余个独立导航组件封装为统一模块。开发者只需安装nav2_bringup元包，即可自动获取完整的导航能力栈，极大简化了复杂系统的部署流程。
+In the field of robotics, Navigation 2 is the classic practice of meta-function packages. Through the package structure, the warehouse covers more than a dozen independent navigation components, such as AMCL positioning, cost maps, planners, controllers, etc., into uniform modules. The complete navigational capacity warehouse will be automatically acquired by the developers with the installation of the nav2 bringup package, greatly simplifying the deployment process for complex systems.
 
-元功能包不直接提供软件，而是依赖于其他相关的包，为完整的包组提供便捷的安装机制。
+The meta-function packages do not provide software directly, but rely on other related packages to provide an easy installation mechanism for the complete package.
 
-```
-Plain Text
-元功能包概念图：
-┌─────────────────────────────────────────────────┐
-│ navigation2 (元功能包) │
-│ │
-│ ┌──────────┐ ┌──────────┐ ┌──────────┐ │
-│ │nav2_costmap│ │nav2_planner│ │nav2_controller│ │
-│ └──────────┘ └──────────┘ └──────────┘ │
-│ │
-│ ┌──────────┐ ┌──────────┐ ┌──────────┐ │
-│ │nav2_behaviors│ │ nav2_core │ │ nav2_bt_navigator│ │
-│ └──────────┘ └──────────┘ └──────────┘ │
-└─────────────────────────────────────────────────┘
-安装流程：
-sudo apt install ros-humble-navigation2
-↓
-自动安装所有依赖的子包
-```
+> Plain Text
+> Concept of the meta-functional kit:
+>
+> That's right. That's right.
+> │navigation2 (metafunctional package)│
+> Zenium
+>
+> │nav2 costmap2nav2 planner│nav2 controller│
+>
+> Zenium
+>
+> │ n  │ │
+>
+>
+>
+> Installation process:
+> I don't know what you're talking about.
+> Zenium
+> Automatically install all dependent subpackages
 
-### 13.1.2元功能包的作用
+### 13.1.2 Role of meta-function packages
 
-方便用户的安装，我们只需要这一个包就可以把其他相关的软件包组织到一起安装了。
+For user-friendly installation, we need only this package to organize other related packages together.
 
-| 用途 | 说明 |
+| Purpose | Annotations |
 | --- | --- |
-| 组织 | 将相关功能包分组 |
-| 简化安装 | 一次安装多个包 |
-| 依赖管理 | 统一管理依赖关系 |
-| 文档化 | 清晰的项目结构 |
-| 版本控制 | 统一发布和管理版本 |
+| Organizations | Group related functional packages |
+| Simplified installation | Installation of multiple packages at a time |
+| Dependence on management | Unified management dependency |
+| Documentation | Clear project structure |
+| Version Control | Harmonized publication and management of versions |
 
-### 13.2实现案例
+## 13.2 Implementation cases
 
-新建一个功能包
+New Function Package
 
 ```bash
 ros2 pkg create pkg_metapackage
 ```
 
-修改package.xml文件，添加执行时所依赖的包
+Modify package.xml file to add the package on which execution depends
 
 ```bash
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-<name>pkg_metapackage</name>
-<version>0.0.0</version>
-<description>TODO: Package description</description>
-<maintainer email="1461190907@qq.com">root</maintainer>
-<license>TODO: License declaration</license>
-<buildtool_depend>ament_cmake</buildtool_depend>
-<exec_depend>pkg_interfaces</exec_depend>
-<exec_depend>pkg_helloworld_py</exec_depend>
-<exec_depend>pkg_topic</exec_depend>
-<exec_depend>pkg_service</exec_depend>
-<exec_depend>pkg_action</exec_depend>
-<exec_depend>pkg_param</exec_depend>
-<test_depend>ament_lint_auto</test_depend>
-<test_depend>ament_lint_common</test_depend>
-<export>
-<build_type>ament_cmake</build_type>
-</export>
+  <name>pkg_metapackage</name>
+  <version>0.0.0</version>
+  <description>TODO: Package description</description>
+  <maintainer email="1461190907@qq.com">root</maintainer>
+  <license>TODO: License declaration</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <exec_depend>pkg_interfaces</exec_depend>
+  <exec_depend>pkg_helloworld_py</exec_depend>
+  <exec_depend>pkg_topic</exec_depend>
+  <exec_depend>pkg_service</exec_depend>
+  <exec_depend>pkg_action</exec_depend>
+  <exec_depend>pkg_param</exec_depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+  <build_type>ament_cmake</build_type>
+  </export>
 </package>
 ```
 
-![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-28.png)
-
-文件CMakeLists.txt内容如下
+Document CMakeLists.txt reads as follows:
 
 ```bash
 cmake_minimum_required(VERSION 3.5)
 project(pkg_metapackage)
+
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-add_compile_options(-Wall -Wextra -Wpedantic)
+  add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
+
 find_package(ament_cmake REQUIRED)
+
 ament_package()
 ```
 
-![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-29.png)
+Compiler functionality package
 
-编译元功能包
+There will be no actual implementable documents.
 
 ```bash
 colcon build --packages-select pkg_metapackage
 ```
 
-![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-30.png)
+## 13.3 Next steps
 
-### 13.3下一步
+You can:
 
-完成元功能包学习后，您可以：
+1.14 Distributed Communication - learning distributed communications
 
-1.14分布式通讯-学习分布式通信
+DDS - Learning DDS intermediate
 
-2.15 DDS-学习DDS中间件
+Review series:
 
-#### 回顾系列：
-
-| 章节 | 内容 |
+| Chapter | Contents |
 | --- | --- |
-| 04 工作区 | 工作区管理 |
-| 05 功能包 | 功能包基础 |
-| 12 参数服务案例 | 参数配置 |
+| 04 Workspace | Workspace management |
+| 05 Package | Functional package base |
+| 12 Parameter service cases | Parameter Configuration |
 
-## 14分布式通讯
+![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-31.png)
 
-### 14分布式通讯(Distributed Communication)
+### 14 Distributed Communication
 
-### 14.1分布式通信概述
+## 14 Distributed Communications
 
-ROS2作为一个强大的分布式通信框架，能够便捷地实现不同主机间的网络数据交互。其底层基于DDS (Data Distribution Service)中间件，通过ROS_DOMAIN_ID（域ID）机制来管理通信：当不同设备上的节点设置了相同的域ID且处于同一网络时，它们便可以自动发现并自由通信；反之，ID不同则相互隔离。为了简化操作，ROS2默认所有节点的域ID均为0，这意味着您无需任何额外配置，只要设备在同一网络中，即可实现开箱即用的分布式通信。这一特性在无人车编队、无人机集群和远程控制等需要多设备数据交互的场景中有着广泛而关键的应用。
+## 14.1 Summary of distributed communications
 
-### 14.1.1什么是分布式通信
+ROS2 is a powerful distributed communications framework that allows easy inter-host network data interaction. The bottom is based on the DDS (Data Distribution Service) intermediate, which manages communications through the ROS DOMAIN ID: when the nodes on different devices set the same domain ID and are in the same network, they automatically detect and communicate freely; On the contrary, the IDs are separate from each other. In order to simplify the operation, ROS2 defaults that the domain ID of all nodes is 0, which means that you do not need any additional configuration, so long as the device is in the same network, you can get a distributed message to open the box. This feature has extensive and critical applications in scenarios requiring multi-equipment data interaction, such as drone formations, drone clusters and remote control.
 
-ROS 2的分布式通信允许多个计算机上的节点互相通信，无需中心服务器。这是通过DDS (Data Distribution Service)实现的。
+### 14.1.1 What is distributed communications
 
-```
-Plain Text
-分布式通信架构：
-网络交换机/路由器
-│
-┌─────────┼─────────┐
-│ │ │
-┌─────┐ ┌─────┐ ┌─────┐
-│ PC1 │ │ PC2 │ │ PC3 │
-│ │ │ │ │ │
-│传感器│ │控制 │ │可视化│
-│ 节点 │ │节点 │ │ 节点 │
-└─────┘ └─────┘ └─────┘
-```
+ROS 2 distributed communications allows multiple computer nodes to communicate with each other without central servers. This is achieved through DDS (Data Distribution Service).
 
-### 14.1.2分布式通信的特点
+> Plain Text
+> Distributed Communication architecture:
+>
+> Network switches/routers
+> Zenium
+> {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FF00}
+> I'm sorry.
+> {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FF00} {\cH00FF00} {\cHFFFFFF} {\cHFFFFFF}{\cH00FF00} {\cHFFFF00} {\cH00FF00} {\cHFFFFFF} {\bord0\shad0\alphaH3D}
+> PC1 & P2 & P3
+> I'm sorry.
+> │ │ │ │ │ │
+> Node, node, node, node.
+> – Peter – – – – – Peter – – Peter –
 
-| 特点 | 说明 |
+### 14.1.2 Characteristics of distributed communications
+
+| Characteristics | Annotations |
 | --- | --- |
-| 无中心化 | 不需要 ROS Master |
-| 自动发现 | 节点自动发现网络上的其他节点 |
-| 跨平台 | 不同操作系统间通信 |
-| 可靠传输 | 支持多种 QoS 策略 |
+| Uncentralized | No need, ROS Master. |
+| Autodiscover | Node automatically finds other nodes on the network |
+| Cross Platform | Communications between different operating systems |
+| Reliable transmission | Support multiple QoS policies |
 
-### 14.2 ROS_DOMAIN_ID
+## 14.2 ROS DOMAIN ID
 
-### 14.2.1域ID概念
+### 14.2.1 Domain ID concept
 
-ROS_DOMAIN_ID用于隔离不同的ROS 2网络。同一域ID的节点可以互相通信，不同域ID的节点彼此隔离。
+ROS DOMIN ID is used to isolate different ROS2 networks. The node of the same domain ID can communicate with each other, and the node of the different domain IDs is isolated from each other.
 
-```
-Plain Text
-域 ID 隔离示意图：
-ROS_DOMAIN_ID=0 ROS_DOMAIN_ID=1
-┌──────────────┐ ┌──────────────┐
-│ 机器人A │ │ 机器人B │
-│ │ │ │
-│ 传感器节点 │ │ 传感器节点 │
-│ 控制节点 │ │ 控制节点 │
-└──────────────┘ └──────────────┘
-互不干扰，独立运行
-```
+![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-32.png)
 
-### 14.3实现
+> Plain Text
+> Domain ID separation diagram:
+>
+> ROS DOMIN ID=0 ROS DOMIN ID=1
+>
+> A robot, B robot, B robot.
+> I don't know.
+> │ Sensor node
+> Node, node, node, node, node.
+> -
+>
+> No interference. Run independently.
 
-### 14.3.1默认实现
+## 14.3 Achieved
 
-只需要将主机和从机【可以有多个】处于同一个网络中，就已经实现了分布式通讯。比如主机和从机连接同一个WiFi或者同一个路由器。
+### 14.3.1 Default Achievement
 
-Windows中虚拟机设置网络为【桥接模式】就和主机处于同一个网络了。
+Distributional communication has been achieved by simply placing the host and the operator [more than one] in the same network. For example, the mainframe connects to the same WiFi or the same router.
 
-测试：
+The virtual network in Windows is in the same network as the host.
 
-1、A主机执行：
+Test:
 
-这里演示的是小车处于docker中，docker使用的网络模式是host模式，host模式简单来说就是和小车共用一个网络，所以跟在小车上执行没有区别。
+It's assumed that we have two hosts A and B, which can be in any form connected to the network, e.g. virtual machines, berry pies, jetson, x86XIAOBAITOKENOX, card master board, with only the same version of the ros2 environment.
+
+1. A. Host execution:
+
+The demonstration here is that the car is in the docker, the docker model is the host model, which simply shares the network with the car, so it's no different from the car implementation.
 
 ```bash
 ros2 run demo_nodes_py talker
 ```
 
-2、B主机执行：
+2. B. Host execution:
 
 ```bash
 ros2 run demo_nodes_py listener
 ```
 
-若显示如下：主机端发布的话题从机端能及时订阅到，表示已经实现了多机通讯
+If shown as follows: Host-end topics are promptly subscribed to, indicating that multiple machine communications have been achieved
 
-![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-31.png)
+### 14.3.2 Distributional network subgroups
 
-### 14.3.2分布式网络分组
+Assuming you're in a network with other robots, you can set up a group for your robots to avoid interference from other robots.
 
-假设你现在所处的网络中还有其它的机器人在使用，为了不受其它机器人的干扰，你还可以给你的机器人设置一个分组。
-
-ROS2提供了一个DOMAIN的机制，就类似分组一样，处于同一个DOMAIN中的计算机才能通信，我们可以在主机端【小车】和从机端【虚拟机】的.bashrc中加入这样一句配置，即可将两者分配到一个小组中：
+ROS2 provides a DOMAIN mechanism, which, like a subgroup, is able to communicate with a computer in the same DOMAIN, and we can add a sentence to the host [car] and from the machine [virtual machine].
 
 ```bash
 $ export ROS_DOMAIN_ID=<your_domain_id>
 ```
 
-如果主机端【小车】和从机端【虚拟机】分配的ID不同，则两者无法实现通信，达到分组的目的。
+If the host [van] is different from the ID assigned from the machine [virtual machine], the two cannot communicate for group purposes.
 
-### 14.3.3案例1
+### 14.3.3 Case 1
 
-1、主机端【小车】执行：
+1. Host [car] execution:
 
-这里演示的是小车处于docker中，docker使用的网络模式是host模式，host模式简单来说就是和小车共用一个网络，所以跟在小车上执行没有区别。
+Here is a demonstration that the car is in a docker, and the docker model is a host model, which simply shares a network with a car, so it's no different from a car.
 
 ```bash
-echo "export ROS_DOMAIN_ID=6" >> ~/.bashrc # 这里的6是ROS_DOMAIN_ID, 不一定要用6，符合ROS_DOMAIN_ID的规则即可
+echo "export ROS_DOMAIN_ID=6" >> ~/.bashrc  # Here `6` is the `ROS_DOMAIN_ID`; it does not have to be `6` as long as it follows the `ROS_DOMAIN_ID` rules
 source ~/.bashrc
 ros2 run demo_nodes_py talker
 ```
 
-2、同时从机端【虚拟机】执行：
+2 At the same time, from [virtual machine]:
+
+![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-33.png)
 
 ```bash
-echo "export ROS_DOMAIN_ID=6" >> ~/.bashrc # 这里和主机端的值保持一致
+echo "export ROS_DOMAIN_ID=6" >> ~/.bashrc  # Keep this value the same as the host side
 source ~/.bashrc
 ros2 run demo_nodes_py listener
 ```
 
-若显示如下：主机端发布的话题从机端能及时订阅到，表示已经实现了分组的多机通讯
+If shown as follows: Subjects posted by the host are promptly subscribed to from the computer, indicating that the grouping multi-computer communication has been achieved
 
-![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-32.png)
+### Case 2
 
-### 14.3.4案例2
+![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-34.png)
 
-通过分布式通信控制小海龟运动
+Controlling the small turtle movement through distributed communication
+
+Host A running command
 
 ```bash
 ros2 run turtlesim turtlesim_node
 ```
 
+Host B running command
+
 ```bash
 ros2 run turtlesim turtle_teleop_key
 ```
 
-### 14.4注意
+## 14.4 Attention
 
-在设置ROS_DOMAIN_ID的值时并不是随意的，也是有一定约束的：
+When setting the value of ROS DOMIN ID, it is not random, but it is also binding:
 
-### 14.5 DDS域ID值的计算规则(进阶知识)
+RECOMMENDED ROS DOMIN ID values between [0,101] containing 0 and 101.
 
-域ID值的相关计算规则如下：
-
-上述计算规则了解即可。
-
-### 14.6下一步
-
-1.15 DDS-深入学习DDS中间件
-
-2.16时间相关API-学习时间API
-
-## 15 DDS
-
-### 15 DDS (Data Distribution Service)
-
-### 15.1 DDS概述
-
-### 15.1.1什么是DDS
-
-DDS (Data Distribution Service)是以数据为中心的发布-订阅中间件标准，ROS 2使用DDS实现底层通信。
-
-```
-Plain Text
-ROS 2 与 DDS 的关系：
-┌─────────────────────────────────────────────────┐
-│ ROS 2 应用层 │
-│ (节点、话题、服务、动作)
-│
-└─────────────────────────────────────────────────┘
-▲
-│
-┌─────────────────────────────────────────────────┐
-│ RMW (ROS Middleware) │
-│ 统一接口层
-│
-└─────────────────────────────────────────────────┘
-▲
-│
-┌───────────────┼───────────────┐
-▼ ▼ ▼
-┌──────────────┐ ┌──────────────┐ ┌──────────────┐
-│CycloneDDS │ │ FastDDS │ │RTI Connext │
-│ │ │ │ │ │
-└──────────────┘ └──────────────┘ └──────────────┘
-```
-
-### 15.1.2 DDS的核心功能
-
-| 功能 | 说明 |
-| --- | --- |
-| 发现机制 | 自动发现网络上的 DDS 参与者 |
-| 发布 / 订阅 | 解耦的数据传输模式 |
-| QoS 策略 | 可配置的服务质量 |
-| 类型系统 | 强类型数据定义 |
-| 零拷贝 | 高效的数据传输 |
-
-### 15.2通信模型
-
-我们在前边课程中学习的话题、服务、动作，他们底层通信的具体实现过程，都是靠DDS来完成的，它相当于是ROS机器人系统中的神经网络。
-
-DDS的核心是通信，能够实现通信的模型和软件框架非常多，这里我们列出常用的四种模型。
-
-![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-33.png)
-
-可见，在这些通信模型中，DDS的优势更加突出。
-
-### 15.3 DDS在ROS2中的应用
-
-DDS在ROS2系统中的位置至关重要，所有上层建设都建立在DDS之上。在这个ROS2的架构图中，蓝色和红色部分就是DDS。
-
-![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-34.png)
-
-在ROS的四大组成部分中，由于DDS的加入，大大提高了分布式通信系统的综合能力，这样我们在开发机器人的过程中，就不需要纠结通信的问题，可以把更多时间放在其他部分的应用开发上。
-
-### 15.4质量服务策略QoS
-
-DDS中的基础结构是Domain。Domain用于把各个应用程序组织在一起完成通信。回想一下之前我们让树莓派和电脑互通时配置的DOMAIN ID，它本质上就是对全局数据空间进行分组的标识：只有处于同一个DOMAIN组内的节点，才能相互发现并通信。通过这种方式，可以有效避免无关数据占用系统资源。
-
-DDS的另一个核心特性是服务质量策略：QoS。
-
-QoS可以理解为一种网络传输规则：应用程序会声明自己期望的传输质量行为，而QoS机制则负责尽可能满足这些要求。它就像是数据发布者与订阅者之间达成的一份“通信合约”。
-
-策略如下：
-
-### 15.5.测试案例
-
-### 15.5.1案例1—通过命令行配置DDS
-
-```bash
-ros2 topic pub /chatter std_msgs/msg/Int32 "data: 66" --qos-reliability best_effort
-```
+The total number of nodes within each domain ID is limited and needs to be less than or equal to 120;
 
 ![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-35.png)
 
-```bash
-ros2 topic echo /chatter --qos-reliability reliable
-```
+If the field ID is 101, the total number of nodes in this domain needs to be less than or equal to 54.
 
 ![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-36.png)
 
-```bash
-ros2 topic echo /chatter --qos-reliability best_effort
-```
+## 14.5 Rules for calculating DDS domain ID values (level knowledge)
 
 ![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-37.png)
 
-### 15.5.2案例2—编写话题节点配置Qos服务策略
+The relevant calculation rules for domain ID values are as follows:
 
-```bash
-ros2 pkg create learning_dds --build-type ament_python --dependencies rclpy std_msgs
-```
+If DDS is based on TCP/IP or UDP/IP network communication protocols, the port number is specified for network communications, and the port number is expressed in two bytes integer, unsigned integer, with a value range between [0,65535];
 
-新建一个dds_controller_pub.py文件，作为话题通信的发布方，填入以下内容：
+The distribution of port numbers is also subject to its rules, not to be used arbitrarily, with 7,400 as the starting port under the DDS agreement, i.e. the port available is [7400,65535], and it is known that, by default under the DDS agreement, each domain ID occupies 250 ports, and the number of domain IDs is: (65535-7400) /250 = 232) and the corresponding range of values is [0,231];
 
-```bash
-import rclpy
-from rclpy.node import Node
-from std_msgs.msg import String
-# 导入QoS相关类
-from rclpy.qos import QoSProfile, QoSReliabilityPolicy, QoSHistoryPolicy
-class ControllerPublisher(Node):
-def __init__(self, name):
-super().__init__(name)
-# 1. 配置QoS策略：可靠传输，保留最后1条历史数据
-self.qos_profile = QoSProfile(
-reliability=QoSReliabilityPolicy.RELIABLE, # 可靠传输（重传丢失数据）
-history=QoSHistoryPolicy.KEEP_LAST, # 保留最后N条数据
-depth=1 # 保留1条历史数据
-)
-# 2. 创建发布者：话题名/robot_cmd，消息类型String，QoS策略
-self.publisher = self.create_publisher(
-String,
-"/robot_cmd",
-self.qos_profile
-)
-# 3. 创建定时器：每秒发送一次指令
-self.timer = self.create_timer(1.0, self.timer_callback)
-self.cmd_list = ["forward", "backward", "stop"] # 指令列表
-self.cmd_index = 0 # 指令索引，循环切换
-def timer_callback(self):
-# 循环切换指令（前进→后退→停止→前进...）
-current_cmd = self.cmd_list[self.cmd_index % 3]
-# 创建消息并填充数据
-msg = String()
-msg.data = current_cmd
-# 发布消息
-self.publisher.publish(msg)
-# 打印日志（显示发布的指令）
-self.get_logger().info(f"发布控制指令：{msg.data}")
-# 更新指令索引
-self.cmd_index += 1
-def main(args=None):
-# 初始化ROS2
-rclpy.init(args=args)
-# 创建发布者节点
-node = ControllerPublisher("robot_controller_pub")
-# 循环运行节点
-rclpy.spin(node)
-# 销毁节点并关闭ROS2
-node.destroy_node()
-rclpy.shutdown()
-if __name__ == "__main__":
-main()
-```
+The operating system will also set up a number of pre-encumbrance ports, which will also need to be avoided when they are used in DDS to avoid conflicts in use and differences in the pre-encumbrance of different operating systems, with the end result that under Linux, the available domain IDs are [0,101] and [215-231] and the available domain IDs in Windows and Mac are [0,166]. In summary, for the purpose of compatibility with multi-platforms, domain IDs are recommended to be taken within [0,101] ranges.
 
-```bash
-import rclpy
-from rclpy.node import Node
-from std_msgs.msg import String
-from rclpy.qos import QoSProfile, QoSReliabilityPolicy, QoSHistoryPolicy
-class RobotSubscriber(Node):
-def __init__(self, name):
-super().__init__(name)
-# 1. 配置与发布者兼容的QoS策略
-self.qos_profile = QoSProfile(
-reliability=QoSReliabilityPolicy.BEST_EFFORT,
-history=QoSHistoryPolicy.KEEP_LAST,
-depth=1
-)
-# 2. 创建订阅者：话题名/robot_cmd，回调函数，QoS策略
-self.subscription = self.create_subscription(
-String,
-"/robot_cmd",
-self.cmd_callback, # 接收到数据后执行的回调函数
-self.qos_profile
-)
-def cmd_callback(self, msg):
-# 回调函数：处理接收到的指令
-self.get_logger().info(f"接收控制指令：{msg.data} → 执行对应动作")
-def main(args=None):
-rclpy.init(args=args)
-node = RobotSubscriber("robot_subscriber")
-rclpy.spin(node)
-node.destroy_node()
-rclpy.shutdown()
-if __name__ == "__main__":
-main()
-```
+Each domain ID by default occupies 250 ports and two ports are required for each ROS2 node. In addition, the 1st and 2nd ports are the ports of Discovery Multicast and User Multicast, beginning with the 11th and 12th ports, and the ports of Discovery Unicast and User Unicast, the port occupied at the subsequent node, are sequentially extended, and the maximum number of nodes in a domain ID is: (250-10) /2 = 120 (one);
 
-```bash
-entry_points={
-'console_scripts': [
-# 发布者节点：命令名 = 包名.文件名:main函数
-'dds_controller_pub = learning_dds.dds_controller_pub:main',
-# 订阅者节点
-'dds_robot_sub = learning_dds.dds_robot_sub:main',
-],
-},
-```
+Special circumstances: When the domain ID value is 101, the subsequent half of the port is the pre-encumbrance port of the operating system, with a maximum of 54 nodes.
 
 ![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-38.png)
 
-```bash
-cd ~/workspaces
-colcon build --packages-select learning_dds --symlink-install
-```
+The above calculation rules are sufficient.
 
 ![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-39.png)
 
-```bash
-source install/setup.bash
-```
+## 14.6 Next steps
 
-```bash
-ros2 run learning_dds dds_controller_pub
-# 另一个终端
-ros2 run learning_dds dds_robot_sub
-```
+DDS - In-depth learning DDS intermediate
 
 ![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-40.png)
 
-#### 机器人开发进阶：
+Time-related API - Learning Time API
 
 https://fast-dds.docs.eprosima.com/en/latest/
 
 ![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-41.png)
 
-### 15.6下一步
+### 15 DDS
 
-1.16时间相关API-学习时间API
+## 15 DDS (Data Distribution Service)
 
-2.17常用命令工具-学习命令行工具
+## 15.1 Overview of DDS
 
-## 16时间相关API
+## 15.1.1 What's DDS?
 
-### 16时间相关API (Time APIs)
+DDS (Data Distribution Service) is a data-centred publication-subscription intermediate standard, and ROS 2 uses DDS to achieve lower level communications.
 
-### 16.1时间概念
+> Plain Text
+> ROS 2 relation to DDS:
+>
+> That's right. That's right.
+> │ ROS 2 Application Layer
+> (node, topic, service, action)
+>
+> Zenium
+> Zenium
+> That's right. That's right.
+> RMW (ROS Middleware)
+> Integrated interface layer
+>
+> Zenium
+> Zenium
+>
+> I'm sorry.
+>
+> CycloneDDS
+> I'm sorry.
+>  -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
-ros2涉及时间相关的API有Rate，Time，Duration，Time与Duration的运算等，下面分别讲解。
+### 15.1.2 DDS Core Functions
 
-```bash
-ros2 pkg create learning_time --build-type ament_python --dependencies rclpy
-```
+| Functions | Annotations |
+| --- | --- |
+| Discovery mechanisms | Automatically find DDS participants on the network |
+| Launch/subscription | Solved data transfer mode |
+| QoS policy | Quality of services available |
+| Type System | Strong-type data definition |
+| Zero copies | Efficient data transfer |
 
-### 16.2 create_rate
+### 15.2 Communications models
 
-ROS2中还提供了create_rate函数，用于控制循环执行频率的工具，其核心作用是让一段代码按照固定频率周期性执行，Rate通过控制循环的 “休眠时间” 来保证循环执行频率的稳定性。切记，Rate一般不能直接用于主线程，否则会永久阻塞回调事件，一般只用于带有多线程回调的程序或子线程中使用。
+The topics, services, actions that we're learning in the front course, and the practical realization of their lower-level communication, are all done by the DDS, which is equivalent to the neural network of the ROS robotic system.
 
-具体工作原理：
+The core of DDS is communication, with a very large number of models and software frameworks that can achieve communication, and here we list four models that are commonly used.
 
-虽然Rate和Timer都能实现周期性执行，但适用场景不同：
+First, the point-to-point model: multiple clients connect directly to the same service. For each communication, both sides need to establish a link; As the number of nodes increases, so does the number of connections. At the same time, each client must clearly know the exact address of the service end and the services it provides. Once the service-end address changes, all clients will be forced to modify it, with considerable impact.
 
 ![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-42.gif)
 
-#### 点击图片可查看完整电子表格
+Second, the Broker model: it is an improvement based on the point-to-point model. All requests are uniformly assigned to Broker, who is responsible for forwarding and identifying nodes that can truly provide services. As a result, the client no longer needs to care about the server's address. However, its problems are also prominent: Broker is at the centre of the system, and processing capacity has a direct impact on overall efficiency and can easily become a performance bottleneck when the system is scaled up. Worse still, if Broker fails, the entire system may collapse. A similar structure was adopted by ROS1.
 
-```bash
-import rclpy
-from rclpy.node import Node
-import threading
-class RateExampleNode(Node):
-def __init__(self):
-super().__init__("rate_example_node")
-self.get_logger().info("Rate 示例节点启动")
-def run_loop(self):
-# 使用节点的create_rate()创建2Hz的Rate
-rate = self.create_rate(2.0)
-count = 0
-try:
-while rclpy.ok():
-self.get_logger().info(f"循环执行 {count} 次")
-count += 1
-rate.sleep() # 休眠到下一个周期（0.5秒）
-except KeyboardInterrupt:
-self.get_logger().info("循环被中断")
-def main(args=None):
-rclpy.init(args=args)
-node = RateExampleNode()
-# 创建线程运行循环（避免阻塞主线程）
-loop_thread = threading.Thread(target=node.run_loop)
-loop_thread.start()
-# 主线程执行spin，维持ROS 2节点运行
-try:
-rclpy.spin(node)
-except KeyboardInterrupt:
-pass
-finally:
-loop_thread.join() # 等待线程结束
-node.destroy_node()
-rclpy.shutdown()
-if __name__ == "__main__":
-main()
-```
+Third, broadcast models: all nodes can send broadcast messages on the same channel and all nodes can receive them. This approach avoids the problem of relying on server addresses and does not require a separate connection between the communication parties. But the disadvantage is also clear: the amount of information on the route is very high, and all nodes have to deal with every message, the vast majority of which is not really about themselves.
 
-```bash
-'rate_demo=learning_time.rate_demo:main'
-```
+Fourth, a data-centred DDS model: this approach is somewhat similar to the broadcast model, and nodes can either publish or subscribe to data on DataBus. But it is more advanced in that there are multiple parallel data access routes in communications, each node simply focusing on data of interest to itself, which can be ignored directly. It's like a turn-over pan, all the dishes are passing on to DataBus, and we just have to take what we want, and the rest is completely ignored.
 
 ![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-43.png)
 
-```bash
-colcon build --packages-select learning_time
-```
+It can be seen that in these communication models the advantages of DDS are more pronounced.
 
 ![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-44.png)
 
-```bash
-source ./install/setup.bash
-ros2 run learning_time rate_demo
-```
+## 15.3 Applications of DDS in ROS2
 
 ![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-45.png)
 
-### 16.3 Timer定时器应用
+The location of DDS in ROS2 is critical, and all upper layers are built on DDS. In this ROS2, the blue and red parts are DDS.
 
-```bash
-import rclpy
-from rclpy.node import Node
-class TimerDemoNode(Node):
-def __init__(self):
-super().__init__('timer_demo_node')
-# 计数器，用于演示定时器执行次数
-self.counter = 0
-# 创建定时器：每1秒执行一次callback函数
-self.timer = self.create_timer(1.0, self.timer_callback)
-# 创建一个更快的定时器：每0.5秒执行一次
-self.fast_timer = self.create_timer(0.5, self.fast_timer_callback)
-self.get_logger().info("定时器节点已启动")
-def timer_callback(self):
-"""1秒定时器回调函数"""
-self.counter += 1
-current_time = self.get_clock().now()
-# 打印当前时间和计数器值
-self.get_logger().info(
-f"[1秒定时器] 第 {self.counter} 次执行，当前时间: {current_time.seconds_nanoseconds()}"
-)
-def fast_timer_callback(self):
-"""0.5秒定时器回调函数"""
-# 打印当前时间戳（纳秒）
-self.get_logger().info(
-f"[0.5秒定时器] 当前时间戳: {self.get_clock().now().nanoseconds}"
-)
-def main(args=None):
-# 初始化ROS 2
-rclpy.init(args=args)
-# 创建节点
-node = TimerDemoNode()
-# 运行节点
-rclpy.spin(node)
-# 关闭ROS 2
-node.destroy_node()
-rclpy.shutdown()
-if __name__ == '__main__':
-main()
-```
+Of the four components of ROS, the integration of distributed communication systems has been significantly enhanced by the inclusion of DDS, so that we do not have to deal with communication in the development of robots and can devote more time to the development of applications in other parts.
 
-```bash
-'Timer_demo=learning_time.Timer_demo:main'
-```
+## 15.4 Quality Services Strategy
 
 ![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-46.png)
 
-```bash
-colcon build --packages-select learning_time
-```
+The infrastructure in DDS is Domain. Domain is used to organize applications to complete communications. In retrospect, the DOMAIN ID that we used to configure while the treeberry pie and the computer were interoperating is essentially a grouping of the global data spaces: only at the nodes of the same DOMAIN group can we discover and communicate with each other. In this way, unconnected data could be effectively avoided.
 
 ![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-47.png)
 
-```bash
-source ./install/setup.bash
-ros2 run learning_time Timer_demo
-```
+Another core feature of DDS is the quality-of-service strategy: Qos.
 
 ![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-48.png)
 
-### 16.4 get_clock获取当前时刻时间
+QoS can be understood as a web-based transmission rule: the application will declare its desired transmission quality behaviour, while the QoS mechanism is responsible for meeting these requirements as far as possible. It's like a "communication contract" between the data publisher and the subscriber.
 
-```bash
-import rclpy
-from rclpy.node import Node
-from rclpy.time import Time
-class TimeExampleNode(Node):
-def __init__(self):
-super().__init__("time_example_node")
-# 获取节点的时钟对象（默认使用系统时钟）
-self.clock = self.get_clock()
-# 获取当前时间（返回Time对象）
-current_time = self.clock.now()
-self.get_logger().info(f"当前时间：{current_time}")
-def main(args=None):
-rclpy.init(args=args)
-node = TimeExampleNode()
-rclpy.spin_once(node) # 运行一次节点
-node.destroy_node()
-rclpy.shutdown()
-if __name__ == "__main__":
-main()
-```
+The strategy is as follows:
 
-```bash
-'get_clock_demo=learning_time.get_clock_demo:main'
-```
+DEADLINE strategy: indicates that each data communication must be completed at least once within the prescribed deadline;
 
 ![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-49.png)
 
-```bash
-colcon build --packages-select learning_time
-```
+HISTORY policy: indicates size limits on historical data caches;
 
 ![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-50.png)
 
-```bash
-source ./install/setup.bash
-ros2 run learning_time get_clock_demo
-```
+RELIABILITY policy: represents a reliable pattern of data transmission. If configured as BEST EFFORT (as far as possible), even if the network is in poor condition, the data flow is as good as possible, but the data may be lost; If configured as RELIABLE (reliable transmission), the integrity of the data is ensured as much as possible during the communication, such as image transmission, which is less likely to be missing. We can choose the right model based on the actual application scene.
 
 ![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-51.png)
 
-### 16.5 Time与Duration
+DURABILITY policy: can be configured to provide historical data for late-to-end nodes, allowing new nodes to enter the system more quickly.
 
-```bash
-import rclpy
-from rclpy.time import Time
-from rclpy.duration import Duration
-def main():
-rclpy.init()
-node = rclpy.create_node("time_opt_node")
-# time类的使用方法，创建‘时间点、时刻’
-time1 = Time(seconds=10)
-time2 = Time(seconds=4)
-# Duration类使用方法，创建‘持续时间、一段时间’
-duration1 = Duration(seconds=3)
-duration2 = Duration(seconds=5)
-# 时刻可以进行比较
-node.get_logger().info("time1 >= time2 ? %d" % (time1 >= time2))
-node.get_logger().info("time1 < time2 ? %d" % (time1 < time2))
-# 时间段与时刻可以数学运算
-t3 = time1 + duration1
-t4 = time1 - time2
-t5 = time1 - duration1
-node.get_logger().info("t3 = %d" % t3.nanoseconds)
-node.get_logger().info("t4 = %d" % t4.nanoseconds)
-node.get_logger().info("t5 = %d" % t5.nanoseconds)
-# 时间段可以进行比较
-node.get_logger().info("-" * 80)
-node.get_logger().info("duration1 >= duration2 ? %d" % (duration1 >= duration2))
-node.get_logger().info("duration1 < duration2 ? %d" % (duration1 < duration2))
-rclpy.shutdown()
-if __name__ == "__main__":
-main()
-```
+## 15.5. Test cases
 
-```bash
-'TimeDuration_demo=learning_time.TimeDuration_demo:main'
-```
+### Case 1 - Configure DDS by Order Line
 
 ![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-52.png)
 
-```bash
-colcon build --packages-select learning_time
-```
+Open the first terminal and use the following command to publish the topic:
 
 ![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-53.png)
 
 ```bash
-source ./install/setup.bash
-ros2 run learning_time TimeDuration_demo
+ros2 topic pub /chatter std_msgs/msg/Int32 "data: 66" --qos-reliability best_effort
 ```
 
 ![](./images/7-3-3-ros2-advanced-interfaces-and-middleware-54.png)
 
-### 16.6下一步
+Once again, a terminal is opened to print the topic using different Qos, and if the Qos policy is different from the publisher, there will be warnings that the subject data will not be received properly:
 
-1.17常用命令工具-学习命令行工具
+```bash
+ros2 topic echo /chatter --qos-reliability reliable
+```
 
-2.18 RViz2使用-学习可视化
+We use the same Qos strategy as the topic publisher to receive subject data.

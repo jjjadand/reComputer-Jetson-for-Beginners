@@ -2,17 +2,17 @@
 
 [Back to Module 3](../README.MD) | [Back to Table of Contents](../../Table-of-Contents.md)
 
-## 06 jtop工具
+## 06 jtop tool
 
-### 系统资源监控工具——Jtop
+### System Resource Monitoring Tool - Jtop
 
-### 介绍
+### Introduction
 
-Jtop是Jetson专用的系统监控工具，可以像htop一样实时查看CPU/GPU使用率、内存、功耗、温度、NVPModel、电源模式、风扇、进程信息 等。它可以帮助你快速诊断性能瓶颈、监控模型推理时的资源占用，是Jetson开发中最常用的调试工具之一。
+Jtop is a Jetson-specific system monitoring tool that allows real-time viewing of CPU/GPU usage, memory, power consumption, temperature, NVPModel, power mode, fans, process information, like htop. It helps you to quickly diagnose bottlenecks, monitor resource consumption in modelling, and is one of the most common debugging tools that Jetson has developed.
 
-#### Step1.安装Jtop
+Step1. Install Jtop
 
-在jetson终端中输入下面的命令。
+Enter the following command in the jetson terminal.
 
 ```bash
 sudo apt update
@@ -20,57 +20,57 @@ sudo apt-get install python3-pip -y
 sudo -H pip install -U jetson_stats
 ```
 
-首次安装Jtop需要重新启动设备以启动Jtop的系统服务。
+The first installation of Jtop requires restarting the device to start Jtop's system service.
 
 ```bash
 sudo reboot
 ```
 
-#### Step2.启动最大功率以及Jetson时钟
+Step2. Start maximum power and Jefferson clock
 
 ```bash
-# 启动Jetson的MAXN SUPER最大功率模式
+# Enable Jetson MAXN SUPER mode
 sudo nvpmodel -m 2
-# 启动jetson时钟,这会让Jetson的CPU和GPU以最大频率运行
+# Enable Jetson clocks so the CPU and GPU run at their maximum frequency
 sudo jetson_clocks
-# 打开Jtop查看系统资源
+# Open `jtop` to inspect system resources
 jtop
 ```
 
-可以监看系统的硬件资源信息
+Hardware resource information to monitor the system
 
 ![](./images/3-16-jtop-and-system-monitoring-01.png)
 
-在Jtop中，可以按数字1、2、3...来切换不同页面的信息
+In Jtop, you can switch information from different pages by number 1, 2, 3...
 
-页面2这里监视着GPU的使用情况，以及进程使用GPU的情况
+Page 2 here monitors the use of GPU and the process uses GPU.
 
 ![](./images/3-16-jtop-and-system-monitoring-02.png)
 
-页面3 CPU监视界面
+Page 3 CPU Surveillance Interface
 
 ![](./images/3-16-jtop-and-system-monitoring-03.png)
 
-页面4内存管理
+Page 4 Memory Management
 
 ![](./images/3-16-jtop-and-system-monitoring-04.png)
 
-可以通过s,b,+,-按键来增加交换区
+You can increase the exchange area by s,b,+,-button
 
 ![](./images/3-16-jtop-and-system-monitoring-05.png)
 
-页面5监看NVIDIA Jetson Orin芯片内部各类“专用硬件加速引擎”的工作状态和频率
+Page 5
 
 ![](./images/3-16-jtop-and-system-monitoring-06.png)
 
-页面6控制页面，允许你直接调整Jetson Orin Nano的硬件运行模式、散热策略和时钟频率
+Page 6 Control Page to allow you to adjust the hardware running mode, heat-dissemination policy and clock frequency of Jetson Orin Nano
 
 ![](./images/3-16-jtop-and-system-monitoring-07.png)
 
-页面7可以监看Jetpack版本、各种环境组件的版本以及网络IP等系统信息
+Page 7 allows access to Jetpack, various environmental components and system information such as web IP
 
 ![](./images/3-16-jtop-and-system-monitoring-08.png)
 
-最后，按键盘上的q键，即可退出jtop。
+Finally, press the q on the keyboard to exit jtop.
 
 [Back to Module 3](../README.MD)

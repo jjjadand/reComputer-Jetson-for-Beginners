@@ -1,861 +1,861 @@
 # ROS2 Foundations and Setup
 
-## 01 ROS2简介
+## Chapter IX ROS2-Humble
 
-### 01 ROS2简介(Introduction)
+| Name | Owner | Modified | Created |
+| --- | --- | --- | --- |
+| 01 ROS2 Introduction | Yujiang! | 2026-01-09 14:03 | 2026-01-09 14:03 |
+| 02 Install Humble | Yujiang! | 2026-01-26:12 | 2026-01-09 14:03 |
+| 03 Integrated Development Environment | Yujiang! | 2026-01-26:55 | 2026-01-09 14:24 |
+| 04 Workspace | Yujiang! | 2026-01-12:22 | 2026-01-09 14:25 |
+| 05 Package | Yujiang! | 2026-01-12:22 | 2026-01-09 14:26 |
+| 06 Node | Yujiang! | 2026-02-13:28 | 2026-01-09 14:26 |
+| 07 Topic Communication | Yujiang! | 2026-02-13:29 | 2026-01-09 14:27 |
+| 08 Service communications | Yujiang! | 2026-02-06 13:57 | 2026-01-09 14:27 |
+| 09 Action Communications | Yujiang! | 2026-01-27:48 | 2026-01-09 14:27 |
+| 10 TF2 Coordinate Transformation | Yujiang! | 2026-01-27:55 | 2026-01-09 14:28 |
+| Custom interface message | Yujiang! | 2026-02-06 14:45 | 2026-01-09 14:28 |
+| 12 Parameter service cases | Yujiang! | 2026-02-06 15:05 | 2026-01-09 14:28 |
+| 13 meta-pack | Yujiang! | 2026-02-06 15:16 | 2026-01-09 14:29 |
+| 14 Distributed Communication | Yujiang! | 2026-02-06 15:25 | 2026-01-09 14:29 |
+| 15 DDS | Yujiang! | 2026-02-06 16:00 | 2026-01-09 14:29 |
+| Time-related API | Yujiang! | 2026-02-06 16:20 | 2026-01-09 14:29 |
+| 17 Common command tool | Yujiang! | 2026-02-06 16:41 | 2026-01-09 14:30 |
+| 18 RViz2 Use | Yujiang! | 2026-02-09:53 | 2026-01-09 14:30 |
+| 19 Rqt Toolbox | Yujiang! | 2026-02-09 13:43 | 2026-01-09 14:38 |
+| 20 Launch Configuration | Yujiang! | 2026-02-09 17:12 | 2026-01-09 14:41 |
+| 21 Record and Playback | Yujiang! | 2026-02-09 17:32 | 2026-01-09 14:41 |
+| 22 URDF Model | Yujiang! | 2026-02-10:39 | 2026-01-09 14:41 |
+| 23 Gazebo Simulation | Yujiang! | 2026-02-10:01 | 2026-01-09 14:42 |
+| 24 Camera Preview | Yujiang! | 2026-02-10:16 | 2026-01-09 14:42 |
+| 25 Camera calibration | Yujiang! | 2026-02-10:21 | 2026-01-09 14:42 |
+| 26 AR Visual | Yujiang! | 2026-02-10:32 | 2026-01-09 14:43 |
 
-### 1.1什么是ROS 2
+Content maintenance...
 
-ROS 2 (Robot Operating System 2)是一个用于编写机器人软件的开源中间件框架。尽管名称中包含"操作系统"，但ROS 2实际上不是传统的操作系统，而是一套软件库和工具，用于帮助开发者创建机器人应用程序。
+# 01 ROS2 Introduction
 
-### 1.1.1 ROS 2的定义
+### 01 ROS2 Profile
 
-ROS 2提供了操作系统通常在进程间传递消息及执行包管理的服务。它是一种分布式框架，使应用程序能够控制机器人硬件、处理传感器数据、执行算法，并与其他应用程序或系统进行通信。
+## 1.1 What is ROS 2
 
-```
-Plain Text
-┌─────────────────────────────────────┐
-│ ROS 2 中间件框架 │
-├─────────────────────────────────────┤
-│ • 话题通信 (Topics) │
-│ • 服务通信 (Services) │
-│ • 动作通信 (Actions) │
-│ • 参数服务 (Parameters) │
-│ • 坐标变换 (TF2) │
-└─────────────────────────────────────┘
-▲
-┌────────────────┼────────────────┐
-│ │ │
-┌────────┴─────┐ ┌───────┴──────┐ ┌─────┴──────┐
-│ 硬件驱动 │ │ 算法模块 │ │ 应用程序 │
-│ (传感器/执行器)│ │ (导航/视觉) │ │ (用户界面) │
-└──────────────┘ └──────────────┘ └────────────┘
-```
+ROS 2 (Robot Operation System 2) is an open-source intermediate framework for the development of robotic software. Although the name contains "operating systems", ROS 2 is not actually a traditional operating system, but a software repository and tools that help developers create robotic applications.
 
-### 1.1.2 ROS 2的设计目标
+### 1.1.1 Definition of ROS 2
 
-ROS 2的设计基于现代机器人应用的需求，主要目标包括：
+ROS 2 provides the service of the operating system, which usually transmits messages between processes and executes package management. It is a distributed framework that enables applications to control robotic hardware, process sensor data, execute algorithms and communicate with other applications or systems.
 
 ![](./images/7-3-1-ros2-foundations-and-setup-01.gif)
 
-#### 点击图片可查看完整电子表格
+> Plain Text
+>
+> │ROS 2 Middle Frame
+> I'm sorry.
+> • Topical communications (Topics)
+> • Service communications
+> • Actions
+> Parameters Services (Parameters)
+> • Coordinate conversion (TF2)
+> I'm sorry.
+> Zenium
+>
+> I'm sorry.
+>
+> │ Hardware drive │ Algorithm module │ Application │
+> │ (sensor/implementer) │ (navigational/visual) │ (user interface) │
+>  -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
-### 1.1.3 ROS 2的核心价值
+### 1.1.2 Design objectives for ROS 2
 
-1.模块化设计：代码组织成独立的包（Packages），易于维护、重用和分发
+The design of ROS 2 is based on the needs of modern robotic applications and has the following main objectives:
 
-2.分布式通信：支持多进程、多机器的分布式计算架构
+Click on a picture to view the complete spreadsheet
 
-3.丰富的生态系统：包含大量的开源功能包和开发工具
+### 1.1.3 ROS 2 Core values
 
-4.活跃的社区：全球开发者持续贡献，商业公司积极支持
+1. Modular design: code organized into separate packages that are easily maintained, reused and distributed
 
-### 1.2 ROS 2核心概念
+2. Distributed Communication: multi-processor, multi-machine distributed computing architecture
 
-### 1.2.1节点(Nodes)
+3. Rich ecosystems: containing a large number of open-source functional packages and development tools
 
-节点是ROS 2中最基本的计算单元。一个节点是一个使用ROS 2 API与其他节点通信的进程。
+4. Active communities: a sustained contribution by global developers and active support from business companies
 
-```
-Plain Text
-┌──────────────────────────────────────────────────────────────┐
-│ ROS 2 系统 │
-│ │
-│ ┌──────────┐ ┌──────────┐ ┌──────────┐ │
-│ │ 摄像头节点 │─数据流─►│ 处理节点 │─控制──►│ 电机节点 │ │
-│ │CameraNode│ │ProcessNode│ │MotorNode │ │
-│ └──────────┘ └──────────┘ └──────────┘ │
-│ │
-│ ┌──────────┐ ┌──────────┐ │
-│ │ 激光雷达 │─数据流─►│ 导航节点 │ │
-│ │LidarNode │ │ NavNode │ │
-│ └──────────┘ └──────────┘ │
-└──────────────────────────────────────────────────────────────┘
-```
+## 1.2 ROS 2 Core concept
 
-#### 节点设计原则：
+#### 1.2.1 Node (Nodes)
 
-#### -单一职责：每个节点专注于特定功能
+Node is the most basic calculation unit in ROS 2. One node is a process using ROS 2 API to communicate with other nodes.
 
-#### -低耦合：节点间通过接口通信，减少直接依赖
+> Plain Text
+>
+> │ ROS 2 System
+> Zenium
+>
+> │ cam node │ data flow ►│ processing node │ control ►│ power node ►│
+> I'm sorry.
+>
+> Zenium
+> {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF} {\cHFFFFFF} {\cHFFFFFF} {\cHFFFFFF} {\cHFFFFFF} {\cHFFFFFF} {\cHFFFFFF} } {\cHFFFFFF} {\cHFFFFFF} {\cHFFFFFF} {\cHFFFFFF} } {\cHFFFFFF} } {\bord0}
+> │ laser radar │ data flow ►│ navigation node │
+> ♪ Lidar Node ♪
+>
+> -  -  /
 
-#### -可组合：多个节点可以组合实现复杂功能
+Node design principles:
 
-#### 节点的生命周期：
+- Single duties: each node focuses on specific functions
 
-```
-Plain Text
-创建节点
-│
-▼
-配置参数 ─────┐
-│ │
-▼ │
-初始化通信 │
-│ │ 可循环：重新配置
-▼ │
-执行回调 │
-│ │
-▼ ◄─┘
-关闭节点
-```
+- Low coupling: communication between nodes through interface to reduce direct dependence
 
-### 1.2.2话题(Topics)
+- Portable: multiple nodes can combine complex functions
 
-话题是节点间进行异步流式通信的机制，采用发布/订阅（Pub/Sub）模式。
+Life cycle of nodes:
 
-```
-Plain Text
-话题: /camera/image_raw
-│
-┌───────────────┼───────────────┐
-│ │ │
-[发布者1] [发布者2] [订阅者1]
-Camera_Raw Camera_L2P DisplayGUI
-│ │ │
-└───────────────┴───────────────┘
-│
-[订阅者2]
-ImageRecorder
-```
+> Plain Text
+> Create Node
+> Zenium
+> Zenium
+> Configure Parameters--------
+> Zenium
+> Zenium
+> Initialization of communications
+> Loopable: reconfigured
+> Zenium
+> Execute recall
+> Zenium
+> I'm sorry.
+> Close Node
 
-#### 话题通信特点：
+#### 1.2.2 Topics (Topics)
 
 ![](./images/7-3-1-ros2-foundations-and-setup-02.gif)
 
-#### 点击图片可查看完整电子表格
+The topic is the mechanism for insular communication between nodes, using the publishing/subscription (Pub/Sub).
 
-#### 典型话题示例：
+> Plain Text
+> Topic: /camera/image_raw
+> Zenium
+>
+> I'm sorry.
+> [publishing 1] [publishing 2] [subscriber 1]
+> Camera Raw Camera L2P DisplayGUI
+> I'm sorry.
+>
+> Zenium
+> [subscriber 2]
+> ImageRecorder
 
-| 话题名称 | 消息类型 | 用途 |
+Topical communication features:
+
+Click on a picture to view the complete spreadsheet
+
+Example of typical topic:
+
+| Subject Name | Message Type | Purpose |
 | --- | --- | --- |
-| /cmd_vel | geometry_msgs/msg/Twist | 速度控制指令 |
-| /odom | nav_msgs/msg/Odometry | 里程计数据 |
-| /scan | sensor_msgs/msg/LaserScan | 激光雷达数据 |
-| /camera/image_raw | sensor_msgs/msg/Image | 原始图像数据 |
+| /cmd_vel | #Gometry msgs/msg/Twist | Speed Control Command |
+| /odom | I'm sorry. | mileage data |
+| /scan | Sensor msgs/msg/LaserScan | Laser radar data |
+| /camera/image_raw | Sensor msgs/msg/Image | Original image data |
 
-### 1.2.3服务(Services)
-
-服务是节点间进行同步通信的机制，采用客户端/服务器（Client/Server）模式。
-
-```
-Plain Text
-客户端A 服务端 客户端B
-ClientA Server ClientB
-│ │ │
-│ ────请求(Request)────►│ │
-│ │◄───请求(Request)───────│
-│ │ │
-│ ◄───响应(Response)───┘ │
-│ │
-│ │ ────响应(Response)───►│
-│ │ │
-```
-
-#### 服务通信特点：
+#### 1.2.3 Services (Services)
 
 ![](./images/7-3-1-ros2-foundations-and-setup-03.gif)
 
-#### 点击图片可查看完整电子表格
+Services are the mechanism for synchronized communication between nodes, using the client/server (Clint/Server) model.
 
-#### 服务类型定义示例：
+> Plain Text
+> Client A Service Client B
+> Clienta Server ClientB
+> I'm sorry.
+> ─ Request
+> Please, please.
+> I'm sorry.
+> Response
+> Zenium
+> – Response –
+> I'm sorry.
 
-```
-Plain Text
-# 示例：添加两个整数的服务
-# 文件: example_interfaces/srv/AddTwoInts.srv
-int64 a
-int64 b
-int64 sum
-```
+Service communications characteristics:
 
-#### 典型服务示例：
+Click on a picture to view the complete spreadsheet
 
-| 服务名称 | 服务类型 | 用途 |
+Example of service type definition:
+
+> Plain Text
+> # Example: two integer services added
+> # File: example interfaces/srv/AddTwoInts.srv
+> Int64a
+> Int64b
+> In 64 sum
+
+Example of typical service:
+
+| Name of service | Type of service | Purpose |
 | --- | --- | --- |
-| /spawn | turtlesim/srv/Spawn | 生成新的海龟 |
-| /teleport_absolute | turtlesim/srv/TeleportAbsolute | 移动海龟到指定位置 |
-| /reset | std_srvs/srv/Empty | 重置仿真环境 |
+| /spawn | Tritlesim/srv/Spawn | Create new turtles. |
+| /teleport_absolute | Tritlesim/srv/TeleportAbsolute | Move turtles to their assigned position. |
+| /reset | Std srvs/srv/Empty | Reset Simulate Environment |
 
-### 1.2.4动作(Actions)
-
-动作是用于处理长时间任务的通信机制，支持任务执行过程中的反馈和取消操作。
-
-```
-Plain Text
-┌────────────────── 动作通信时序图 ──────────────────┐
-│ │
-│ 目标发送 ──┐ │
-│ ├──► 服务端开始执行任务 │
-│ 反馈接收 ◄─┘ │
-│ ▲ │
-│ │ 循环发送执行状态 │
-│ │ │
-│ │ │
-│ 取消操作 ──┴──► 中断任务执行 │
-│ │
-│ 结果接收 ◄──────── 任务完成 ───────────────────────►│
-└─────────────────────────────────────────────────────┘
-```
-
-#### 动作通信的三种消息流：
+#### 1.2.4 Actions
 
 ![](./images/7-3-1-ros2-foundations-and-setup-04.gif)
 
-#### 点击图片可查看完整电子表格
+Actions are communication mechanisms used to handle long-term assignments to support feedback and cancellation of assignments.
 
-#### 动作类型定义示例：
+> Plain Text
+> The movement sequence is -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+> Zenium
+> │ Target sent ─ │ │
+> The service began to operate.
+> ♪ Reception reception ♪
+> I'm sorry.
+> Cyclops, Cyclops, Cyclops, Cyclops.
+> I'm sorry.
+> I'm sorry.
+> │ Cancel Operation ─ ┴ Interrupted Task
+> Zenium
+> And then it was accepted that -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
-```
-Plain Text
-# 示例：旋转指定角度的动作
-# 文件: action_interfaces/action/Rotate.action
-float32 target_angle
-float32 duration
-float32 final_angle
-bool success
-float32 current_angle
-float32 remaining_time
-```
+Three streams of action communication:
 
-#### 典型动作示例：
+Click on a picture to view the complete spreadsheet
 
-| 动作名称 | 动作类型 | 用途 |
+Example of action type definition:
+
+> Plain Text
+> # Example: Rotating the action of the given angle
+> # File: action interfaces/action/Rotate.action
+> Float32 target angle
+> Float32 development
+> Float32 final angle
+> I don't know.
+> float32 calendar angle
+> float32 remaining time
+
+Typical action examples:
+
+| Action Name | Action Type | Purpose |
 | --- | --- | --- |
-| /navigate_to_pose | nav2_msgs/action/NavigateToPose | 导航到目标位姿 |
-| /rotate | ros2_control/action/FollowJointTrajectory | 关节轨迹跟踪 |
-| /spin | turtlesim/action/RotateAbsolute | 旋转指定角度 |
+| /navigate_to_pose | Nov2 msgs/action/NavigateToPose | Navigate to target position. |
+| /rotate | ros2 control/action/FollowJointTrajectory | Joint track tracking |
+| /spin | Tritlesim/action/RotateAbsolute | Rotate Specified Angle |
 
-### 1.2.5参数(Parameters)
+#### 1.2.5 Parameters (Parameters)
 
-参数是节点的配置值，可以在节点启动时设置，也可以在运行时动态修改。
+Parameters are configuration values for nodes, which can be set at nodes startup or dynamically modified while running.
 
 ```
 Plain Text
-节点: camera_node
-├── 参数: frame_id = "camera_link"
-├── 参数: width = 640
-├── 参数: height = 480
-├── 参数: fps = 30
-└── 参数: exposure_mode = "auto"
-动态修改示例:
+Node: camera_node
+├── Parameter: frame_id = "camera_link"
+├── Parameter: width = 640
+├── Parameter: height = 480
+├── Parameter: fps = 30
+└── Parameter: exposure_mode = "auto"
+
+Dynamic update example:
 $ ros2 param set camera_node exposure_mode "manual"
 ```
 
-#### 参数类型：
+Parameter type:
 
-| 类型 | 说明 | 示例值 |
+| Type | Annotations | Example value |
 | --- | --- | --- |
-| bool | 布尔值 | true , false |
-| int | 整数 | 42 , -10 |
-| float / double | 浮点数 | 3.14 , -0.001 |
-| string | 字符串 | "hello_world" |
-| byte_array | 字节数组 | [0x01, 0x02, 0x03] |
-| bool_array | 布尔数组 | [true, false, true] |
-| int_array | 整数数组 | [1, 2, 3, 4, 5] |
-| float_array | 浮点数组 | [1.0, 2.0, 3.0] |
-| string_array | 字符串数组 | ["a", "b", "c"] |
+| Bool | Boolean value | Oh, my God. |
+| Int | Integer | Forty-two, ten. |
+| Float / double | Float | 3.14, -0.001 |
+| string | String | "Hello world" |
+| Byte array | Bytes | [0x01, 0x02, 0x03] |
+| Bool array | Boolean | [True, false, true] |
+| Int array | Integer array | [1, 2, 3, 4, 5] |
+| Float array | Floating Point Cluster | [1.0, 2.0, 3.0] |
+| "string array" | String array | ["a", "b", "c"] |
 
-### 1.3 ROS 2架构
+## 1.3 ROS 2 Structure
 
-### 1.3.1分层架构
+### 1.3.1 Layer structure
 
-ROS 2采用清晰的分层架构设计，从底层操作系统到上层应用：
-
-```
-Plain Text
-╔═════════════════════════════════════════════════════════════════╗
-║ 应用层 (Application Layer) ║
-║ ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ ║
-║ │ 导航节点 │ │感知节点 │ │ 控制节点 │ │ 可视化 │ ║
-║ └────────┘ └────────┘ └────────┘ └────────┘
-║
-╠═════════════════════════════════════════════════════════════════╣
-║ 客户端库层 (Client Library Layer) ║
-║ ┌──────────────────┐ ┌──────────────────┐ ║
-║ │ rclcpp (C++) │ │ rclpy (Python) │ ║
-║ │ rcljava │ │ rclrust │ ║
-║ └──────────────────┘ └──────────────────┘
-║
-╠═════════════════════════════════════════════════════════════════╣
-║ RMW 层 (ROS Middleware Interface) ║
-║ ┌─────────────────────────────────────────────────┐ ║
-║ │ RMW (ROS Middleware Interface) │ ║
-║ │ • 节点发现 • 发布/订阅 • 服务调用 • 参数 │ ║
-║ └─────────────────────────────────────────────────┘
-║
-╠═════════════════════════════════════════════════════════════════╣
-║ DDS 层 (DDS Implementation) ║
-║ ┌──────────┐ ┌──────────┐ ┌──────────────────┐ ║
-║ │CycloneDDS│ │ FastDDS │ │ RTI Connext DDS │ ║
-║ │(默认) │ │ │ │ (商业版) │ ║
-║ └──────────┘ └──────────┘ └──────────────────┘
-║
-╠═════════════════════════════════════════════════════════════════╣
-║ 操作系统层 (Operating System) ║
-║ ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ ║
-║ │ Linux │ │Windows │ │ macOS │ │ RTOS │ ║
-║ └────────┘ └────────┘ └────────┘ └────────┘
-║
-╚═════════════════════════════════════════════════════════════════╝
-```
-
-### 1.3.2客户端库(Client Libraries)
-
-ROS 2提供多种语言的客户端库，开发者可以选择熟悉的语言编写节点：
+ROS 2 Designed with a clear layered structure from the bottom operating system to the upper layer:
 
 ![](./images/7-3-1-ros2-foundations-and-setup-05.gif)
 
-#### 点击图片可查看完整电子表格
+> Plain Text
+> Zenium
+> Application Layer
+> {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FF00} {\cH00FF00} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF} {\cHFFFFFF} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF} {\cH00FF00} {\cH00FF00} {\cHFFFF00} {\cHFFFFFF} {\cH00} {\cHFFFF00} {\cHFFFFFF} {\cHFFFF00} {\cH00}
+> {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF} {\cHFFFFFF}{\cH000 {\cH3030} {\cH303030D3D3D} {\cH000 \cH303030}
+> {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF} {\cHFFFFFF}{\cH00FF00} {\cH00FF00} {\cHFFFF00} {\cHFFFF00} {\cHFFFFFF} {\cHFFFF00} {\cHFFFF00} {\cH00} {\cHFFFF00} {\cH00} {\cHFFFF00 } {\cH00}
+> Zenium
+> Clint Library Layer
+> {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FF00} {\cH00FF00} {\cHFFFFFF}{\cH00FF00}
+> ║ rclcpp (C++) │ rclpy (Python) │
+> ♪ Rcljava ♪
+> {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FF00} {\cH00FF00} {\cHFFFFFF}{\cH00FF00} {\cH00FF00} {\cHFFFFFF}{\cH00FF00} {\cH00FF00} {\cH00FF00} {\cH00FF00} {\cHFFFF00} {\cHFFFFFF} {\cHFFFF00} {\cHFFFF00} {\cH00} {\cHFFFF00} {\cH00} {\cH303030} {\cH30}
+> Zenium
+> RMW Layer (ROS Middleware Interface)
+> {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FF00} {\cH00FFFF} {\cHFFFFFF}{\cH00FF00} {\cH00FF00} {\cH00FF00} {\cHFFFFFF} {\cH00FF00} {\cH00FF00} {\cHFFFFFF} {\cHFFFF00} {\cH00} {\cHFFFF00} {\cHFFFF00} {\cH00} {\cH00} {\cH00} {\cH00} {\cH00}
+> RMW (ROS Middleware Interface)
+> • Discovery/subscription
+> {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FF00} {\cH00FF00} {\cH00FF00} {\cH00FF00} {\cH00FF00} {\cH00FF00} {\cHFFFF00} {\cHFFFFFF} {\cH00} {\cHFFFF00} {\cH00} {\cH00} {\cH00} {\cH3030} {\cH00} } {\cH303030} {\cH30303030}
+> Zenium
+> WWDS Layer (DDS Integration)
+> {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FF00} {\cH00FF00} {\cHFFFFFF}{\cH00FF00} {\cH00FF00} {\cHFFFFFF}{\cH00} {\cHFFFFFF} {\cHFFFFFF} {\cHFFFFFF} {\cHFFFFFF} {\cHFFFFFF} {\cHFFFF00} {\cH00} {\cHFFFF00} {\cHFFFF00} {\cHFFFFFF} {\cHFFFF00} {\cH00} {\cHFFFF00}
+> ♪ CycloneDDS ♪
+> ║ (default) │ (commercial) │
+> {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF} {\cHFFFFFF}{\cH00FF00} {\cH00FF00} {\cHFFFFFF} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF} {\cH00FF00} {\cHFFFFFF} {\cHFFFFFF} {\cHFFFF00} {\cHFFFFFF} {\cH00} {\cHFFFFFF} {\cHFFFFFF} {\cHFFFFFF} {\cHFFFF00} {\cH00} {\cH00} } {\cH303030}
+> Zenium
+> Operation System
+> {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FF00} {\cH00FF00} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF} {\cHFFFFFF} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF} {\cH00FF00} {\cH00FF00} {\cHFFFF00} {\cHFFFFFF} {\cH00} {\cHFFFF00} {\cHFFFFFF} {\cHFFFF00} {\cH00}
+> ♪ Linux and Windows ♪
+> {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF} {\cHFFFFFF}{\cH00FF00} {\cH00FF00} {\cHFFFF00} {\cHFFFF00} {\cHFFFFFF} {\cHFFFF00} {\cHFFFF00} {\cH00} {\cHFFFF00} {\cH00} {\cHFFFF00 } {\cH00}
+> Zenium
 
-#### rclcpp和rclpy对比：
+#### 1.3.2 Client Library (Clint Librries)
 
-```
-C++
-// C++ 发布者示例 (rclcpp)
-# include "rclcpp/rclcpp.hpp"
-# include "std_msgs/msg/string.hpp"
+ROS 2 provides a multilingual client library where developers can choose a familiar language to write nodes:
+
+Click on a picture to view the complete spreadsheet
+
+rclcpp versus rclpy:
+
+```cpp
+// C++ publisher example (rclcpp)
+#include "rclcpp/rclcpp.hpp"
+#include "std_msgs/msg/string.hpp"
+
 class Publisher : public rclcpp::Node {
 public:
-Publisher() : Node("publisher") {
-publisher_ = this->create_publisher<std_msgs::msg::String>("topic", 10);
-timer_ = this->create_wall_timer(
-std::chrono::milliseconds(500),
-[this]() { this->timer_callback(); });
-}
+  Publisher() : Node("publisher") {
+  publisher_ = this->create_publisher<std_msgs::msg::String>("topic", 10);
+  timer_ = this->create_wall_timer(
+  std::chrono::milliseconds(500),
+  [this]() { this->timer_callback(); });
+  }
 private:
-void timer_callback() {
-auto msg = std_msgs::msg::String();
-msg.data = "Hello ROS 2";
-publisher_->publish(msg);
-}
-rclcpp::TimerBase::SharedPtr timer_;
-rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisher_;
+  void timer_callback() {
+  auto msg = std_msgs::msg::String();
+  msg.data = "Hello ROS 2";
+  publisher_->publish(msg);
+  }
+  rclcpp::TimerBase::SharedPtr timer_;
+  rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisher_;
 };
 ```
 
 ```python
-# Python 发布者示例 (rclpy)
+# Python publisher example (rclpy)
 import rclpy
 from rclpy.node import Node
 from std_msgs.msg import String
+
 class Publisher(Node):
-def __init__(self):
-super().__init__('publisher')
-self.publisher_ = self.create_publisher(String, 'topic', 10)
-self.timer = self.create_timer(0.5, self.timer_callback)
-def timer_callback(self):
-msg = String()
-msg.data = 'Hello ROS 2'
-self.publisher_.publish(msg)
+  def __init__(self):
+  super().__init__('publisher')
+  self.publisher_ = self.create_publisher(String, 'topic', 10)
+  self.timer = self.create_timer(0.5, self.timer_callback)
+
+  def timer_callback(self):
+  msg = String()
+  msg.data = 'Hello ROS 2'
+  self.publisher_.publish(msg)
 ```
 
-### 1.3.3 RMW和DDS
+#### 1.3.3 RRW and DDS
 
-RMW (ROS Middleware Interface)是ROS 2中间件的抽象接口层，允许ROS 2使用不同的DDS实现：
+RMW (ROS Middleware Interface) is an abstract interface layer for the ROS 2 intermediate, allowing ROS 2 to use different DDSs to achieve:
 
-```
-Plain Text
-┌────────────────────────────────────────────────────────────┐
-│ ROS 2 用户代码 │
-│ (rclcpp/rclpy) │
-└────────────────────────────────────────────────────────────┘
-│
-▼
-┌────────────────────────────────────────────────────────────┐
-│ RMW 接口层 │
-│ (统一的 ROS 2 中间件接口)
-│
-└────────────────────────────────────────────────────────────┘
-│
-┌─────────────────┼─────────────────┐
-▼ ▼ ▼
-┌──────────────┐ ┌──────────────┐ ┌──────────────┐
-│rmw_cyclonedds│ │rmw_fastrtps │ │rmw_connext │
-│ _cpp │ │ _cpp │ │ _cpp │
-└──────────────┘ └──────────────┘ └──────────────┘
-│ │ │
-▼ ▼ ▼
-┌──────────────┐ ┌──────────────┐ ┌──────────────┐
-│ CycloneDDS │ │ FastDDS │ │ RTI Connext │
-└──────────────┘ └──────────────┘ └──────────────┘
-```
+> Plain Text
+> That's -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+> R ROS 2 User code
+> (rclcpp/rclpy)
+>
+> Zenium
+> Zenium
+> That's -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+> RMW interface layer
+> │ (uniform ROS 2 intermediate interface) │
+>
+> Zenium
+>
+> I'm sorry.
+>
+> │rmw cycclonedds│rmw fastrtps│rmw connext│
+> cpp  cpp  cpp  cpp  cpp
+>  -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+> I'm sorry.
+> I'm sorry.
+>
+> CycloneDDS.
+>  -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
-#### DDS实现对比：
+DDS achieves comparison:
 
-| RMW 实现 | DDS 后端 | 开源 / 商业 | 特点 |
+| RMW Achieved | DDS Backend | Open source/commercial | Characteristics |
 | --- | --- | --- | --- |
-| rmw_cyclonedds_cpp | CycloneDDS | 开源 | 默认选择，轻量高效 |
-| rmw_fastrtps_cpp | FastDDS | 开源 | 功能丰富，性能优秀 |
-| rmw_connext_cpp | RTI Connext | 商业 | 工业级支持，功能最全面 |
+| cmw cycclonedds cpp | CycloneDDS | Open Source | Default selection, light efficiency |
+| rmw fastrtps cpp | FastDS | Open Source | It's very functional and highly performing. |
+| rmw connext cpp | RTI Connext | Commercial | Industrial level support, most comprehensive |
 
-#### DDS提供的核心功能：
+DDS provides core functions:
 
-1.发现机制(Discovery)：节点自动发现网络上的其他ROS 2节点
+Discovery mechanism (Discovery): Node automatically discovers other ROS 2 nodes on the network
 
-2.零拷贝传输(Zero-copy)：高效数据传输，减少内存复制
+2. Zero copy transfer (Zero-copy): efficient data transfer to reduce memory reproduction
 
-3.QoS策略(Quality of Service)：控制通信可靠性、延迟、持久性等
+3. QoS policy (Quality of Service): Control of reliability, delay, persistence, etc. of communications
 
-#### 4.类型系统：强类型消息定义和序列化
+4. Type systems: definition and sequence of powerful type messages
 
-### 1.4 ROS 1与ROS 2的主要区别
+### 1.4 Major differences between ROS 1 and ROS 2
 
-### 1.4.1架构对比
+### 1.4.1 Structure comparison
 
-```
-Plain Text
-ROS 1 架构 ROS 2 架构
-┌─────────┐ ┌─────────┐
-│ 节点A │ │ 节点A │
-└────┬────┘ └────┬────┘
-│ │
-▼ ▼
-┌─────────┐ ┌─────────────────┐
-│ ROS │ │ DDS 发现机制 │
-│ Master │ │ (无中心化) │
-└────┬────┘ └────────┬────────┘
-│ │
-▼ ▼
-┌─────────┐ ┌─────────┐
-│ 节点B │◄─────────────────►│ 节点B │
-└─────────┘ 通信 └─────────┘
-▲ ▲
-│ │
-┌─────────┐ ┌─────────┐
-│ 节点C │ │ 节点C │
-└─────────┘ └─────────┘
-```
+> Plain Text
+> ROS 1 Architecture ROS 2 Architecture
+>
+>
+> Node A, node A, node A.
+> House, house, house, house.
+> Zenium
+> Zenium
+>
+> RUS │ DDS Discovery Mechanism
+> │Master │ (uncentralized)│
+> House, house, house, house, house.
+> Zenium
+> Zenium
+>
+> Node B -- -- -- -- -- -- -- -- -- -- -- -- node B --
+>  -
+> Zenium
+> Zenium
+>
+> Node C, node C, node C
 
-### 1.4.2详细对比表
+#### 1.4.2 Detailed comparative tables
 
-| 对比维度 | ROS 1 | ROS 2 |
+| Relative dimensions | ROS 1 | ROS 2 |
 | --- | --- | --- |
-| 通信中间件 | TCP/UDP 自定义协议 | DDS 标准协议 |
-| 发现机制 | ROS Master ( 中心化 ) | DDS 发现 ( 去中心化 ) |
-| 构建系统 | Catkin | Colcon / Ament |
-| Python 版本 | Python 2/3 | 仅 Python 3 |
-| 支持的操作系统 | 主要 Linux | Linux / Windows / macOS / RTOS |
-| 实时性支持 | 无实时保证 | 支持硬实时 |
-| 多机器人通信 | 需要额外配置 | 原生支持 (ROS_DOMAIN_ID) |
-| 安全性 | 无加密或认证 | 支持加密、认证、访问控制 |
-| 发布版本 | Noetic ( 最后版本 ) | Humble, Iron, Jazzy... |
+| Communications intermediate | TCP/UDP Customise protocol | DDS Standard Agreement |
+| Discovery mechanisms | ROS Master (centralized) | Discovery of DDS (decentralization) |
+| Build System | Catkin. | Colcon / Ament |
+| Python Version | Python 2/3 | Python 3 Only |
+| Supported operating systems | Main Linux | Linux / Windows / MacOS / RTOS |
+| Real-time support | No real-time assurance | Support hard real time |
+| Multiple robotic communications | Additional configuration required | Native support (ROS DOMAIN ID) |
+| Security | No encryption or authentication | Support encryption, authentication, access control |
+| Release | Noetic (final version) | Humble, Iron, Jazzy... |
 
-### 1.4.3关键改进详解
+### 1.4.3 Detailed information on key improvements
 
-#### 1.去中心化架构
+1. Decentralization
 
--ROS 1问题：依赖ROS Master，Master故障导致整个系统崩溃
+- ROS 1 problem: relying on ROS Master, Master failure caused the whole system to collapse
 
--ROS 2改进：使用DDS发现机制，节点间直接通信，无单点故障
+- ROS 2 Improvements: Discovery mechanism, direct communication between nodes, no single failure
 
-#### 2.实时性能
+2. Real-time performance
 
-#### -ROS 1问题：非实时，无法满足工业机器人需求
+- ROS 1 problem: non-real-time inability to meet industrial robotic needs
 
--ROS 2改进：支持优先级调度、确定性通信，可用于硬实时系统
+- ROS 2 Improvements: support priority movement, certainty communications, for hard real time systems
 
-#### 3.多机器人协同
+3. Multiple robots working together
 
--ROS 1问题：同一网络上的多机器人容易互相干扰
+- ROS 1 problem: multiple robots on the same network can interfere with each other.
 
--ROS 2改进：通过ROS_DOMAIN_ID隔离不同机器人的通信域
+- ROS 2 Improvements: Separating the telecommunications domain of different robots through ROS DOMIN ID
 
-#### 4.跨平台支持
+Cross-platform support
 
-#### -ROS 1：主要支持Linux
+- ROS 1: Main support Linux
 
--ROS 2：原生支持Windows、macOS、Linux，可移植到RTOS
+-ROS 2: Native support Windows, MacOS, Linux, portable to RTOS
 
-### 1.5 ROS 2发行版本
+## 1.5 ROS 2 Release
 
-### 1.5.1版本历史
+### 1.5.1 Version history
 
-ROS 2按字母顺序命名发行版本，每个版本都有代号：
+ROS 2 issues an alphanumeric version, each with a code name:
 
-```
-Plain Text
-┌─────────────────────────────────────────────────────┐
-│ ROS 2 版本时间线 │
-│ │
-│ Ardent Bouncy Crystal Dashing Eloquent │
-│ ▼ ▼ ▼ ▼ ▼ │
-│ 2017.12 2018.06 2018.12 2019.05 2019.11 │
-│ │
-│ Foxy Galactic Humble LTS Iron Jazzy LTS│
-│ ▼ ▼ ▼ ▼ ▼ │
-│ 2020.06 2021.05 2022.05 2023.05 2024.05 │
-│ │
-└─────────────────────────────────────────────────────┘
-```
+> Plain Text
+>
+> │ ROS 2 Version Timeline
+> Zenium
+> Ardent Bouncy Crystal Dashing Eloquent
+> I don't know.
+> │ 2017.12 2018.06 2018.12 2019.05 2019.11 │
+> Zenium
+> Foxy Galactic Humble
+> I don't know.
+> │2020.06 2021.05 2022.05 2023.05 2024.05 │
+> Zenium
 
-| 版本代号 | 发布时间 | 支持系统 | 支持状态 | 截止日期 |
+| Version Designator | Release time | Support System | Support status | Deadline |
 | --- | --- | --- | --- | --- |
-| Ardent | 2017.12 | Ubuntu 16.04 | 已终止 | 2019.04 |
-| Bouncy | 2018.06 | Ubuntu 16.04/18.04 | 已终止 | 2019.09 |
-| Crystal | 2018.12 | Ubuntu 16.04/18.04 | 已终止 | 2020.12 |
-| Dashing | 2019.05 | Ubuntu 16.04/18.04 | 已终止 | 2021.05 |
-| Eloquent | 2019.11 | Ubuntu 18.04 | 已终止 | 2021.11 |
-| Foxy | 2020.06 | Ubuntu 18.04/20.04 | 已终止 | 2023.05 |
-| Galactic | 2021.05 | Ubuntu 20.04 | 已终止 | 2022.11 |
-| Humble | 2022.05 | Ubuntu 22.04 | LTS | 2027.05 |
-| Iron | 2023.05 | Ubuntu 22.04 | 已终止 | 2024.11 |
-| Jazzy | 2024.05 | Ubuntu 24.04 | LTS | 2029.05 |
+| Ardent | 2017.12 | Ubuntu 16.04 | Terminated | 2019.04 |
+| Bouncy. | 2018.06 | Ubuntu 16.04/18.04 | Terminated | 2019.09 |
+| Crystal. | 2018.12 | Ubuntu 16.04/18.04 | Terminated | 2020.12 |
+| Dashing | 2019.05 | Ubuntu 16.04/18.04 | Terminated | 2021.05 |
+| Eloquent | 2019.11 | Ubuntu 18.04 | Terminated | 2021.11 |
+| Foxy. | 2020.06 | Ubuntu 18.04/20.04 | Terminated | 2023.05 |
+| Galactic | 2021.05 | Ubuntu 20.04 | Terminated | 2022.11 |
+| Humble. | 2022.05 | Ubuntu 22.04 | LTS | 2027.05 |
+| Iron. | 2023.05 | Ubuntu 22.04 | Terminated | 2024.11 |
+| Jazzy. | 2024.05 | Ubuntu 24.04 | LTS | 2029.05 |
 
-1.5.2 LTS (Long Term Support)版本
+1.5.2 LTS (Long Term Support) Version
 
-ROS 2提供LTS版本，获得更长时间的支持和安全更新：
+ROS 2 provides the LTS version with longer support and security updates:
 
-Humble Hawksbill(首个LTS版本)
+Humble Hawksbil (first LTS version)
 
-#### Jazzy Jalisco(第二个LTS版本)
+Release: May 2022
 
-### 1.5.3版本选择建议
+Support system: Ubuntu 22.04 (Jammy)
 
-| 使用场景 | 推荐版本 | 原因 |
+Duration of support: 5 years (to May 2027)
+
+Suitable scenario: production environment, commercial deployment
+
+Jazzy Jalisco (second LTS version)
+
+Release: May 2024
+
+Support system: Ubuntu 24.04 (Noble)
+
+Duration of support: 5 years (to May 2029)
+
+Feature: latest LTS version, functional update
+
+#### 1.5.3 Proposal for the selection of a version
+
+| Use scene | Recommended version | Reason |
 | --- | --- | --- |
-| 生产环境 | Humble | 稳定、长期支持 |
-| 新项目开发 | Jazzy | 最新 LTS ，长期支持 |
-| 学习 / 实验 | 最新滚动版 | 最新功能 |
-| 旧系统维护 | Humble | 兼容性好 |
+| Production environment | Humble. | Stable, long-term support |
+| New project development | Jazzy. | Latest LTS, long-term support |
+| Study/experiment | Recent Scroll | Recent Functions |
+| Old system maintenance | Humble. | Compatibility is good. |
 
-### 1.6 ROS 2应用领域
+#### 1.6 ROS 2 Application Area
 
-### 1.6.1工业机器人
+#### 1.6.1 Industrial robots
 
-```
-Plain Text
-┌────────────────────────────────────────────────────┐
-│ 工业机器人应用场景
-│
-├────────────────────────────────────────────────────┤
-│ │
-│ ┌────────────┐ ┌────────────┐ │
-│ │ 机械臂 │ │ AGV/AMR │ │
-│ │ 抓取/组装 │ │ 物料搬运 │ │
-│ └────────────┘ └────────────┘ │
-│ │
-│ ┌────────────┐ ┌────────────┐ │
-│ │ 协作机器人│ │ 质量检测 │ │
-│ │ 安全协作 │ │ 视觉检测 │ │
-│ └────────────┘ └────────────┘ │
-│ │
-└────────────────────────────────────────────────────┘
-```
+> Plain Text
+>
+> Industrial robotic applications
+> I'm sorry.
+> Zenium
+> {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FF00}
+> I'm sorry, I'm sorry.
+> │ Capture/assembly │ Material handling │
+>
+> Zenium
+> {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FF00}
+> │ │ │ │ │ │
+> │ Security collaboration │ visual detection │
+>
+> Zenium
 
--机械臂控制：Pick & Place、装配、焊接
+- Mechanical arm control: Pick & Place, assembly, welding
 
--移动机器人(AGV/AMR)：物流搬运、仓储自动化
+- Mobile robot (AGV/AMR): Logistics handling, storage automation
 
-#### -协作机器人：人机协作、安全交互
+- Collaborative robots: human collaboration, security interaction
 
-#### -质量检测：视觉检测、尺寸测量
+- Quality testing: visual testing, size measurement
 
-### 1.6.2服务机器人
+#### 1.6.2 Service robots
 
-```
-Plain Text
-┌────────────────────────────────────────────────────┐
-│ 服务机器人应用场景
-│
-├────────────────────────────────────────────────────┤
-│ │
-│ 餐厅配送 │ 商场导览 │ 家庭清洁 │
-│ │ │ │ │ │ │
-│ ┌───┴───┐ ┌───┴───┐ ┌───┴───┐ │
-│ │送餐机器人│ │导览机器人│ │清洁机器人│ │
-│ └───────┘ └───────┘ └───────┘ │
-│
-│
-└────────────────────────────────────────────────────┘
-```
+> Plain Text
+>
+> ♪ Service robot application scene ♪
+> I'm sorry.
+> Zenium
+> ♪ Dining room distribution mall tour ♪
+> I don't know.
+> {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00} {\cHFFFFFF} {\cHFFFFFF} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF} {\cHFFFF00} {\cHFFFFFF} {\cHFFFFFF} {\cHFFFFFF} {\cHFFFFFF} {\cHFFFFFF} {\cHFFFFFF} {\cHFFFFFF}
+> ♪ Ta-da-da-da-da-da ♪
+> {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FF00} {\cH00FF00} {\cHFFFFFF}{\cH00FF00} {\cH00FF00} {\cHFFFFFF}{\cH00FF00} {\cHFFFF00} {\cHFFFFFF} {\cHFFFFFF} {\cHFFFFFF} {\cHFFFFFF} {\cHFFFFFF} {\cHFFFFFF}{\cH00}
+> Zenium
 
-#### -送餐机器人：餐厅配送、酒店服务
+- Food delivery robots: catering, hotel services
 
-#### -清洁机器人：地面清洁、窗户清洁
+- Cleaning robots: ground cleaning, window cleaning
 
-#### -导览机器人：商场导览、博物馆讲解
+- Guided robots: mall guides, museum lectures
 
-#### -陪伴机器人：老年人陪护、儿童教育
+- Compassing robots: the elderly, children ' s education
 
-### 1.6.3自动驾驶
+#### 1.6.3 Automatic driving
 
-```
-Plain Text
-┌────────────────────────────────────────────────────┐
-│ 自动驾驶系统架构
-│
-├────────────────────────────────────────────────────┤
-│ │
-│ ┌────────────────────────────────────────────┐ │
-│ │ 感知层 (Perception) │ │
-│ │ 激光雷达 │ 摄像头 │ 雷达 │ IMU │ GPS │ │
-│ └────────────────────────────────────────────┘ │
-│ ▼ │
-│ ┌────────────────────────────────────────────┐ │
-│ │ 定位层 (Localization) │ │
-│ │ SLAM │ 状态估计 │ 传感器融合 │ │
-│ └────────────────────────────────────────────┘ │
-│ ▼ │
-│ ┌────────────────────────────────────────────┐ │
-│ │ 规划层 (Planning) │ │
-│ │ 路径规划 │ 行为决策 │ 运动规划 │ │
-│ └────────────────────────────────────────────┘ │
-│ ▼ │
-│ ┌────────────────────────────────────────────┐ │
-│ │ 控制层 (Control) │ │
-│ │ PID 控制 │ MPC │ 执行器控制 │ │
-│ └────────────────────────────────────────────┘ │
-│ │
-└────────────────────────────────────────────────────┘
-```
+> Plain Text
+>
+> Autopilot system architecture
+> I'm sorry.
+> Zenium
+>
+> Perception
+> │ Laser radar │ Camera │ Radar │ IMU │ GPS │
+>  /
+> I'm sorry.
+>
+> Localization
+> │ SLAM state estimate │ sensor integration │
+>  /
+> I'm sorry.
+>
+> Planning
+> │ Path planning │ Behavioural decision-making │ Sports planning │
+>  /
+> I'm sorry.
+>
+> Control
+> │ PID Control │ MPC │ Executor Control │
+>  /
+> Zenium
 
-#### -感知：激光雷达、摄像头、雷达数据处理
+- Perceptions: laser radar, cameras, radar data processing
 
-#### -定位：SLAM、状态估计、传感器融合
+- Positioning: SLAM, state estimates, sensor integration
 
-#### -规划：路径规划、行为决策、运动规划
+- Planning: path planning, behavioural decisions, sports planning
 
-#### -控制：车辆控制、执行器驱动
+- Control: Vehicle control, enforcer drive
 
-### 1.6.4无人机
+#### 1.6.4 UAVs
 
-```
-Plain Text
-▲────▲
-╱ ╱ ROS 2 无人机系统
-╱ ____╱
-╱ ╱ ╱
-╱ ╱____╱
-╱________╱
-│ │
-│ └─── 飞行控制 (mavros)
-│
-└────── 视觉处理
-(图像识别、避障)
-```
+> Plain Text
+> I'm sorry.
+> ╱ ROS 2 UAV System
+>
+> I'm sorry.
+> ╱
+> ╱
+> Zenium
+> (mavros)
+> Zenium
+> Visual treatment
+> (Image recognition, shielding)
 
-#### -飞行控制：姿态控制、高度控制、路径跟踪
+- Flight control: attitude control, height control, path tracking
 
-#### -视觉避障：实时障碍物检测和规避
+- Visual barriers: real-time barrier detection and circumvention
 
-#### -任务执行：自主飞行、航点导航
+- Mission execution: autonomous flight, flight point navigation
 
-#### -图传处理：视频传输和图像处理
+- Telegraph processing: video transmission and image processing
 
-### 1.6.5科研教育
+### 1.6.5 Education for scientific research
 
-```
-Plain Text
-┌────────────────────────────────────────────────────┐
-│ 科研教育场景
-│
-├────────────────────────────────────────────────────┤
-│ │
-│ ┌────────────┐ ┌────────────┐ │
-│ │ 算法验证 │ │ 教学演示 │ │
-│ │ SLAM研究 │ │ 课程实验 │ │
-│ └────────────┘ └────────────┘ │
-│ │
-│ ┌────────────┐ ┌────────────┐ │
-│ │ 竞赛平台 │ │ 原型开发 │ │
-│ │ RoboCup │ │ 概念验证 │ │
-│ └────────────┘ └────────────┘ │
-│ │
-└────────────────────────────────────────────────────┘
-```
+> Plain Text
+>
+> • Science and education
+> I'm sorry.
+> Zenium
+> {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FF00}
+> │ Algorithmic validation │ Teaching demonstration │
+> │ SLAM Research │ Experimental │
+>
+> Zenium
+> {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FF00}
+> │ Competition platform │ Prototype development │
+> │ RoboCup
+>
+> Zenium
 
-#### -算法研究：SLAM、路径规划、强化学习
+- Algorithmology: SLAM, Path Planning, Enhanced Learning
 
-#### -教学培训：机器人课程、实验演示
+- Teaching and training: robotic courses, experimental demonstrations
 
-#### -学科竞赛：RoboCup、RoboMaster
+- Professional competitions: RoboCup, RoboMaster
 
-#### -原型开发：快速验证新想法
+- Prototype development: quick validation of new ideas
 
-### 1.7学习路径建议
+## 1.7 Learning path proposal
 
-### 1.7.1基础知识准备
+### 1.7.1 Basic knowledge readiness
 
-```
-Plain Text
-┌────────────────────────────────────┐
-│ 入门前准备 │
-├────────────────────────────────────┤
-│ • Linux 基础操作 │
-│ • Python 或 C++ 编程基础 │
-│ • 终端命令使用 │
-│ • 基本的软件工程概念 │
-└────────────────────────────────────┘
-▼
-┌────────────────────────────────────┐
-│ ROS 2 核心概念学习 │
-├────────────────────────────────────┤
-│ • 安装和环境配置 │
-│ • 节点、话题、服务 │
-│ • 工作空间和包管理 │
-│ • 基本命令行工具 │
-└────────────────────────────────────┘
-```
+> Plain Text
+>
+> Get ready for the entrance.
+> I'm sorry.
+> • Linux Basic Operations
+> • Python or C++ programming base
+> • Use of terminal commands
+> • Basic software engineering concepts
+>
+> Zenium
+>
+> ROS 2 Core conceptual learning
+> I'm sorry.
+> • Installation and environmental configuration
+> • Nodes, topics, services
+> • Workspace and package management
+> • Basic command line tools
 
-#### 必备知识清单：
+List of knowledge required:
 
-| 知识领域 | 具体内容 | 重要程度 |
+| Knowledge area | Specific content | Importance |
 | --- | --- | --- |
-| Linux 操作 | 文件系统、终端命令、权限管理 | 必需 |
-| 编程语言 | Python 或 C++ | 必需 |
-| 版本控制 | Git 基本操作 | 推荐 |
-| 网络基础 | TCP/UDP 、端口、 IP 地址 | 推荐 |
-| 数学基础 | 线性代数、概率统计 | 进阶 |
+| Linux Operations | File system, terminal command, privileges management | Required |
+| Programming languages | Python or C++ | Required |
+| Version Control | Git Basic Operations | Recommendations |
+| Network Foundation | TCP/UDP, port, IP address | Recommendations |
+| Math Basis | Linear algebra, probability statistics | Progress |
 
-### 1.7.2分阶段学习计划
+### 1.7.2 Phased learning plan
 
-#### 阶段一：基础入门(1-2个月)
+Phase I: Basic Introduction (1 - 2 months)
 
-```
-Plain Text
-周次 学习内容 实践项目
-────────────────────────────────────────────────
-第1周 ROS 2 安装与环境配置 安装 Humble
-第2周 工作空间与功能包 创建第一个包
-第3周 节点与话题通信 Pub/Sub 示例
-第4周 服务与参数 Server/Client 示例
-第5周 Launch 文件 启动多节点系统
-第6周 RViz2 与 Rqt 可视化数据
-第7周 录制与回放 (Rosbag2) 数据记录
-第8周 综合项目 小型机器人仿真
-```
+> Plain Text
+> Learning content
+>
+> Week 1 ROS 2 Installation and Environmental Configuration Installation Humble
+> Week 2 Workspace and functionality package Create the first package
+> Week 3 Node and topic communication Pub/Sub Example
+> Week 4 Services and Parameters Server/Client Example
+> Week 5 Launch File Start Multinodes
+> Week 6 RVIZ2 and Rqt visualized data
+> Week 7 Record and Playback (Rosbag2) Data Record
+> Week 8 Integrated Project Small Robot Simulation
 
-#### 阶段二：进阶学习(2-3个月)
+Phase II: Progressive learning (2-3 months)
 
-```
-Plain Text
-周次 学习内容 实践项目
-────────────────────────────────────────────────
-第9周 自定义消息/服务/动作 定义接口
-第10周 TF2 坐标变换 多坐标系管理
-第11周 动作通信 长任务处理
-第12周 QoS 策略 通信质量配置
-第13周 参数服务器 动态参数配置
-第14周 分布式通信 多机通信
-第15周 DDS 配置 切换 DDS 实现
-第16周 时间 API 定时与速率控制
-```
+> Plain Text
+> Learning content
+>
+> Week 9 Custom message/service/action define interface
+> Week 10 TF2 Coordinate Transformation Multi-Coordinate System Management
+> Week 11, action communications, long mission processing.
+> Week 12 QoS Policy Communication Quality Configuration
+> Week 13 Parameter Server Dynamic Parameter Configuration
+> WEEK 14 Distributive Communications Multi-machine Communications
+> Week 15 DDS Configuration Toggle DDS Achieved
+> Week 16 Time API Time and Rate Control
 
-#### 阶段三：高级应用(3-4个月)
+Phase III: Advanced applications (3-4 months)
 
-```
-Plain Text
-周次 学习内容 实践项目
-────────────────────────────────────────────────
-第17周 URDF 机器人建模 创建机器人模型
-第18周 Gazebo 仿真 物理仿真环境
-第19周 导航功能包 自主导航
-第20周 视觉处理 OpenCV 集成
-第21周 传感器驱动 相机/激光雷达
-第22周 机器人控制 ros2_control
-第23周 性能优化 调试与性能分析
-第24周 综合项目 完整机器人系统
-```
+> Plain Text
+> Learning content
+>
+> Week 17, URDF robot modeling.
+> Week 18, Gazebo Simulation Physical Simulation Environment
+> Week 19, navigation kit, autonomous navigation.
+> Week 20 Visual processing OpenCV integration
+> WEEK 21 Sensor Drive Camera/laser radar
+> Week 22, robot control ros2 control
+> Week 23 Optimization of performance debugging and performance analysis
+> Week 24, Comprehensive Project, full robotic system.
 
-### 1.7.3推荐学习资源
+### 1.7.3 Recommended learning resources
 
-#### 官方资源：
+Official resources:
 
-| 资源名称 | URL | 描述 |
+| Resource Name | URL | Description |
 | --- | --- | --- |
-| ROS 2 官方文档 | https://docs.ros.org/en/humble/ | 权威的完整文档 |
-| ROS 2 教程 | https://docs.ros.org/en/humble/Tutorials.html | 官方教程集合 |
-| ROS 2 设计文档 | https://design.ros2.org/ | 架构设计说明 |
-| ROS 2 源码 | https://github.com/ros2 | GitHub 仓库 |
+| ROS 2 Official Document | https://docs.ros.org/en/humble/ | Full authoritative document |
+| ROS 2 Academy | https://docs.ros.org/en/humble/Tutorials.html | Official course collection |
+| ROS 2 Design Document | https://design.ros2.org/ | Architecture design note |
+| ROS 2 Source | https://github.com/ros2 | GitHub Repository |
 
-#### 社区资源：
+Community resources:
 
-| 资源名称 | 描述 |
+| Resource Name | Description |
 | --- | --- |
-| ROS Answers | 官方问答社区 |
-| Discourse Forum | ROS 2 讨论论坛 |
-| ROS 2 YouTube 官方频道 | 视频教程 |
-| 各类 ROS 2 博客和教程 | 社区贡献内容 |
+| ROS Answers | Official question and answer community |
+| Discourse Forum | ROS 2 Discussion Forum |
+| ROS 2 YouTube official channel | Video tutorial |
+| Various ROS 2 Blogs and Courses | Community contribution |
 
-#### 书籍推荐：
+Book recommendations:
 
-### 1.8参考资源汇总
+ROS 2 Development Guide
 
-### 1.8.1官方文档索引
+Technical ROS 2 Programme
 
-```
-Plain Text
-docs.ros.org
-│
-├── /en/humble/
-│ ├── /Concepts/ # 核心概念
-│ ├── /Tutorials/ # 教程集合
-│ ├── /How-To-Guides/ # 操作指南
-│ ├── /Installation/ # 安装指南
-│ ├── /Releases/ # 版本信息
-│ └── /API/ # API 文档
-│
-└── /en/rolling/ # 滚动版本文档
-```
+Programing Robots with ROS 2
 
-### 1.8.2关键文档章节
+#### 1.8 Summary of reference resources
 
-| 章节名称 | 路径 | 内容概述 |
+### 1.8.1 Indexes to official documents
+
+> Plain Text
+> I don't know, docs.ros.org.
+> Zenium
+> Ideas - https://download.docker.com/linux/ubuntu/dists/
+> # Core concept #
+> ♪ I miss ♪
+> │ - /How-To-Guides/ # Operating Guide
+> │ - /Installation/ # Installation guide
+> │ - /Releases/ # Info
+> │--XIOBAITOKEN6 #API Document
+> Zenium
+> └ - /en/rolling/ # Scroll document
+
+#### 1.8.2 Key document chapters
+
+| Chapter Name | Path | Overview |
 | --- | --- | --- |
-| 核心概念 | Concepts/Basic | ROS 2 基本概念详解 |
-| 教程集合 | Tutorials/ | 循序渐进的教程 |
-| 安装指南 | Installation/ | 各平台安装方法 |
-| 迁移指南 | How-To-Guides/Migrating-from-ROS1 | ROS 1 到 ROS 2 迁移 |
+| Core concepts | Concepts/Basic | ROS 2 Detailed basic concepts |
+| The tutorials. | Tutorias/ | Progressive curriculum |
+| Installation Guide | Establishment/ | Installation of platforms |
+| Migration guide | How-To-Guides/Migrating-from-ROS1 | ROS 1 to ROS 2 migration |
 
-### 1.8.3社区支持渠道
+#### 1.8.3 Community support channels
 
-```
-Plain Text
-┌──────────────────────────────────────────────┐
-│ ROS 2 社区支持
-│
-├──────────────────────────────────────────────┤
-│ │
-│ • ROS Answers: answers.ros.org │
-│ • Discourse: discourse.ros.org │
-│ • GitHub: github.com/ros2 │
-│ • Slack: ROS Devroom Slack │
-│ • Stack Overflow: 标签 ros2 │
-│ • Reddit: r/ROS │
-│ │
-└──────────────────────────────────────────────┘
-```
+> Plain Text
+>
+> │ ROS 2 Community support
+> I'm sorry.
+> Zenium
+> • ROS Answers: answers.ros.org
+> Discourse: Discourse.ros.org
+> • GitHub: github.comXIABAITOKEN0
+> • Slack: ROS Devroom Slack
+> • Stack Overflow: label ros2
+> • Reddit: rXIOBAITOKEN1
+> Zenium
 
-## 03集成开发环境
+#### 03 Integrated Development Environment
 
-### 03集成开发环境(IDE Setup)
+## 03 Integrated Development Environment (IDE Setup)
 
-### 3.1概述
+### 3.1 General
 
-良好的开发环境配置可以显著提高ROS 2开发效率。本章将详细介绍如何配置Visual Studio Code (VS Code)作为ROS 2的主要开发环境，包括插件安装、智能代码补全、调试配置等。
+A good development environment configuration can significantly improve the efficiency of ROS 2 development. This chapter will provide detailed information on how to configure Visual Studio Code (VS Code) as the main development environment for ROS 2, including plugin installation, smart code completion, debug configuration, etc.
 
-### 3.1.1开发环境选择
+### 3.1.1 Development of environmental options
 
-| IDE | 优点 | 缺点 | 推荐度 |
+| IDE | Strengths | Disadvantages | Recommended |
 | --- | --- | --- | --- |
-| VS Code | 轻量、插件丰富、免费 | C++ 支持需额外配置 | ⭐⭐⭐⭐⭐ |
-| CLion | 强大的 C++ 支持、内置调试 | 付费、较重 | ⭐⭐⭐⭐ |
-| Qt Creator | 跨平台、 CMake 支持好 | ROS 2 支持需手动配置 | ⭐⭐⭐ |
-| Vim/Neovim | 轻量、高度可定制 | 学习曲线陡峭 | ⭐⭐ |
+| VS Code | Light, rich plugs, free | Additional configuration for C++ support | Zenium |
+| CLion | Strong C++ Support, Internal Debug | Payment, heavy | Zenium |
+| Qt Creator | Cross Platform, CMake Support | ROS 2 support needs manual configuration | Zenium |
+| Vim/Neovim | Light, highly customable | Learning curve steep | Zenium |
 
-### 3.1.2推荐配置
+### 3.1.2 Recommended configuration
 
-#### 本文推荐使用VS Code+ROS扩展的组合：
+This document recommends a combination of VS Code+ROS extensions:
 
-### 3.2 Visual Studio Code安装
+Cross Platform Support (Linux/Windows/macOS)
 
-### 3.2.1安装VS Code
+Rich Plugin Ecology
 
-#### Ubuntu 22.04通过APT安装：
+Perfect ROS 2 support
+
+Free.
+
+## 3.2 Visa Studio Code installation
+
+#### 3.2.1 Installation of VS Code
+
+Ubuntu 22.04 Install through APT:
 
 ```bash
-# 下载并安装 VS Code
+# Download and install VS Code
 wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
 sudo install -o root -g root -m 644 packages.microsoft.gpg /etc/apt/trusted.gpg.d/
 sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/trusted.gpg.d/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
@@ -863,734 +863,758 @@ sudo apt update
 sudo apt install -y code
 ```
 
-#### 通过Snap安装：
+Install through Snap:
 
 ```bash
 sudo snap install --classic code
 ```
 
-#### 验证安装：
+Validation installation:
 
 ```bash
 code --version
 ```
 
-### 3.2.2 VS Code基本配置
+### 3.2.2 VS Code Basic Configuration
 
-启动VS Code：
+Start VS Code:
 
 ```bash
 code
-# 或者打开特定目录
+# Or open a specific directory
 code ~/ros2_ws
 ```
 
-### 3.3必装插件
+## 3.3 Required plugins
 
-### 3.3.1 ROS 2核心插件
+#### 3.3.1 ROS 2 Core Plugin
 
-| 插件名称 | 发布者 | 用途 | 安装命令 |
+| Plugin Name | Publisher | Purpose | Install Command |
 | --- | --- | --- | --- |
-| ROS | Microsoft | ROS 支持 | ext install ms-iot.vscode-ros |
-| C/C++ | Microsoft | C++ 语言支持 | ext install ms-vscode.cpptools |
-| Python | Microsoft | Python 语言支持 | ext install ms-python.python |
-| CMake Tools | Microsoft | CMake 支持 | ext install ms-vscode.cmake-tools |
+| ROS | Microsoft | ROS Support | I don't know what to do with it. |
+| C/C+ | Microsoft | C++ Language Support | I don't know. |
+| Python. | Microsoft | Python Language Support | I'm sorry, I'm sorry. |
+| CMake Tools | Microsoft | CMake Support | I don't know what you're talking about. |
 
-### 3.3.2推荐插件
+### 3.3.2 Recommended plugins
 
-| 插件名称 | 发布者 | 用途 |
+| Plugin Name | Publisher | Purpose |
 | --- | --- | --- |
-| YAML | Red Hat | YAML 文件支持 |
-| XML | Red Hat | XML 文件支持 |
-| Better Comments | Aaron Petheram | 更好的注释显示 |
-| GitLens | GitKraken | Git 增强工具 |
-| TODO Highlight | Wayou Liu | 高亮 TODO 注释 |
-| Bracket Pair Colorizer | CoenraadS | 括号配对着色 |
-| Thunder Client | Ranga Vadhineni | REST API 测试（替代 Postman ） |
+| YAML | Red Hat | YamL file support |
+| XML | Red Hat | XML file support |
+| Better comments | Aaron Petheram. | Better Comment Display |
+| GitLens. | Git Kraken | Git Enhancement Tool |
+| TODO Highlight | Wayou Liu | Highlight TODO Comment |
+| Blacket Pair Colorizer | CoenraadS | parenthesis to colour |
+| Thunder! | Ranga Vadhinini | REST API Test (replaces Postman) |
 
-### 3.3.3安装插件的方法
+### 3.3.3 Method of installing plugins
 
-#### 方法1：通过命令面板安装
+Method 1: Installation by command panel
 
-```
-Plain Text
-1. 按 Ctrl+Shift+P 打开命令面板
-2. 输入 "Extensions: Install Extensions"
-3. 搜索插件名称
-4. 点击 Install 按钮
-```
+> Plain Text
+> 1. Open command panel by Ctrl+Shift+P
+> 2. Input "Extensions: Install Extensions"
+> 3. Search plugin name
+> Click on the Install button
 
-#### 方法2：通过命令行安装
+Method 2: Installation by command line
 
 ```bash
-# 安装 ROS 插件
+# Install the ROS extension
 code --install-extension ms-iot.vscode-ros
-# 安装 C/C++ 插件
+
+# Install the C/C++ extension
 code --install-extension ms-vscode.cpptools
-# 安装 Python 插件
+
+# Install the Python extension
 code --install-extension ms-python.python
-# 安装 CMake Tools
+
+# Install CMake Tools
 code --install-extension ms-vscode.cmake-tools
 ```
 
-#### 方法3：通过界面安装
+Method 3: Installation through interface
 
-```
-Plain Text
-1. 点击左侧扩展图标 (或 Ctrl+Shift+X)
-2. 搜索插件名称
-3. 点击 Install
-```
+> Plain Text
+> 1. Click left extension icon (or Ctrl+Shift+X)
+> 2. Name of the search plugin
+> 3. Click Install
 
-### 3.4 ROS 2工作空间配置
+### 3.4 ROS 2 Workspace Configuration
 
-### 3.4.1打开ROS 2工作空间
+#### 3.4.1 Open ROS 2 workspace
 
 ```bash
-# 打开工作空间
+# Open the workspace
 code ~/ros2_ws
 ```
 
-### 3.4.2配置C/C++智能提示
+#### 3.4.2 Configure C/C+ smart tips
 
-VS Code需要知道ROS 2的头文件路径才能提供准确的代码补全。
+VS Code needs to know the lead file path for ROS 2 to provide an accurate code completion.
 
-创建.vscode/c_cpp_properties.json：
+Create .vscode/c_cpp_properties.json:
 
-```
-JSON
+```json
 {
-"configurations": [
-{
-"name": "Linux",
-"includePath": [
-"${workspaceFolder}/**",
-"/opt/ros/humble/include/**",
-"/usr/include/**"
-],
-"defines": [],
-"compilerPath": "/usr/bin/gcc",
-"cStandard": "c17",
-"cppStandard": "c++17",
-"intelliSenseMode": "linux-gcc-x64",
-"compileCommands": "${workspaceFolder}/build/compile_commands.json"
-}
-],
-"version": 4
+  "configurations": [
+  {
+  "name": "Linux",
+  "includePath": [
+  "${workspaceFolder}/**",
+  "/opt/ros/humble/include/**",
+  "/usr/include/**"
+  ],
+  "defines": [],
+  "compilerPath": "/usr/bin/gcc",
+  "cStandard": "c17",
+  "cppStandard": "c++17",
+  "intelliSenseMode": "linux-gcc-x64",
+  "compileCommands": "${workspaceFolder}/build/compile_commands.json"
+  }
+  ],
+  "version": 4
 }
 ```
 
-#### 关键配置说明：
+Key profile description:
 
-| 配置项 | 说明 |
+| Configure Item | Annotations |
 | --- | --- |
-| includePath | 头文件搜索路径，必须包含 ROS 2 路径 |
-| compileCommands | 编译命令数据库，用于精确的代码分析 |
-| cppStandard | C++ 标准， ROS 2 使用 C++17 |
+| IncludePath | Head file search path, must contain ROS 2 path |
+| I'm sorry. | Compile command database for precise code analysis |
+| cppStandard | C++ standard, ROS 2 uses C++17 |
 
-### 4.4.3生成compile_commands.json
+### 4.4.3 Generate compile_commands.json
 
-配置colcon生成编译命令数据库：
+Configure colcon to generate compilation command databases:
 
 ```bash
-# 在工作空间根目录
+# From the workspace root directory
 cd ~/ros2_ws
-# 编译时生成 compile_commands.json
+
+# Generate compile_commands.json during the build
 colcon build --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
-# 创建符号链接到 src 目录（可选，方便某些工具访问）
+
+# Create a symbolic link to the src directory (optional, useful for some tools)
 ln -s build/compile_commands.json
 ```
 
-#### 验证生成：
+Authentication generation:
 
 ```bash
 cat build/compile_commands.json | jq '.[] | .directory' | head -5
 ```
 
-### 3.4.4配置Python环境
+### 3.4.4 Configure the Python environment
 
-#### 创建.vscode/settings.json：
+Create .vscode/settings.json:
 
-```
-JSON
+```json
 {
-"python.autoComplete.extraPaths": [
-"${workspaceFolder}/install/*/lib/python3.10/site-packages",
-"/opt/ros/humble/lib/python3.10/site-packages"
-],
-"python.analysis.extraPaths": [
-"${workspaceFolder}/install/*/lib/python3.10/site-packages",
-"/opt/ros/humble/lib/python3.10/site-packages"
-],
-"python.formatting.provider": "black",
-"python.linting.enabled": true,
-"python.linting.pylintEnabled": true,
-"python.linting.pylintArgs": [
-"--rcfile=${workspaceFolder}/.pylintrc"
-]
+  "python.autoComplete.extraPaths": [
+  "${workspaceFolder}/install/*/lib/python3.10/site-packages",
+  "/opt/ros/humble/lib/python3.10/site-packages"
+  ],
+  "python.analysis.extraPaths": [
+  "${workspaceFolder}/install/*/lib/python3.10/site-packages",
+  "/opt/ros/humble/lib/python3.10/site-packages"
+  ],
+  "python.formatting.provider": "black",
+  "python.linting.enabled": true,
+  "python.linting.pylintEnabled": true,
+  "python.linting.pylintArgs": [
+  "--rcfile=${workspaceFolder}/.pylintrc"
+  ]
 }
 ```
 
-### 3.5 VS Code任务配置
+### 3.5 VS Code Job Configuration
 
-### 3.5.1配置构建任务
+### 3.5.1 Configure construction tasks
 
-#### 创建.vscode/tasks.json：
+Create .vscode/tasks.json:
 
-```
-JSON
+```json
 {
-"version": "2.0.0",
-"tasks": [
-{
-"label": "colcon build",
-"type": "shell",
-"command": "colcon build --symlink-install",
-"group": {
-"kind": "build",
-"isDefault": true
-},
-"problemMatcher": [],
-"presentation": {
-"reveal": "always",
-"panel": "new"
+  "version": "2.0.0",
+  "tasks": [
+  {
+  "label": "colcon build",
+  "type": "shell",
+  "command": "colcon build --symlink-install",
+  "group": {
+  "kind": "build",
+  "isDefault": true
+  },
+  "problemMatcher": [],
+  "presentation": {
+  "reveal": "always",
+  "panel": "new"
+  }
+  },
+  {
+  "label": "colcon build (selected package)",
+  "type": "shell",
+  "command": "colcon build --symlink-install --packages-select ${input:packageName}",
+  "group": "build",
+  "problemMatcher": []
+  },
+  {
+  "label": "source workspace",
+  "type": "shell",
+  "command": "source install/setup.bash && echo 'Workspace sourced'",
+  "problemMatcher": []
+  },
+  {
+  "label": "clean build",
+  "type": "shell",
+  "command": "rm -rf build install log && colcon build --symlink-install",
+  "group": "build",
+  "problemMatcher": []
+  }
+  ],
+  "inputs": [
+  {
+  "id": "packageName",
+  "type": "promptString",
+  "description": "Enter package name to build"
+  }
+  ]
 }
-},
-{
-"label": "colcon build (selected package)",
-"type": "shell",
-"command": "colcon build --symlink-install --packages-select ${input:packageName}",
-"group": "build",
-"problemMatcher": []
-},
-{
-"label": "source workspace",
-"type": "shell",
-"command": "source install/setup.bash && echo 'Workspace sourced'",
-"problemMatcher": []
-},
-{
-"label": "clean build",
-"type": "shell",
-"command": "rm -rf build install log && colcon build --symlink-install",
-"group": "build",
-"problemMatcher": []
-}
-],
-"inputs": [
-{
-"id": "packageName",
-"type": "promptString",
-"description": "Enter package name to build"
-}
-]
-}
 ```
 
-#### 使用任务：
+Other Organiser
 
-```
-Plain Text
-Ctrl+Shift+B # 运行默认构建任务
-Ctrl+Shift+P -> Tasks: Run Task # 选择其他任务
-```
+> Plain Text
+> Ctrl+Shift+B# Run the default builder task
+> Ctrl+Shift+P->Tasks: Run Task # Choose Other Tasks
 
-### 3.5.2配置测试任务
+### 3.5.2 Configure testing tasks
 
-在tasks.json中添加：
+Add in tasks.json:
 
-```
-JSON
+```json
 {
-"label": "colcon test",
-"type": "shell",
-"command": "colcon test --packages-select ${input:testPackage}",
-"group": "test",
-"problemMatcher": []
+  "label": "colcon test",
+  "type": "shell",
+  "command": "colcon test --packages-select ${input:testPackage}",
+  "group": "test",
+  "problemMatcher": []
 },
 {
-"label": "colcon test --event-handlers",
-"type": "shell",
-"command": "colcon test --packages-select ${input:testPackage} --event-handlers console_direct+",
-"group": "test",
-"problemMatcher": []
+  "label": "colcon test --event-handlers",
+  "type": "shell",
+  "command": "colcon test --packages-select ${input:testPackage} --event-handlers console_direct+",
+  "group": "test",
+  "problemMatcher": []
 },
 {
-"label": "show test results",
-"type": "shell",
-"command": "colcon test-result --all --verbose",
-"group": "test",
-"problemMatcher": []
+  "label": "show test results",
+  "type": "shell",
+  "command": "colcon test-result --all --verbose",
+  "group": "test",
+  "problemMatcher": []
 }
 ```
 
-### 3.6调试配置
+## 3.6 Debug configuration
 
-### 3.6.1 C++节点调试
+### 3.6.1 C++ Debugging Nodes
 
-#### 创建.vscode/launch.json：
+Create .vscode/launch.json:
 
-```
-JSON
+```json
 {
-"version": "0.2.0",
-"configurations": [
-{
-"name": "ROS2: C++ Node",
-"type": "cppdbg",
-"request": "launch",
-"program": "${workspaceFolder}/install/${input:packageName}/lib/${input:packageName}/${input:executableName}",
-"args": [],
-"stopAtEntry": false,
-"cwd": "${workspaceFolder}",
-"environment": [
-{
-"name": "ROS_DOMAIN_ID",
-"value": "0"
-},
-{
-"name": "RMW_IMPLEMENTATION",
-"value": "rmw_cyclonedds_cpp"
-}
-],
-"externalConsole": false,
-"MIMode": "gdb",
-"setupCommands": [
-{
-"description": "Enable pretty-printing",
-"text": "-enable-pretty-printing",
-"ignoreFailures": true
-}
-]
-}
-],
-"inputs": [
-{
-"id": "packageName",
-"type": "promptString",
-"description": "Package name"
-},
-{
-"id": "executableName",
-"type": "promptString",
-"description": "Executable name"
-}
-]
-}
-```
-
-### 3.6.2 Python节点调试
-
-```
-JSON
-{
-"name": "ROS2: Python Node",
-"type": "python",
-"request": "launch",
-"module": "rclpy.executors",
-"args": [
-"${workspaceFolder}/install/${input:packageName}/lib/${input:packageName}/${input:moduleName}"
-],
-"console": "integratedTerminal",
-"env": {
-"ROS_DOMAIN_ID": "0",
-"PYTHONPATH": "${workspaceFolder}/install/${input:packageName}/lib/python3.10/site-packages:${env:PYTHONPATH}"
-}
+  "version": "0.2.0",
+  "configurations": [
+  {
+  "name": "ROS2: C++ Node",
+  "type": "cppdbg",
+  "request": "launch",
+  "program": "${workspaceFolder}/install/${input:packageName}/lib/${input:packageName}/${input:executableName}",
+  "args": [],
+  "stopAtEntry": false,
+  "cwd": "${workspaceFolder}",
+  "environment": [
+  {
+  "name": "ROS_DOMAIN_ID",
+  "value": "0"
+  },
+  {
+  "name": "RMW_IMPLEMENTATION",
+  "value": "rmw_cyclonedds_cpp"
+  }
+  ],
+  "externalConsole": false,
+  "MIMode": "gdb",
+  "setupCommands": [
+  {
+  "description": "Enable pretty-printing",
+  "text": "-enable-pretty-printing",
+  "ignoreFailures": true
+  }
+  ]
+  }
+  ],
+  "inputs": [
+  {
+  "id": "packageName",
+  "type": "promptString",
+  "description": "Package name"
+  },
+  {
+  "id": "executableName",
+  "type": "promptString",
+  "description": "Executable name"
+  }
+  ]
 }
 ```
 
-### 3.6.3调试操作
+### 3.6.2 Python debugging
 
-#### 调试快捷键：
+```json
+{
+  "name": "ROS2: Python Node",
+  "type": "python",
+  "request": "launch",
+  "module": "rclpy.executors",
+  "args": [
+  "${workspaceFolder}/install/${input:packageName}/lib/${input:packageName}/${input:moduleName}"
+  ],
+  "console": "integratedTerminal",
+  "env": {
+  "ROS_DOMAIN_ID": "0",
+  "PYTHONPATH": "${workspaceFolder}/install/${input:packageName}/lib/python3.10/site-packages:${env:PYTHONPATH}"
+  }
+}
+```
 
-| 快捷键 | 功能 |
+### 3.6.3 Debugging
+
+Debug shortcuts:
+
+| Shortcuts | Functions |
 | --- | --- |
-| F5 | 开始调试 |
-| Ctrl+Shift+F5 | 重启调试 |
-| Shift+F5 | 停止调试 |
-| F9 | 设置 / 取消断点 |
-| F10 | 单步跳过 |
-| F11 | 单步进入 |
-| Shift+F11 | 单步跳出 |
+| F5 | Start debugging |
+| Ctrl+Shift+F5 | Restart debugging |
+| Shift+F5 | Stop debugging |
+| F9 | Set/Close Breakpoint |
+| F10 | Step Over |
+| F11 | Step into |
+| Shift+F11 | Step Out |
 
-### 3.7 ROS 2专用功能配置
+#### 3.7 ROS 2 Special feature configuration
 
-### 3.7.1 ROS扩展配置
+### 3.7.1 ROS Extension
 
-创建.vscode/settings.json（ROS相关）：
+Create .vscode/settings.json (ROS-related):
 
-```
-JSON
+```json
 {
-"ros.distro": "humble",
-"ros.pythonPath": "/usr/bin/python3",
-"ros.defaultWorkspace": "${workspaceFolder}",
-"ros.rosSetupScript": "/opt/ros/humble/setup.bash",
-"ros.rosWorkspace": "${workspaceFolder}",
-"files.associations": {
-"*.world": "xml",
-"*.urdf": "xml",
-"*.xacro": "xml",
-"*.rviz": "yaml",
-"*.launch.py": "python"
-}
+  "ros.distro": "humble",
+  "ros.pythonPath": "/usr/bin/python3",
+  "ros.defaultWorkspace": "${workspaceFolder}",
+  "ros.rosSetupScript": "/opt/ros/humble/setup.bash",
+  "ros.rosWorkspace": "${workspaceFolder}",
+  "files.associations": {
+  "*.world": "xml",
+  "*.urdf": "xml",
+  "*.xacro": "xml",
+  "*.rviz": "yaml",
+  "*.launch.py": "python"
+  }
 }
 ```
 
-### 3.7.2代码片段（Snippets）
+#### 3.7.2 Snippets
 
-创建.vscode/ros2.code-snippets：
+Create .vscode/ros2.code-snippets:
 
-```
-JSON
+```json
 {
-"ROS2 C++ Node Minimal": {
-"prefix": "ros2_cpp_node",
-"description": "Minimal ROS2 C++ node template",
-"body": [
-"# include \"rclcpp/rclcpp.hpp\"",
-"",
-"class ${1:NodeName} : public rclcpp::Node {",
-"public:",
-" ${1:NodeName}() : Node(\"${1:NodeName}\") {",
-" RCLCPP_INFO(this->get_logger(), \"${1:NodeName} has been started.\");",
-" }",
-"};",
-"",
-"int main(int argc, char** argv) {",
-" rclcpp::init(argc, argv);",
-" auto node = std::make_shared<${1:NodeName}>();",
-" rclcpp::spin(node);",
-" rclcpp::shutdown();",
-" return 0;",
-"}"
-]
-},
-"ROS2 Python Node Minimal": {
-"prefix": "ros2_py_node",
-"description": "Minimal ROS2 Python node template",
-"body": [
-"import rclpy",
-"from rclpy.node import Node",
-"",
-"",
-"class ${1:NodeName}(Node):",
-" def __init__(self):",
-" super().__init__('${1:NodeName}')",
-" self.get_logger().info('${1:NodeName} has been started.')",
-"",
-"",
-"def main(args=None):",
-" rclpy.init(args=args)",
-" node = ${1:NodeName}()",
-" rclpy.spin(node)",
-" node.destroy_node()",
-" rclpy.shutdown()",
-"",
-"",
-"if __name__ == '__main__':",
-" main()"
-]
-},
-"ROS2 Publisher C++": {
-"prefix": "ros2_cpp_pub",
-"description": "ROS2 C++ publisher template",
-"body": [
-"auto publisher_ = this->create_publisher<${1:std_msgs::msg::String}>(\"${2:topic_name}\", 10);",
-"auto timer_ = this->create_wall_timer(",
-" std::chrono::milliseconds(500),",
-" [this]() {",
-" auto message = ${1:std_msgs::msg::String}();",
-" message.data = \"Hello, ROS 2!\";",
-" publisher_->publish(message);",
-" });"
-]
-},
-"ROS2 Subscriber C++": {
-"prefix": "ros2_cpp_sub",
-"description": "ROS2 C++ subscriber template",
-"body": [
-"auto subscription_ = this->create_subscription<${1:std_msgs::msg::String}>(",
-" \"${2:topic_name}\", 10,",
-" [this](const ${1:std_msgs::msg::String}::SharedPtr msg) {",
-" RCLCPP_INFO(this->get_logger(), \"Received: '%s'\", msg->data.c_str());",
-" });"
-]
+  "ROS2 C++ Node Minimal": {
+  "prefix": "ros2_cpp_node",
+  "description": "Minimal ROS2 C++ node template",
+  "body": [
+  "#include \"rclcpp/rclcpp.hpp\"",
+  "",
+  "class ${1:NodeName} : public rclcpp::Node {",
+  "public:",
+  "  ${1:NodeName}() : Node(\"${1:NodeName}\") {",
+  "  RCLCPP_INFO(this->get_logger(), \"${1:NodeName} has been started.\");",
+  "  }",
+  "};",
+  "",
+  "int main(int argc, char** argv) {",
+  "  rclcpp::init(argc, argv);",
+  "  auto node = std::make_shared<${1:NodeName}>();",
+  "  rclcpp::spin(node);",
+  "  rclcpp::shutdown();",
+  "  return 0;",
+  "}"
+  ]
+  },
+  "ROS2 Python Node Minimal": {
+  "prefix": "ros2_py_node",
+  "description": "Minimal ROS2 Python node template",
+  "body": [
+  "import rclpy",
+  "from rclpy.node import Node",
+  "",
+  "",
+  "class ${1:NodeName}(Node):",
+  "  def __init__(self):",
+  "  super().__init__('${1:NodeName}')",
+  "  self.get_logger().info('${1:NodeName} has been started.')",
+  "",
+  "",
+  "def main(args=None):",
+  "  rclpy.init(args=args)",
+  "  node = ${1:NodeName}()",
+  "  rclpy.spin(node)",
+  "  node.destroy_node()",
+  "  rclpy.shutdown()",
+  "",
+  "",
+  "if __name__ == '__main__':",
+  "  main()"
+  ]
+  },
+  "ROS2 Publisher C++": {
+  "prefix": "ros2_cpp_pub",
+  "description": "ROS2 C++ publisher template",
+  "body": [
+  "auto publisher_ = this->create_publisher<${1:std_msgs::msg::String}>(\"${2:topic_name}\", 10);",
+  "auto timer_ = this->create_wall_timer(",
+  "  std::chrono::milliseconds(500),",
+  "  [this]() {",
+  "  auto message = ${1:std_msgs::msg::String}();",
+  "  message.data = \"Hello, ROS 2!\";",
+  "  publisher_->publish(message);",
+  "  });"
+  ]
+  },
+  "ROS2 Subscriber C++": {
+  "prefix": "ros2_cpp_sub",
+  "description": "ROS2 C++ subscriber template",
+  "body": [
+  "auto subscription_ = this->create_subscription<${1:std_msgs::msg::String}>(",
+  "  \"${2:topic_name}\", 10,",
+  "  [this](const ${1:std_msgs::msg::String}::SharedPtr msg) {",
+  "  RCLCPP_INFO(this->get_logger(), \"Received: '%s'\", msg->data.c_str());",
+  "  });"
+  ]
+  }
 }
-}
 ```
 
-### 3.7.3预定义变量
+### 3.7.3 Predefined variables
 
-VS Code中可用的预定义变量：
+Predefined variables available in VS Code:
 
-| 变量 | 说明 |
+| Variables | Annotations |
 | --- | --- |
-| ${workspaceFolder} | 工作空间根目录 |
-| ${workspaceFolderBasename} | 工作空间文件夹名 |
-| ${file} | 当前打开的文件 |
-| ${fileBasename} | 当前文件名 |
-| ${fileDirname} | 当前文件所在目录 |
-| ${env:ENV_VAR} | 环境变量 |
+| WorkspaceFolder | Workspace Root Directory |
+| $workspaceFolderBasename} | Workspace folder name |
+| That's right. | Current open file |
+| $ {fileBasename} | Current filename |
+| $FileDirname} | Directory of current file |
+| {env: ENV VAR} | Environmental variables |
 
-### 3.8推荐的工作流
+## 3.8 Recommended workflow
 
-### 3.8.1标准开发流程
+### 3.8.1 Standard development process
 
-```
-Plain Text
-1. 打开工作空间
-code ~/ros2_ws
-2. Source ROS 2 环境（在集成终端中）
-source /opt/ros/humble/setup.bash
-3. 构建工作空间
-Ctrl+Shift+B
-4. 开发代码
-- 使用代码片段快速编写模板
-- 使用智能提示和自动补全
-- 保存后自动格式化
-5. 运行节点进行测试
-Ctrl+Shift+` 打开新终端
-ros2 run package_name node_name
-6. 如需调试
-设置断点 -> F5 开始调试
-```
+> Plain Text
+> 1. Open working space
+> #Code #https://download.docker.com/linux/ubuntu/dists/
+>
+> 2. Source ROS 2 Environment (in integrated terminals)
+> I'm sorry.
+>
+> 3. Construction of workspace
+> Ctrl+Shift+B
+>
+> 4. Development codes
+> - Quick preparation of templates using code clips
+> - Use smart tips and auto-completion
+> - Autoformat after saving
+>
+> Operational nodes tested
+> Ctrl+Shift+`Open New Terminal
+> Ros2 run pack name node name
+>
+> 6. Debugging if required
+> Set Breakpoint - > F5 Start debugging
 
-### 3.8.2常用快捷键
+#### 3.8.2 Common shortcut keys
 
-| 快捷键 | 功能 |
+| Shortcuts | Functions |
 | --- | --- |
-| Ctrl+Shift+P | 命令面板 |
-| Ctrl+P | 快速打开文件 |
-| `Ctrl+\`` | 切换集成终端 |
-| Ctrl+B | 切换侧边栏 |
-| Ctrl+Shift+E | 显示资源管理器 |
-| Ctrl+Shift+F | 全局搜索 |
-| Alt+↑/↓ | 移动行 |
-| Ctrl+/ | 注释 / 取消注释 |
-| F2 | 重命名符号 |
-| Ctrl+Space | 触发建议 |
+| Ctrl+Shift+P | Command Panel |
+| Ctrl+P | Quick Open File |
+| `Ctrl+\ | Toggle Integrated Terminal |
+| Ctrl+B | Toggle Sidebar |
+| Ctrl+Shift+E | Show Resource Manager |
+| Ctrl+Shift+F | Global Search |
+| Alt+↑/↓ | Move Rows |
+| Ctrl+/ | Comment/Undo Comment |
+| F2 | Rename Symbols |
+| Ctrl+Space | Trigger Recommendations |
 
-### 3.9常见问题
+### 3.9 Common problems
 
-### 3.9.1 C++智能提示不工作
+### 3.9.1 C++ Smart tip not to work
 
-#### 问题：无法找到ROS 2头文件
+Question: Could not find ROS 2 header file
 
-#### 解决方案：
+Solutions:
+
+Ensure that c_cpp_properties.json contains the correct path
+
+Regeneration compile_commands.json
+
+Restart VS Code
 
 ```bash
-# 重新生成 compile_commands.json
+# Regenerate compile_commands.json
 cd ~/ros2_ws
 colcon build --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 ```
 
-### 3.9.2 Python导入错误
+### 3.9.2 Python Import Error
 
-#### 问题：Python节点无法导入ROS 2模块
+![](./images/7-3-1-ros2-foundations-and-setup-06.png)
 
-#### 解决方案：
+Problem: Python Node cannot import ROS 2 module
 
-检查.vscode/settings.json中的Python路径配置：
+Solutions:
 
-```
-JSON
+Check the Python path configuration for .vscode/settings.json:
+
+```json
 {
-"python.autoComplete.extraPaths": [
-"/opt/ros/humble/lib/python3.10/site-packages",
-"${workspaceFolder}/install/*/lib/python3.10/site-packages"
-]
+  "python.autoComplete.extraPaths": [
+  "/opt/ros/humble/lib/python3.10/site-packages",
+  "${workspaceFolder}/install/*/lib/python3.10/site-packages"
+  ]
 }
 ```
 
-### 3.9.3调试时找不到节点
+### 3.9.3 Nodes found during debugging
 
-#### 问题：启动调试时提示找不到可执行文件
+Problem: Could not find executable when debugging started
 
-#### 解决方案：
+Solutions:
 
-确保已经构建了包，并且可执行文件路径正确：
+Ensure that the package has been constructed and that the executionable file has the correct path:
 
 ```bash
-# 构建包
+# Build the package
 colcon build --packages-select <package_name>
-# 查看可执行文件位置
+
+# View the executable location
 find install -name <executable_name> -type f
 ```
 
-### 3.9.4 ROS扩展无法识别工作空间
+### 3.9.4 ROS Extension Unrecognized Workspace
 
-#### 问题：ROS扩展显示无法识别工作空间
+![](./images/7-3-1-ros2-foundations-and-setup-07.jpg)
 
-#### 解决方案：
+Question: ROS Extension does not recognize workspace
 
-### 3.10完整配置示例
+Solutions:
 
-### 3.10.1 .vscode/settings.json（完整版）
+Ensure that the working space path is configured in .vscode/settings.json
 
-```
-JSON
+Restart VS Code
+
+Manually run source /opt/ros/humble/setup.bash
+
+![](./images/7-3-1-ros2-foundations-and-setup-08.gif)
+
+#### 3.10 Full configuration examples
+
+### 3.10.1 .vscode/settings.json (full version)
+
+```json
 {
-// C/C++ 配置
-"C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
-"C_Cpp.default.cppStandard": "c++17",
-"C_Cpp.default.cStandard": "c11",
-// Python 配置
-"python.defaultInterpreterPath": "/usr/bin/python3",
-"python.autoComplete.extraPaths": [
-"${workspaceFolder}/install/*/lib/python3.10/site-packages",
-"/opt/ros/humble/lib/python3.10/site-packages"
-],
-// ROS 配置
-"ros.distro": "humble",
-"ros.rosSetupScript": "/opt/ros/humble/setup.bash",
-// 文件关联
-"files.associations": {
-"*.urdf": "xml",
-"*.xacro": "xml",
-"*.rviz": "yaml",
-"*.world": "xml",
-"*.launch.py": "python",
-"*.action": "yaml"
-},
-// 编辑器配置
-"editor.formatOnSave": true,
-"editor.tabSize": 4,
-"editor.insertSpaces": true,
-// CMake Tools 配置
-"cmake.sourceDirectory": "${workspaceFolder}/src",
-"cmake.buildDirectory": "${workspaceFolder}/build",
-"cmake.configureArgs": [
-"-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
-]
+  // C/C++ configuration
+  "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+  "C_Cpp.default.cppStandard": "c++17",
+  "C_Cpp.default.cStandard": "c11",
+
+  // Python configuration
+  "python.defaultInterpreterPath": "/usr/bin/python3",
+  "python.autoComplete.extraPaths": [
+  "${workspaceFolder}/install/*/lib/python3.10/site-packages",
+  "/opt/ros/humble/lib/python3.10/site-packages"
+  ],
+
+  // ROS configuration
+  "ros.distro": "humble",
+  "ros.rosSetupScript": "/opt/ros/humble/setup.bash",
+
+  // File associations
+  "files.associations": {
+  "*.urdf": "xml",
+  "*.xacro": "xml",
+  "*.rviz": "yaml",
+  "*.world": "xml",
+  "*.launch.py": "python",
+  "*.action": "yaml"
+  },
+
+  // Editor configuration
+  "editor.formatOnSave": true,
+  "editor.tabSize": 4,
+  "editor.insertSpaces": true,
+
+  // CMake Tools configuration
+  "cmake.sourceDirectory": "${workspaceFolder}/src",
+  "cmake.buildDirectory": "${workspaceFolder}/build",
+  "cmake.configureArgs": [
+  "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
+  ]
 }
 ```
 
-### 3.10.2 .vscode/tasks.json（完整版）
+### 3.10.2 .vscode/tasks.json (full version)
 
-```
-JSON
+![](./images/7-3-1-ros2-foundations-and-setup-09.gif)
+
+```json
 {
-"version": "2.0.0",
-"tasks": [
-{
-"label": "colcon build",
-"type": "shell",
-"command": "colcon build --symlink-install --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
-"group": {
-"kind": "build",
-"isDefault": true
-},
-"problemMatcher": []
-},
-{
-"label": "colcon build --packages-select",
-"type": "shell",
-"command": "colcon build --symlink-install --packages-select ${input:packageName}",
-"group": "build",
-"problemMatcher": []
-},
-{
-"label": "colcon test",
-"type": "shell",
-"command": "colcon test --packages-select ${input:testPackage} --event-handlers console_direct+",
-"group": "test",
-"problemMatcher": []
-}
-],
-"inputs": [
-{
-"id": "packageName",
-"type": "promptString",
-"description": "Package name to build"
-},
-{
-"id": "testPackage",
-"type": "promptString",
-"description": "Package name to test"
-}
-]
+  "version": "2.0.0",
+  "tasks": [
+  {
+  "label": "colcon build",
+  "type": "shell",
+  "command": "colcon build --symlink-install --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+  "group": {
+  "kind": "build",
+  "isDefault": true
+  },
+  "problemMatcher": []
+  },
+  {
+  "label": "colcon build --packages-select",
+  "type": "shell",
+  "command": "colcon build --symlink-install --packages-select ${input:packageName}",
+  "group": "build",
+  "problemMatcher": []
+  },
+  {
+  "label": "colcon test",
+  "type": "shell",
+  "command": "colcon test --packages-select ${input:testPackage} --event-handlers console_direct+",
+  "group": "test",
+  "problemMatcher": []
+  }
+  ],
+  "inputs": [
+  {
+  "id": "packageName",
+  "type": "promptString",
+  "description": "Package name to build"
+  },
+  {
+  "id": "testPackage",
+  "type": "promptString",
+  "description": "Package name to test"
+  }
+  ]
 }
 ```
 
-### 3.11安裝Terminator
+#### 3.11 Installation of Terminator
+
+![](./images/7-3-1-ros2-foundations-and-setup-10.gif)
 
 ```bash
 sudo apt install terminator
 ```
 
-### 3.11.1启动
+### 3.11.1 Commencement
 
-快捷键Ctrl+Alt+T启动
+![](./images/7-3-1-ros2-foundations-and-setup-11.gif)
 
-![](./images/7-3-1-ros2-foundations-and-setup-06.png)
+Shortcut Ctrl+Alt+T
 
-### 3.11.2 Terminator常用快捷键
+### 3.11.2 Terminator Common Shortcut Keys
 
 ```bash
-关于在同一个标签内的操作：
-Alt+Up //移动到上面的终端
-Alt+Down //移动到下面的终端
-Alt+Left //移动到左边的终端
-Alt+Right //移动到右边的终端
-Ctrl+Shift+O //水平分割终端
-Ctrl+Shift+E //垂直分割终端
-Ctrl+Shift+Right //在垂直分割的终端中将分割条向右移动
-Ctrl+Shift+Left //在垂直分割的终端中将分割条向左移动
-Ctrl+Shift+Up //在水平分割的终端中将分割条向上移动
-Ctrl+Shift+Down //在水平分割的终端中将分割条向下移动
-Ctrl+Shift+S //隐藏/显示滚动条
-Ctrl+Shift+F //搜索
-Ctrl+Shift+C //复制选中的内容到剪贴板
-Ctrl+Shift+V //粘贴剪贴板的内容到此处
-Ctrl+Shift+W //关闭当前终端
-Ctrl+Shift+Q //退出当前窗口，当前窗口的所有终端都将被关闭
-Ctrl+Shift+X //最大化显示当前终端
-Ctrl+Shift+Z //最大化显示当前终端并使字体放大
-Ctrl+Shift+N or Ctrl+Tab //移动到下一个终端
-Ctrl+Shift+P or Ctrl+Shift+Tab //Crtl+Shift+Tab 移动到之前的一个终端
-关于各个标签之间的操作：
-F11 //全屏开关
-Ctrl+Shift+T //打开一个新的标签
-Ctrl+PageDown //移动到下一个标签
-Ctrl+PageUp //移动到上一个标签
-Ctrl+Shift+PageDown //将当前标签与其后一个标签交换位置
-Ctrl+Shift+PageUp //将当前标签与其前一个标签交换位置
-Ctrl+Plus (+) //增大字体
-Ctrl+Minus (-) //减小字体
-Ctrl+Zero (0) //恢复字体到原始大小
-Ctrl+Shift+R //重置终端状态
-Ctrl+Shift+G //重置终端状态并clear屏幕
-Super+g //绑定所有的终端，以便向一个输入能够输入到所有的终端
-Super+Shift+G //解除绑定
-Super+t
-//绑定当前标签的所有终端，向一个终端输入的内容会自动输入到其他终端
-Super+Shift+T //解除绑定
-Ctrl+Shift+I //打开一个窗口，新窗口与原来的窗口使用同一个进程
-Super+i //打开一个新窗口，新窗口与原来的窗口使用不同的进程
+Operations within the same tab:
+Alt+Up  // Move to the terminal above
+Alt+Down  // Move to the terminal below
+Alt+Left  // Move to the terminal on the left
+Alt+Right  // Move to the terminal on the right
+Ctrl+Shift+O  // Split the terminal horizontally
+Ctrl+Shift+E  // Split the terminal vertically
+Ctrl+Shift+Right  // Move the divider right in a vertically split terminal
+Ctrl+Shift+Left  // Move the divider left in a vertically split terminal
+Ctrl+Shift+Up  // Move the divider up in a horizontally split terminal
+Ctrl+Shift+Down  // Move the divider down in a horizontally split terminal
+Ctrl+Shift+S  // Hide/show the scrollbar
+Ctrl+Shift+F  // Search
+Ctrl+Shift+C  // Copy the selected content to the clipboard
+Ctrl+Shift+V  // Paste the clipboard content here
+Ctrl+Shift+W  // Close the current terminal
+Ctrl+Shift+Q  // Quit the current window and close all terminals in it
+Ctrl+Shift+X  // Maximize the current terminal
+Ctrl+Shift+Z  // Maximize the current terminal and enlarge the font
+Ctrl+Shift+N or Ctrl+Tab  // Move to the next terminal
+Ctrl+Shift+P or Ctrl+Shift+Tab  // Move to the previous terminal
+Operations across different tabs:
+F11  // Toggle full screen
+Ctrl+Shift+T  // Open a new tab
+Ctrl+PageDown  // Move to the next tab
+Ctrl+PageUp  // Move to the previous tab
+Ctrl+Shift+PageDown  // Swap the current tab with the next tab
+Ctrl+Shift+PageUp  // Swap the current tab with the previous tab
+Ctrl+Plus (+)  // Increase the font size
+Ctrl+Minus (-)  // Decrease the font size
+Ctrl+Zero (0)  // Reset the font size to the default
+Ctrl+Shift+R  // Reset the terminal state
+Ctrl+Shift+G  // Reset the terminal state and clear the screen
+Super+g  // Bind all terminals so input in one terminal is sent to all terminals
+Super+Shift+G  // Unbind all terminals
+Super+t  // Bind all terminals in the current tab so input is mirrored to the others
+Super+Shift+T  // Unbind the current tab terminals
+Ctrl+Shift+I  // Open a new window that uses the same process as the current one
+Super+i  // Open a new window that uses a different process from the current one
 ```
 
-### 3.12使用git
+## 3.12 Use of Git
 
-### 3.12.1安装
+## 3.12.1 Installation
 
-日常工作中，因为都是团队协作，且涉及版本管理，所以git是绕不开的技能。git是一个免费和开源的分布式版本控制系统，在Ubuntu下安装git：
+In day-to-day work, git is a skill that cannot be bypassed because it is a team effort and involves version management. guit is a free and open source distributed version control system that installs git under Ubuntu:
 
-sudo apt install git
+Sodo apt install give
 
-### 3.12.2 Git基本操作
+### 3.12.2 Git Basic operations
 
-Git的工作就是创建和保存你项目的快照及与之后的快照进行对比。
+Git's job is to create and keep a snapshot of your project and compare it with the one that follows.
 
-本章将对有关创建与提交你的项目快照的命令作介绍。
+This chapter will describe the orders concerning the creation and submission of project snapshots.
 
-Git常用的是以下6个命令：git clone、git push、git add、git commit、git checkout、git pull，后面我们会详细介绍。
+Git commonly uses the following six commands: Git line, Git Push, Git add, Git part, Git checkout, Git pull, which we will describe in detail later.
 
-![](./images/7-3-1-ros2-foundations-and-setup-07.jpg)
+Note:
 
-#### 说明：
+Workspace: Workspace
 
-一个简单的操作步骤：
+Stagging area: temporary/cacheline
+
+Local repository: Version library or local repository
+
+Remote repository: remote repository
+
+A simple operational step:
 
 ```bash
 git init
@@ -1598,1053 +1622,1133 @@ git add .
 git commit
 ```
 
-### 3.12.3创建仓库命令
+Let init - Initialize the repository.
 
-下表列出了git创建仓库的命令：
+gint add. - Add files to temporary storage.
 
-![](./images/7-3-1-ros2-foundations-and-setup-08.gif)
+gint part - Adds the contents of the temporary storage area to the repository.
 
-#### 点击图片可查看完整电子表格
+### 3.15.3 Creation of warehouse orders
 
-### 3.12.4提交与修改
+The following table shows the orders of the guit to create a repository:
 
-Git的工作就是创建和保存你的项目的快照及与之后的快照进行对比。
+Click on a picture to view the complete spreadsheet
 
-下表列出了有关创建与提交你的项目的快照的命令：
+### 3.12.4 Submission and modification
 
-![](./images/7-3-1-ros2-foundations-and-setup-09.gif)
+Git's job is to create and preserve a snapshot of your project and to compare it with later.
 
-#### 点击图片可查看完整电子表格
+The following table shows the orders to create snapshots of the projects submitted to you:
 
-#### 3.12.5提交日志
+Click on a picture to view the complete spreadsheet
 
-![](./images/7-3-1-ros2-foundations-and-setup-10.gif)
+#### 3.12.5 Submission of logs
 
-#### 点击图片可查看完整电子表格
+Click on a picture to view the complete spreadsheet
 
-### 3.12.6远程操作
+### 3.12.6 Remote operation
 
-![](./images/7-3-1-ros2-foundations-and-setup-11.gif)
+Click on a picture to view the complete spreadsheet
 
-#### 点击图片可查看完整电子表格
+Use of more Git tools can be entered below terminal: Git-help view the help document
 
-关于更多git工具的使用可以在终端下输入：git --help查看帮助文档
+#### 3.13 Next steps
 
-### 3.13下一步
+When the development configuration is completed, you can:
 
-开发环境配置完成后，您将可以：
+04 Workspace - Learning workspace management
 
-## 04工作区
+05 Functional Package - Create Functional Package
 
-### 04工作区(Workspace)
+06 Node - Write Node Code
 
-### 4.1工作区概述
+# 04 Workspace
 
-### 4.1.1什么是工作区
+#### 04 Workspace (Workspace)
 
-工作区(Workspace)是ROS 2中用于组织和管理功能包的目录结构。它是一个包含源码、编译产物和安装文件的根目录，是进行ROS 2开发的基础环境。
+## 4.1 Overview of the workspace
 
-```
-Plain Text
-工作空间概念图：
-┌────────────────────────────────────────────────────┐
-│ ROS 2 工作空间 │
-│ │
-│ ┌─────────┐ ┌─────────┐ ┌─────────┐ │
-│ │ Package │ │ Package │ │ Package │ │
-│ │ A │ │ B │ │ C │ │
-│ └─────────┘ └─────────┘ └─────────┘ │
-│ │ │ │ │
-│ └────────────┴────────────┘ │
-│ │ │
-│ Colcon 编译系统 │
-│ │ │
-│ ┌────────────┴────────────┐ │
-│ ▼ ▼ │
-│ ┌─────────┐ ┌─────────┐ │
-│ │ build │ │ install │ │
-│ └─────────┘ └─────────┘
-│
-└────────────────────────────────────────────────────┘
-```
+### 4.1.1 What is a workspace?
 
-### 4.1.2工作区的目录结构
+Workspace is the directory structure for organizing and managing functional packages in ROS 2. It is a root directory containing source code, compilation products and installation documents and is the basic environment for the ROS 2 development.
 
-一个标准的ROS 2工作空间包含以下目录：
+> Plain Text
+> Workspace concept map:
+>
+>
+> ROS 2 Workspace
+> Zenium
+>
+> Package. Package. Package.
+> I'm sorry.
+>
+> I don't know.
+>
+> I'm sorry.
+> Colcon Compiler System
+> I'm sorry.
+>
+> I don't know.
+> {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FF00} {\cH00FF00} {\cHFFFFFF}{\cH00FF00} {\cH00FF00} {\cHFFFFFF} {\cHFFFFFF} {\cHFFFFFF} {\cHFFFFFF} {\cHFFFFFF} {\cHFFFFFF} {\cHFFFFFF} {\cHFFFFFF} {\cHFFFFFF} } {\cHFFFFFF} } {\cHFFFFFF}
+> I'm sorry.
 
-```
-Plain Text
-~/ros2_ws/
-├── build/ # 编译中间文件目录
-│ ├── package_1/
-│ ├── package_2/
-│ └── ...
-├── install/ # 安装文件目录（可执行文件、库、脚本）
-│ ├── package_1/
-│ ├── package_2/
-│ ├── setup.bash # 环境设置脚本（重要）
-│ ├── setup.zsh
-│ └── local_setup.bash
-├── log/ # 编译和测试日志
-│ ├── build_/
-│ ├── test_/
-│ └── ...
-└── src/ # 源码目录（功能包放这里）
-├── package_1/
-├── package_2/
-└── ...
-```
+### 4.1.2 Workspace catalogue structure
 
-#### 目录说明：
+A standard ROS 2 workspace contains the following directories:
 
-| 目录 | 用途 | 是否版本控制 |
+> Plain Text
+> ~/ros2_ws/
+> ├-build/ # Compile a directory of intermediate files
+> │  package 1/
+> package 2/
+> I'm sorry.
+> Ideas - install/ # File Directory (executable, library, script)
+> │  package 1/
+> package 2/
+> │-setup.bash # Environment settings script (important)
+> I'm sorry.
+> Local setup.bash
+> Log/ # Compile and Test Log
+> │
+> I'm sorry.
+> I'm sorry.
+> └ - src/ # Source Directory (functional package here)
+> Page 1/
+> -Package 2/
+> What?
+
+Contents:
+
+| Contents | Purpose | Whether Version Control |
 | --- | --- | --- |
-| src/ | 存放功能包源码 | 是 |
-| build/ | 编译中间产物 | 否 |
-| install/ | 最终安装文件 | 否 |
-| log/ | 编译和测试日志 | 否 |
+| Src/ | Store functional package source | Yes. |
+| I'm sorry. | Compile intermediate products | Yes |
+| Install/ | Final Install File | Yes |
+| I'm not sure. | Compile and test logs | Yes |
 
-### 4.1.3工作区类型
+### 4.1.3 Type of work area
 
-| 类型 | 路径示例 | 用途 |
+| Type | Example path | Purpose |
 | --- | --- | --- |
-| 系统工作区 | /opt/ros/humble/ | 安装的 ROS 2 软件 |
-| 用户工作区 | ~/ros2_ws/ | 个人开发工作空间 |
-| 覆盖工作区 | ~/overlay_ws/ | 扩展或覆盖已有包 |
+| System Workspace | /opt/ros/humble/ | Installed ROS 2 software |
+| User Workspace | ~/ros2_ws/ | Personal development of workspace |
+| Cover Workspace | ~/overlay_ws/ | Expand or Overwrite Existing Packages |
 
-### 4.2创建工作空间
+### 4.2 Creation of workspaces
 
-### 4.2.1创建基础工作空间
+#### 4.2.1 Creation of basic workspaces
 
 ```bash
-# 创建工作空间目录
+# Createworkspacedirectory
 mkdir -p ~/ros2_ws/src
 cd ~/ros2_ws
-# 查看目录结构
+
+# Viewdirectory structure
 tree -L 2
 ```
 
-#### 预期输出：
+Expected output:
 
-```
-Plain Text
-~/ros2_ws/
-└── src/
-```
+> Plain Text
+> ~/ros2_ws/
+> Src/
 
-### 4.2.2初始化工作空间
+#### 4.2.2 Initializing workspace
 
-工作空间无需显式初始化。当您在src/目录中添加包并编译时，colcon会自动识别和构建工作空间。
+Workspaces need not be visibly initialized. Colcon automatically recognizes and constructs the workspace when you add a package and compile it in the src/ directory.
 
 ```bash
-# 添加一个示例包到 src/ 目录
+# Add an example package to the `src/` directory
 cd ~/ros2_ws/src
-# 这里可以克隆或创建功能包
-# 返回工作空间根目录
+# You can clone or create a package here
+
+# Return to the workspace root directory
 cd ~/ros2_ws
 ```
 
-### 4.3 Colcon编译系统
+## 4.3 Colcon Compiler System
 
-### 4.3.1 Colcon简介
+### 4.3.1 Colcon Introduction
 
-Colcon(Command Line COmpiler for CONstituents)是ROS 2的推荐构建工具，替代了ROS 1的Catkin。
+Colcon (Command Line Compiler for CONstituents) is a recommended construction tool for ROS 2, replacing Catkin for ROS 1.
 
-#### Colcon特点：
+Colcon characteristics:
 
-| 特性 | 描述 |
+| Feature | Description |
 | --- | --- |
-| 并行构建 | 支持多包并行编译 |
-| 增量编译 | 只重新编译修改过的包 |
-| 扩展性 | 通过插件扩展功能 |
-| 无中心构建 | 每个包独立构建，减少依赖 |
+| Parallel Build | Support multiple packages for simultaneous compilation |
+| Incremental compilation | Recompile modified packages only |
+| Extension | Expand function by plugin |
+| No Centre Build | Individual packages built independently to reduce dependency |
 
-### 4.3.2安装Colcon
+#### 4.3.2 Installation of Colcon
 
 ```bash
-# 安装 colcon 和常用扩展
+# Install `colcon` and common extensions
 sudo apt install -y python3-colcon-common-extensions
-# 验证安装
+
+# VerifyInstall
 colcon --help
 ```
 
-### 4.3.3 Colcon基本用法
+### 4.3.3 Colcon Basic usage
 
-#### 编译整个工作空间：
+Compile the entire workspace:
 
 ```bash
 cd ~/ros2_ws
 colcon build
 ```
 
-#### 编译单个包：
+Other Organiser
 
 ```bash
 colcon build --packages-select <package_name>
 ```
 
-#### 编译多个包：
+Compile multiple packages:
 
 ```bash
 colcon build --packages-select <pkg1> <pkg2> <pkg3>
 ```
 
-#### 编译时跳过某些包：
+Skip some packages while compiling:
 
 ```bash
 colcon build --packages-skip <package_name>
 ```
 
-### 4.3.4常用编译选项
+### 4.3.4 Common compilation options
 
-| 选项 | 说明 | 示例 |
+| Options | Annotations | Example: |
 | --- | --- | --- |
-| --symlink-install | 使用符号链接，便于开发调试 | colcon build --symlink-install |
-| --cmake-args | 传递 CMake 参数 | --cmake-args -DCMAKE_BUILD_TYPE=Debug |
-| --parallel-workers | 设置并行工作数 | --parallel-workers 4 |
-| --event-handlers | 事件处理器 | --event-handlers console_direct+ |
-| --cmake-force-configure | 强制重新配置 | 每次都重新运行 CMake |
+| --symlink-install | Use symbolic links to develop debugging | I'm sorry, I'm sorry. |
+| --andake-args | Pass CMake Parameters | ♪ and make-args-DCMAKE ♪ |
+| --parallel-workers | Set the number of parallel jobs | --parallel-workers 4 |
+| --event-handlers | Organisation | --event-handlers Console direct+ |
+| Could not close temporary folder: %s | Force Reconfiguration | Rerun CMake every time |
 
-#### 常用组合命令：
+Common combination command:
 
 ```bash
-# 开发调试配置（推荐）
+# Development and debugging configuration (recommended)
 colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Debug
-# 发布版本配置
+
+# Release configuration
 colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
-# 生成编译命令数据库（配合 VS Code）
+
+# Generate the compile command database (for VS Code)
 colcon build --symlink-install --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
-# 详细输出（调试编译问题）
+
+# Detailed output (for debugging build issues)
 colcon build --event-handlers console_direct+
 ```
 
-### 4.3.5查看编译结果
+### 4.3.5 View compilation results
 
 ```bash
-# 查看编译摘要
+# View the build summary
 cat log/latest_build/build_summary.csv
-# 查看详细日志
+
+# View the detailed log
 cat log/latest_build/<package_name>/build_stdout.log
 ```
 
-### 4.4工作空间覆盖(Overlaying)
+### 4.4 Workspace cover (Overlaying)
 
-### 4.4.1覆盖机制
+### 4.4.1 Coverage mechanisms
 
-ROS 2工作空间支持层层覆盖，上层工作空间会覆盖下层工作空间中的同名包。
+ROS 2 workspace support layer coverage, with upper working space covering the same name package in lower working space.
 
-```
-Plain Text
-┌────────────────────────────────────────────────────────┐
-│ 覆盖机制示意图
-│
-├────────────────────────────────────────────────────────┤
-│ │
-│ ┌──────────────────────────────────────────────┐ │
-│ │ /opt/ros/humble (系统层) │ │
-│ │ ├── nav2_bringup │ │
-│ │ ├── navigation2 │ │
-│ │ └── ... │ │
-│ └──────────────────────────────────────────────┘ │
-│ ▲ │
-│ │ Source 顺序 │
-│ ┌──────────────────────────────────────────────┐ │
-│ │ ~/ros2_ws (基础工作空间) │ │
-│ │ ├── my_package │ │
-│ │ └── ... │ │
-│ └──────────────────────────────────────────────┘ │
-│ ▲ │
-│ │ │
-│ ┌──────────────────────────────────────────────┐ │
-│ │ ~/overlay_ws (覆盖工作空间) │ │
-│ │ └── nav2_bringup (修改后的版本) │ │
-│ └──────────────────────────────────────────────┘ │
-│ │
-│ 结果：overlay_ws 中的 nav2_bringup 会覆盖系统版本 │
-│
-│
-└────────────────────────────────────────────────────────┘
-```
+> Plain Text
+>
+> • Mapping of coverage mechanisms
+> I'm sorry.
+> Zenium
+> . . . . . . . . . . . . . . . . . . . . . . . .
+> │ (System Layer)
+> {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF}
+> I'm sorry.
+> ♪ Bang, bang, bang ♪
+> :
+> I'm sorry.
+> You've got to get to work.
+> . . . . . . . . . . . . . . . . . . . . . . . .
+> ~XIOBAITOKEN1 (basic workspace)
+> {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF}{\cH00FFFF}
+> ♪ Bang, bang, bang ♪
+> :
+> I'm sorry.
+> I'm sorry.
+> . . . . . . . . . . . . . . . . . . . . . . . .
+> ~XIOBAITOKEN2 (covered workspace)
+> │ └ - nav2 bringup (modified) │
+> :
+> Zenium
+> Results: nav2 bringup of overlay ws will overwrite system version
+> Zenium
 
-### 4.4.2设置覆盖工作空间
+### 4.4.2 Settings to cover workspace
 
-#### 创建覆盖工作空间：
+Other Organiser
 
 ```bash
-# 创建主工作空间
+# Createmain workspace
 mkdir -p ~/ros2_ws/src
 cd ~/ros2_ws
-# ... 添加包并编译 ...
-# 创建覆盖工作空间
+# ... add packages and build ...
+
+# Create an overlay workspace
 mkdir -p ~/overlay_ws/src
 cd ~/overlay_ws/src
-# ... 克隆要修改的包 ...
+# ... clone the packages you want to modify ...
 ```
 
-#### 设置环境变量（Source顺序很重要）：
+Setting the environment variable order is important:
 
 ```bash
-# 正确的 source 顺序（从下到上）
+# Correct source order (from bottom to top)
 source /opt/ros/humble/setup.bash
 source ~/ros2_ws/install/setup.bash
 source ~/overlay_ws/install/setup.bash
 ```
 
-#### 添加到~/.bashrc：
+Add to ~/.bashrc:
 
 ```bash
-# 编辑 bashrc
+# Edit `.bashrc`
 nano ~/.bashrc
-# 添加以下内容（注意顺序）
+
+# Add the following content (pay attention to the order)
 source /opt/ros/humble/setup.bash
 source ~/ros2_ws/install/setup.bash
 source ~/overlay_ws/install/setup.bash
 ```
 
-### 4.4.3查看工作空间优先级
+### 4.4.3 View workspace priorities
 
 ```bash
-# 查看当前工作空间栈
+# View the current workspace stack
 ros2 pkg prefix --all
-# 或者使用 ros2 doctor 检查
+
+# Or use `ros2 doctor` to inspect the setup
 ros2 doctor --report
 ```
 
-### 4.5环境设置详解
+### 4.5 Detailed Environmental Settings
 
-### 4.5.1 setup.bash脚本
+### 4.5.1 setup.bash script
 
-编译完成后，必须source环境设置脚本才能使用新编译的包：
+After the compilation has been completed, the new compiled package must be set by the source environment:
 
 ```bash
-# Source 工作空间环境
+# Source the workspace environment
 source install/setup.bash
-# 验证环境变量
+
+# Verify the environment variables
 echo $ROS_DOMAIN_ID
 echo $AMENT_PREFIX_PATH
 echo $LD_LIBRARY_PATH
 ```
 
-#### setup.bash做了什么：
+What did you do?
 
-### 4.5.2 setup.bash vs local_setup.bash
+Set AMENT PROFIX PATH (package search path)
 
-| 脚本 | 用途 |
+Set up LD LIBRARY PATH (Key Search Path)
+
+Set up PATH (executable file search path)
+
+Setup PYTHONPATH (Python module search path)
+
+Provide automatic completion of commands
+
+### 4.5.2 setup.bash vs local setup.bash
+
+| Script | Purpose |
 | --- | --- |
-| setup.bash | 设置当前环境并扩展上游工作空间 |
-| local_setup.bash | 仅设置当前工作空间，不扩展上游 |
+| Come on, setup. | Set the current environment and expand upstream workspace |
+| I'm sorry, local setup.bash | Set only the current workspace without extending upstream |
 
-#### 使用场景：
+Use scene:
 
 ```bash
-# 开发时使用（推荐）
+# Use during development (recommended)
 source install/setup.bash
-# 仅测试本地包（避免干扰）
+
+# Test only local packages (avoid interference)
 source install/local_setup.bash
 ```
 
-### 4.5.3永久设置环境
+### 4.5.3 Permanent environment setting
 
-#### 方法1：修改~/.bashrc
+Method 1: Modify ~https://download.docker.com/linux/ubuntu/dists/
 
 ```bash
 echo "source ~/ros2_ws/install/setup.bash" >> ~/.bashrc
 source ~/.bashrc
 ```
 
-#### 方法2：创建独立的启动脚本
+Method 2: Create independent start-up script
 
 ```bash
-# 创建 ~/ros2_env.sh
+# Create `~/ros2_env.sh`
 cat > ~/ros2_env.sh << 'EOF'
-# !/bin/bash
-# ROS 2 环境设置脚本
-# Source ROS 2 基础环境
+#!/bin/bash
+# ROS 2 environment setup script
+
+# Source the base ROS 2 environment
 source /opt/ros/humble/setup.bash
-# Source 主工作空间
+
+# Source the main workspace
 source ~/ros2_ws/install/setup.bash
-# Source 覆盖工作空间（如果有）
+
+# Source the overlay workspace (if present)
 # source ~/overlay_ws/install/setup.bash
-# 显示当前配置
+
+# Show the current configuration
 echo "ROS 2 Environment Loaded"
 echo "ROS_DISTRO: $ROS_DISTRO"
 echo "RMW: $RMW_IMPLEMENTATION"
 EOF
+
 chmod +x ~/ros2_env.sh
 ```
 
-### 4.6包管理
+## 4.6 Package management
 
-### 4.6.1列出工作空间中的包
+### 4.6.1 Listing of packages in workspace
 
 ```bash
-# 列出所有可用包
+# List all available packages
 ros2 pkg list
-# 列出特定包的路径
+
+# List the path of a specific package
 ros2 pkg prefix <package_name>
-# 列出工作空间 src 目录中的包
+
+# List packages in the workspace `src` directory
 find src -maxdepth 2 -name package.xml -exec dirname {} \;
 ```
 
-### 4.6.2查看包信息
+#### 4.6.2 View package information
 
 ```bash
-# 查看包的描述信息
+# View package metadata
 ros2 pkg xml <package_name>
-# 查看包的依赖
+
+# View package dependencies
 ros2 pkg dependencies <package_name>
-# 导出包列表
+
+# Export the package list
 ros2 pkg list > packages_list.txt
 ```
 
-### 4.6.3包的依赖关系
+### 4.6.3 Package dependency
 
-```
-Plain Text
-依赖关系示例：
-my_robot_package
-├── 依赖 (depend)
-│ ├── rclcpp
-│ ├── std_msgs
-│ └── sensor_msgs
-├── 构建依赖 (build_depend)
-│ ├── ament_cmake
-│ └── geometry_msgs
-└── 测试依赖 (test_depend)
-└── ament_lint_auto
-```
+> Plain Text
+> Example of dependency:
+>
+> My robot package
+> Depend
+> Rclcpp
+> Ideas - std msgs
+> │ ─ sensor msgs
+> Ideas - Build Dependence
+> I miss you.
+> │-geometry msgs
+> Test Dependence (test depend)
+> – ament lint auto
 
-### 4.7增量编译
+#### 4.7 Incremental translation
 
-### 4.7.1理解增量编译
+### 4.7.1 Understanding incremental compilation
 
-Colcon会检测哪些包被修改，只重新编译必要的包：
+Colcon will test which packages have been modified and only recompile the necessary packages:
 
 ```bash
-# 首次完整编译
+# Run a full build for the first time
 colcon build
-# 修改某个包的代码后
-# 只重新编译该包及其依赖者
+
+# After modifying the code of a package
+# Rebuild only that package and its dependents
 colcon build --packages-select <modified_package>
 ```
 
-### 4.7.2强制重新编译
+### 4.7.2 Compulsory redacting
 
 ```bash
-# 清理并重新编译单个包
+# Clean and rebuild a single package
 colcon build --packages-select <package_name> --cmake-force-configure
-# 清理整个工作空间重新编译
+
+# Clean and rebuild the entire workspace
 rm -rf build install log
 colcon build
 ```
 
-### 4.7.3编译加速技巧
+## 4.7.3 Computation acceleration techniques
 
 ```bash
-# 使用更多并行任务
+# Use more parallel jobs
 colcon build --parallel-workers 8
-# 只编译修改过的包（默认行为）
+
+# Build only modified packages (default behavior)
 colcon build
-# 使用 symlink-install 减少复制
+
+# Use `symlink-install` to reduce copying
 colcon build --symlink-install
-# 使用 ccache 加速 C++ 编译
+
+# Use `ccache` to speed up C++ builds
 sudo apt install ccache
 export CC="ccache gcc"
 export CXX="ccache g++"
 ```
 
-### 4.8测试与验证
+### 4.8 Test and Certification
 
-### 4.8.1运行单元测试
+### 4.8.1 Operational module testing
 
 ```bash
-# 编译并运行所有测试
+# Build and run all tests
 colcon test
-# 运行特定包的测试
+
+# Run tests for a specific package
 colcon test --packages-select <package_name>
-# 显示详细测试输出
+
+# Show detailed test output
 colcon test --packages-select <package_name> --event-handlers console_direct+
-# 查看测试结果
+
+# View test results
 colcon test-result --all
 colcon test-result --verbose
 ```
 
-### 4.8.2验证工作空间
+### 4.8.2 Validation workspace
 
 ```bash
-# 验证包是否正确安装
+# Verify that the package is installed correctly
 ros2 pkg list | grep <package_name>
-# 验证可执行文件是否可用
+
+# Verify that the executable is available
 ros2 run <package_name> <executable_name> --ros-args --remap __node:=test_node
-# 使用 ros2 doctor 检查环境
+
+# Use `ros2 doctor` to inspect the environment
 ros2 doctor --report
 ```
 
-### 4.9常用工作空间操作
+#### 4.9 Common workspace operations
 
-### 4.9.1清理工作空间
+### 4.9.1 Clean-up of working space
 
 ```bash
-# 清理编译产物
+# Clean build artifacts
 rm -rf build/ install/ log/
-# 或者使用 colcon 的清理功能
+
+# Or use colcon cleanup features
 colcon clean --all
-# 清理特定包
+
+# Clean a specific package
 colcon clean --packages-select <package_name>
 ```
 
-### 4.9.2克隆包到工作空间
+### 4.9.2 Cloning packages to work space
 
 ```bash
 cd ~/ros2_ws/src
-# 从 GitHub 克隆包
+
+# Clone a package from GitHub
 git clone https://github.com/username/package.git
-# 从另一个工作空间复制包
+
+# Copy a package from another workspace
 cp -r ~/other_ws/src/package .
-# 返回根目录并编译
+
+# Return to the root directory and build
 cd ..
 colcon build --packages-select <package_name>
 ```
 
-### 4.9.3查看工作空间状态
+### 4.9.3 View workspace status
 
 ```bash
-# 查看编译历史
+# View build history
 colcon build-summary --all
-# 查看包的构建信息
+
+# View package build information
 colcon list
-# 查看包的依赖图
+
+# View the package dependency graph
 colcon graph --all
 ```
 
-### 4.10最佳实践
+## 4.10 Best practices
 
-### 4.10.1工作空间组织
+#### 4.10.1 Workspace Organization
 
-```
-Plain Text
-推荐的目录结构：
-~/
-├── ros2_ws/ # 主开发工作空间
-│ ├── src/
-│ ├── build/
-│ ├── install/
-│ └── log/
-│
-├── overlay_ws/ # 覆盖工作空间（用于修改第三方包）
-│ └── src/
-│
-├── ros2_test_ws/ # 测试/实验工作空间
-│ └── src/
-│
-└── projects/ # 项目专用工作空间
-├── project_a_ws/
-└── project_b_ws/
-```
+> Plain Text
+> Recommended directory structure:
+>
+> ~/
+> # Main development workspace
+> Ideas - src/
+> Ideas - built/
+> Install/
+> log-- log/
+> Zenium
+> ├-overlay ws/ # Overwrite Workspace (for modifying third-party packages)
+> Src/
+> Zenium
+> # Test/experiment workspace
+> Src/
+> Zenium
+> └ - projects/ # Project dedicated workspace
+> Ideas -project a ws/
+> project b ws/
 
-### 4.10.2开发工作流
+### 4.10.2 Development of workflows
 
-```
-Plain Text
-标准开发流程：
-1. 创建/打开工作空间
-cd ~/ros2_ws
-2. Source ROS 2 环境
-source /opt/ros/humble/setup.bash
-3. 编译修改的包
-colcon build --packages-select <pkg> --symlink-install
-4. Source 工作空间环境
-source install/setup.bash
-5. 运行测试
-ros2 run <pkg> <node>
-6. 如果需要，运行单元测试
-colcon test --packages-select <pkg>
-```
+> Plain Text
+> Standard development process:
+>
+> 1. Creation/opening of workspace
+> cd ~/ros2_ws
+>
+> 2. Source ROS 2 Environment
+> I'm sorry.
+>
+> 3. Compiled modified packages
+> Colcon built-packages-symlink-install
+>
+> 4. Workspace environment
+> Now, if you'll excuse me, we're going to have to ask you a question.
+>
+> 5. Operational testing
+> Ros2 run <pkg > <node >
+>
+> 6. Operational module testing, if required
+> Colcon test-packages-select <pkg>
 
-### 4.10.3 .colcon隐藏目录
+### 4.10.3.colcon hidden directory
 
-在工作空间根目录创建.colcon隐藏目录可以存放colcon配置：
+Creates the .colcon hidden directory in the workspace root directory to store the colcon configuration:
 
 ```bash
-# 创建 .colcon 目录
+# Create the `.colcon` directory
 mkdir -p ~/.colcon
-# 创建默认配置文件
+
+# Create the default configuration file
 cat > ~/.colcon/default.yaml << 'EOF'
-# Colcon 默认配置
+# Default colcon configuration
 build:
-symlink-install: true
-cmake-args:
-- -DCMAKE_BUILD_TYPE=Debug
-- -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+  symlink-install: true
+  cmake-args:
+  - -DCMAKE_BUILD_TYPE=Debug
+  - -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 EOF
 ```
 
-### 4.11常见问题
+#### 4.11 Common issues
 
-### 4.11.1找不到包
+### 4.11.1 Package not found
 
-问题：`ros2 run`或`ros2 launch`找不到包
+Question: `ros2 run ' or `ros2 lanch ' could not find the package
 
-#### 解决方法：
+Solutions:
 
 ```bash
-# 1. 确保已 source 环境
+# 1. Make sure the environment has been sourced
 source install/setup.bash
-# 2. 检查包是否存在
+
+# 2. Check whether the package exists
 ros2 pkg list | grep <package_name>
-# 3. 重新编译
+
+# 3. Rebuild
 colcon build --packages-select <package_name>
-# 4. 检查 package.xml 中的包名是否正确
+
+# 4. Check whether the package name in `package.xml` is correct
 cat src/<package_name>/package.xml | grep "<name>"
 ```
 
-### 4.11.2库找不到
+### 4.11.2 Library not found
 
-#### 问题：运行节点时报错找不到共享库
+Question: Unable to find shared library when running nodes
 
-#### 解决方法：
+Solutions:
 
 ```bash
-# 检查 LD_LIBRARY_PATH
+# Check `LD_LIBRARY_PATH`
 echo $LD_LIBRARY_PATH | tr ':' '\n' | grep install
-# 重新 source 环境
+
+# Re-source the environment
 source install/setup.bash
-# 清理并重新编译
+
+# Clean and rebuild
 rm -rf build install
 colcon build
 ```
 
-### 4.11.3 Python模块导入错误
+#### 4.11.3 Python module import error
 
-#### 问题：Python节点无法导入自定义模块
+Question: Python Node cannot import custom modules
 
-#### 解决方法：
+Solutions:
 
 ```bash
-# 检查 PYTHONPATH
+# Check `PYTHONPATH`
 echo $PYTHONPATH | tr ':' '\n' | grep install
-# 确保使用 symlink-install 编译
+
+# Make sure the package was built with `symlink-install`
 colcon build --symlink-install
-# 手动添加到 PYTHONPATH（临时）
+
+# Manually add it to `PYTHONPATH` (temporary)
 export PYTHONPATH=$PYTHONPATH:~/ros2_ws/install/<pkg>/lib/python3.10/site-packages
 ```
 
-### 4.12下一步
+### 4.12 Next steps
 
-完成工作空间学习后，您可以：
+You can:
 
-1.05功能包-学习创建和管理功能包
+1.05 Package - Learning to create and manage functional kit
 
-2.06节点-编写第一个节点
+2.06 Node - Preparation of the first Node
 
-## 05功能包
+# 05 Package
 
-### 05功能包(Packages)
+### 05 Functional Packages (Packages)
 
-### 5.1功能包概述
+## 5.1 Summary of functional packages
 
-### 5.1.1什么是功能包
+### 5.1.1 What is a functional package?
 
-功能包(Package)是ROS 2中组织代码的基本单元。它包含用于实现特定功能的源代码、配置文件、数据文件、构建脚本和文档。功能包可以被其他包依赖、使用和共享。
+The Package is the basic unit of the organizational code in ROS 2. It contains source codes, configuration files, data files, construction scripts and documents for specific functions. Functional packages can be relied upon, used and shared with other packages.
 
-```
-Plain Text
-功能包概念图：
-┌────────────────────────────────────────────────────┐
-│ 功能包 (Package) │
-│ │
-│ ┌────────────────────────────────────────────┐ │
-│ │ package.xml │ │ 元信息
-│ │ (包描述文件、依赖声明) │ │
-│ └────────────────────────────────────────────┘ │
-│ │
-│ ┌────────────┐ ┌────────────┐ ┌────────────┐ │
-│ │CMakeLists │ │ setup.py │ │ 源代码 │ │
-│ │ .txt │ │ │ │ │ │
-│ │(C++ 构建配置)│ │(Python配置)│ │ │ │
-│ └────────────┘ └────────────┘ └────────────┘ │
-│ │
-│ ┌────────────┐ ┌────────────┐ ┌────────────┐ │
-│ │ 配置文件 │ │ 启动文件 │ │ 资源 │ │
-│ │ .yaml │ │ .launch │ │ (urdf/ │ │
-│ │ │ │ │ │ meshes) │ │
-│ └────────────┘ └────────────┘ └────────────┘ │
-│
-│
-└────────────────────────────────────────────────────┘
-```
+> Plain Text
+> Functional package concept map:
+>
+>
+> Package
+> Zenium
+>
+> │https://download.docker.com/linux/ubuntu/dists/ │ meta-information
+> │ (package description document, dependency statement) │
+>  /
+> Zenium
+>
+> │CakeLists│XIOBAITOKEN1│source code│
+> I'm sorry. I'm sorry.
+> │ (C++ configuration) │ (Python configuration) │
+>
+> Zenium
+>
+> │ Profile Profile │ Launch File │ Resources │
+> It's not like you're going to be able to use the urdf.
+> I'm sorry.
+>
+> Zenium
 
-### 5.1.2功能包的命名规则
+### 5.1.2 Naming rules for functional packages
 
-#### 有效名称示例：
+Only lowercase letters, numbers and underlined
 
-| 名称 | 状态 | 说明 |
+It must start with letters.
+
+Recommended descriptive name
+
+Avoid using ROS 2 to keep name
+
+Example of valid name:
+
+| Name | Status | Annotations |
 | --- | --- | --- |
-| my_robot_controller | 有效 | 推荐格式 |
-| camera_driver | 有效 | 简洁描述性 |
-| 2d_navigation | 无效 | 不能以数字开头 |
-| my-package | 无效 | 不能使用连字符 |
-| MyPackage | 无效 | 不能使用大写字母 |
+| My robot controller | Valid. | Recommended format |
+| Camera driver | Valid. | Brief descriptive |
+| 2d navigation | Invalid | You can't start with numbers. |
+| My-package | Invalid | Unable to use hyphen |
+| MyPackage | Invalid | No uppercase letters |
 
-### 5.1.3功能包类型
+### 5.1.3 Type of functional package
 
-| 类型 | 构建系统 | 主要语言 | 用途 |
+| Type | Build System | Main languages | Purpose |
 | --- | --- | --- | --- |
-| ament_cmake | CMake | C++ | C++ 节点、混合项目 |
-| ament_python | setuptools | Python | 纯 Python 项目 |
-| ament_cmake_python | CMake + Python | 混合 | C++ 和 Python 混合项目 |
+| Ament cake | CMake | C++ | C++ Nodes, mixed items |
+| ament python | Setuptools | Python. | Pure Python Project |
+| ament cake python | CMake +Python | Mixed | C++ and Python mixed items |
 
-### 5.2创建功能包
+### 5.2 Create functional packages
 
-### 5.2.1创建C++功能包
+### 5.2.1 Create C++ functional package
 
-使用ros2 pkg create命令创建C++功能包：
+Create a C++ feature package using the ros2 pkg profile command:
 
 ```bash
 cd ~/ros2_ws/src
-# 创建基本 C++ 包
+
+# Create a basic C++ package
 ros2 pkg create --build-type ament_cmake my_cpp_pkg
-# 创建带有依赖的 C++ 包
+
+# Create a C++ package with dependencies
 ros2 pkg create --build-type ament_cmake \
---dependencies rclcpp std_msgs \
-my_robot_controller
-# 创建完整的 C++ 包结构
+  --dependencies rclcpp std_msgs \
+  my_robot_controller
+
+# Create a complete C++ package structure
 ros2 pkg create --build-type ament_cmake \
---dependencies rclcpp std_msgs geometry_msgs \
---node-name my_node \
---library-name my_library \
-my_cpp_pkg
+  --dependencies rclcpp std_msgs geometry_msgs \
+  --node-name my_node \
+  --library-name my_library \
+  my_cpp_pkg
 ```
 
-#### 常用参数：
+Common parameters:
 
-| 参数 | 说明 |
+| Parameters | Annotations |
 | --- | --- |
-| --build-type | 构建类型 (ament_cmake/ament_python) |
-| --dependencies | 包依赖列表 |
-| --node-name | 创建示例节点 |
-| --library-name | 创建库目标 |
-| --description | 包描述信息 |
+| --bild-type | Build type (ament cake/ament_python) |
+| I'm sorry. | Package Dependence List |
+| Can not open message | Create Example Node |
+| --library-name | Create Library Target |
+| --description | Package description information |
 
-### 5.2.2创建Python功能包
+### 5.2.2 Create Python functionality
 
 ```bash
 cd ~/ros2_ws/src
-# 创建基本 Python 包
+
+# Create a basic Python package
 ros2 pkg create --build-type ament_python my_py_pkg
-# 创建带有依赖的 Python 包
+
+# Create a Python package with dependencies
 ros2 pkg create --build-type ament_python \
---dependencies rclpy std_msgs \
-my_python_package
-# 创建包含节点的 Python 包
+  --dependencies rclpy std_msgs \
+  my_python_package
+
+# Create a Python package that includes nodes
 ros2 pkg create --build-type ament_python \
---dependencies rclpy \
---node-name my_node \
-my_py_pkg
+  --dependencies rclpy \
+  --node-name my_node \
+  my_py_pkg
 ```
 
-### 5.2.3功能包目录结构
+### 5.2.3 Functional package catalogue structure
 
-#### C++包结构：
+C++ package structure:
 
-```
-Plain Text
-my_cpp_pkg/
-├── CMakeLists.txt # CMake 构建配置
-├── package.xml # 包元信息
-├── src/ # C++ 源代码
-│ └── my_node.cpp
-├── include/ # 头文件
-│ └── my_cpp_pkg/
-│ └── my_header.hpp
-├── launch/ # Launch 文件
-│ └── my_launch.py
-├── config/ # 配置文件
-│ └── params.yaml
-├── resource/ # 资源文件
-└── test/ # 测试代码
-```
+> Plain Text
+> My cpp pkg/
+> Ideas - CMakeLists.txt #CMake Build Configuration
+> # Package
+> src/ #C++ Source
+> – my node.cpp
+> Include/ # Headers
+> │ - my cpp pkg/
+> – my header.hpp
+> Launch/ #Launch File
+> XIOBAITOKEN2
+> Config/ # Profile
+> │-XIOBAITOKEN3
+> Resource/ # Resource Files
+> └-test/ # test code
 
-#### Python包结构：
+Python package structure:
 
-```
-Plain Text
-my_py_pkg/
-├── setup.py # Python 构建配置
-├── setup.cfg # Python 配置
-├── package.xml # 包元信息
-├── my_py_pkg/ # Python 包目录
-│ ├── __init__.py
-│ └── my_node.py
-├── launch/ # Launch 文件
-│ └── my_launch.py
-├── config/ # 配置文件
-│ └── params.yaml
-├── resource/ # 资源文件
-└── test/ # 测试代码
-└── test_copyright.py
-└── test_flake8.py
-└── test_pep257.py
-```
+> Plain Text
+> My py pkg/
+> Ideas --https://download.docker.com/linux/ubuntu/dists/ #Python Build Configuration
+> setup.cfg #Python Configuration
+> # Package
+> My py pkg/ #Python Package Directory
+> I'm sorry.
+> │-XIOBAITOKEN3
+> Launch/ #Launch File
+> XIOBAITOKEN4
+> Config/ # Profile
+> │-XIOBAITOKEN5
+> Resource/ # Resource Files
+> └-test/ # test code
+> XIOBAITOKEN6
+> XIOBAITOKEN7
+> XIOBAITOKEN8
 
-### 5.3 package.xml配置
+## 5.3 package.xml Configuration
 
-### 5.3.1 package.xml基本结构
+### 5.3.1 package.xml Basic structure
 
-package.xml是功能包的元数据文件，定义了包的基本信息和依赖关系：
+package.xml is a metadata file for the functional package that defines the basic information of the package and its dependency:
 
-```
-XML
+```xml
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-<!-- 基本信息 -->
-<name>my_package</name>
-<version>1.0.0</version>
-<description>My ROS 2 package description</description>
-<maintainer email="user@example.com">Your Name</maintainer>
-<license>Apache-2.0</license>
-<!-- 构建工具 -->
-<buildtool_depend>ament_cmake</buildtool_depend>
-<!-- 依赖项 -->
-<depend>rclcpp</depend>
-<depend>std_msgs</depend>
-<!-- 测试依赖 -->
-<test_depend>ament_lint_auto</test_depend>
-<test_depend>ament_lint_common</test_depend>
-<!-- 导出信息 -->
-<export>
-<build_type>ament_cmake</build_type>
-</export>
+  <!-- Basic information -->
+  <name>my_package</name>
+  <version>1.0.0</version>
+  <description>My ROS 2 package description</description>
+  <maintainer email="user@example.com">Your Name</maintainer>
+  <license>Apache-2.0</license>
+
+  <!-- Build tools -->
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <!-- Dependencies -->
+  <depend>rclcpp</depend>
+  <depend>std_msgs</depend>
+
+  <!-- Test dependencies -->
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <!-- Export information -->
+  <export>
+  <build_type>ament_cmake</build_type>
+  </export>
 </package>
 ```
 
-### 5.3.2依赖类型详解
+### 5.3.2 Detailed type of dependence
 
-| 依赖类型 | 说明 | 示例 |
+| Type of dependency | Annotations | Example: |
 | --- | --- | --- |
-| <depend> | 编译、运行、测试都依赖 | <depend>rclcpp</depend> |
-| <build_depend> | 仅编译时依赖 | <build_depend>message_generation</build_depend> |
-| <build_export_depend> | 编译和导出依赖 | <build_export_depend>some_msg_pkg</build_export_depend> |
-| <exec_depend> | 仅运行时依赖 | <exec_depend>python3-numpy</exec_depend> |
-| <test_depend> | 仅测试时依赖 | <test_depend>ament_cmake_gtest</test_depend> |
-| <buildtool_depend> | 构建工具依赖 | <buildtool_depend>ament_cmake</buildtool_depend> |
+| ♪ Depend ♪ | Compiled, run, tested. | {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FF00} {\cHFFFFFF}{\cH00FFFF} {\cHFFFFFF}{\cH00FFFF} |
+| <build depend> | Only rely on compilation | I'm sorry. |
+| <build export depend> | Compile and Export Dependencies | <build export depend>some msg pkg<https://download.docker.com/linux/ubuntu/dists/> |
+| <exec depend> | Run-only | <exec depend>python3-numpy<XIAITOKEN0> |
+| test depend | Dependency on testing only | {\cHFFFFFF}{\cH00FFFF}{\cH00FFFF} |
+| <buildtool depend> | Build Tool Dependence | I'm sorry, I'm sorry. |
 
-### 5.3.3常用依赖项
+### 5.3.3 Common dependency items
 
-#### 核心依赖：
+Core dependence:
 
-```
-XML
-<!-- C++ 支持 -->
+```xml
+<!-- C++ support -->
 <depend>rclcpp</depend>
-<!-- Python 支持 -->
+
+<!-- Python support -->
 <depend>rclpy</depend>
-<!-- 标准消息 -->
+
+<!-- Standard messages -->
 <depend>std_msgs</depend>
-<!-- 几何消息 -->
+
+<!-- Geometry messages -->
 <depend>geometry_msgs</depend>
-<!-- 传感器消息 -->
+
+<!-- Sensor messages -->
 <depend>sensor_msgs</depend>
-<!-- 导航消息 -->
+
+<!-- Navigation messages -->
 <depend>nav_msgs</depend>
-<!-- TF2 变换 -->
+
+<!-- TF2 transforms -->
 <depend>tf2</depend>
 <depend>tf2_ros</depend>
 <depend>tf2_geometry_msgs</depend>
 ```
 
-### 5.3.4完整package.xml示例
+### 5.3.4 Complete package.xml Example
 
-```
-XML
+```xml
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-<name>my_robot_package</name>
-<version>1.0.0</version>
-<description>My robot control package with advanced features</description>
-<maintainer email="developer@example.com">Developer Name</maintainer>
-<license>Apache-2.0</license>
-<url type="website">https://github.com/username/my_robot_package</url>
-<url type="bugtracker">https://github.com/username/my_robot_package/issues</url>
-<url type="repository">https://github.com/username/my_robot_package</url>
-<author email="contributor@example.com">Contributor Name</author>
-<!-- Build tool -->
-<buildtool_depend>ament_cmake</buildtool_depend>
-<!-- Core dependencies -->
-<depend>rclcpp</depend>
-<depend>rclpy</depend>
-<depend>std_msgs</depend>
-<depend>geometry_msgs</depend>
-<depend>sensor_msgs</depend>
-<!-- Additional dependencies -->
-<exec_depend>tf2_ros</exec_depend>
-<exec_depend>tf2_geometry_msgs</exec_depend>
-<!-- Test dependencies -->
-<test_depend>ament_lint_auto</test_depend>
-<test_depend>ament_lint_common</test_depend>
-<test_depend>ament_cmake_gtest</test_depend>
-<export>
-<build_type>ament_cmake</build_type>
-</export>
+  <name>my_robot_package</name>
+  <version>1.0.0</version>
+  <description>My robot control package with advanced features</description>
+  <maintainer email="developer@example.com">Developer Name</maintainer>
+  <license>Apache-2.0</license>
+
+  <url type="website">https://github.com/username/my_robot_package</url>
+  <url type="bugtracker">https://github.com/username/my_robot_package/issues</url>
+  <url type="repository">https://github.com/username/my_robot_package</url>
+
+  <author email="contributor@example.com">Contributor Name</author>
+
+  <!-- Build tool -->
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <!-- Core dependencies -->
+  <depend>rclcpp</depend>
+  <depend>rclpy</depend>
+  <depend>std_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>sensor_msgs</depend>
+
+  <!-- Additional dependencies -->
+  <exec_depend>tf2_ros</exec_depend>
+  <exec_depend>tf2_geometry_msgs</exec_depend>
+
+  <!-- Test dependencies -->
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+  <test_depend>ament_cmake_gtest</test_depend>
+
+  <export>
+  <build_type>ament_cmake</build_type>
+  </export>
 </package>
 ```
 
-### 5.4 CMakeLists.txt配置(C++)
+### 5.4 CMakeLists.txt Configuration (C++)
 
-### 5.4.1基本结构
+### 5.4.1 Basic structure
 
-```
-CMake
-cmake_minimum_required(VERSION 3.8)
-project(my_cpp_pkg)
-# 默认为 C++17
-if(NOT CMAKE_CXX_STANDARD)
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-endif()
-# 查找依赖
-find_package(ament_cmake REQUIRED)
-find_package(rclcpp REQUIRED)
-find_package(std_msgs REQUIRED)
-# 包含目录
-include_directories(include)
-# 可执行文件
-add_executable(my_node src/my_node.cpp)
-# 依赖项
-ament_target_dependencies(my_node
-rclcpp
-std_msgs
-)
-# 安装目标
-install(TARGETS
-my_node
-DESTINATION lib/${PROJECT_NAME}
-)
-# 安装 Python 模块
-ament_package()
-```
+> CMake
+> And make minum required (VERSION 3.8)
+> Project(my cpp pkg)
+>
+> # Default to C++17
+> If (NOT CMAKE CXX STANDARD)
+> set (CMAKE CXX STANDARD 17)
+> Set (CMAKE CXX STANDARD REQUIRED ON)
+> Endif()
+>
+> # Find dependency
+> Find package
+> Find package (clcpp REQUIRED)
+> Find package (std msgsREQUIRD)
+>
+> # Include directory
+> Include directors
+>
+> # Executable
+> edd executeable (my node src/my_node.cpp)
+>
+> # Dependencies
+> ament target dependincies(my node)
+> rclcpp
+> Std msgs
+> I'm not sure.
+>
+> # Installation target
+> Install
+> Oh, my node.
+> DESTINATION lib/${PROJECT NAME}
+> I'm not sure.
+>
+> # Install Python module
+> ament package()
 
-### 5.4.2添加可执行文件
+### 5.4.2 Add enforceable documents
 
-```
-CMake
-# 创建可执行文件
-add_executable(talker src/talker.cpp)
-add_executable(listener src/listener.cpp)
-# 链接依赖
-ament_target_dependencies(talker
-rclcpp
-std_msgs
-)
-ament_target_dependencies(listener
-rclcpp
-std_msgs
-)
-# 安装可执行文件
-install(TARGETS
-talker
-listener
-DESTINATION lib/${PROJECT_NAME}
-)
-```
+> CMake
+> # Create Executable
+> (talker src/talker.cpp)
+> edd executeable (lister src/listener.cpp)
+>
+> # Link dependent
+> ament target dependincies(talker)
+> rclcpp
+> Std msgs
+> I'm not sure.
+>
+> ament target dependincies(lister)
+> rclcpp
+> Std msgs
+> I'm not sure.
+>
+> # Install Executable Files
+> Install
+> Talker
+> I don't know, listner.
+> DESTINATION lib/${PROJECT NAME}
+> I'm not sure.
 
-### 5.4.3添加库
+### 5.4.3 Add Library
 
-```
-CMake
-# 创建库
-add_library(my_library
-src/my_library.cpp
-)
-# 库可见性
-target_include_directories(my_library PUBLIC
-$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-$<INSTALL_INTERFACE:include>)
-ament_target_dependencies(my_library
-rclcpp
-)
-# 安装库
-install(TARGETS my_library
-ARCHIVE DESTINATION lib
-LIBRARY DESTINATION lib
-RUNTIME DESTINATION bin
-)
-# 安装头文件
-install(DIRECTORY include/
-DESTINATION include/
-)
-```
+> CMake
+> # Create Library
+> library
+> Src/my_library.cpp
+> I'm not sure.
+>
+> # Library Visibility
+> I'm sorry, I'm sorry.
+> <BUILD INTERFACE: $ {CMAKE CURRENT SOURCE DIR}XIOBAITOKEN1>
+> <INSTALL INTERFACE:include>)
+>
+> ament target dependincies(my library)
+> rclcpp
+> I'm not sure.
+>
+> # Installation library
+> Install
+> ARCHIVE DESTINATION lib
+> LIBRARY DESTINATION lib
+> RUNTIME DESTINATION bin
+> I'm not sure.
+>
+> # Install header files
+> Install
+> DESTINATION include/
+> I'm not sure.
 
-### 5.4.4安装额外文件
+### 5.4.4 Installation of additional documents
 
-```
-CMake
-# 安装 Launch 文件
-install(DIRECTORY launch/
-DESTINATION share/${PROJECT_NAME}/launch/
-)
-# 安装配置文件
-install(DIRECTORY config/
-DESTINATION share/${PROJECT_NAME}/config/
-)
-# 安装 URDF/Mesh 文件
-install(DIRECTORY urdf meshes
-DESTINATION share/${PROJECT_NAME}/
-)
-```
+> CMake
+> # Install Launch files
+> Install
+> DESTINATION share/${PROJECT NAME}https://download.docker.com/linux/ubuntu/dists/
+> I'm not sure.
+>
+> # Install Profile
+> Install
+> DESTINATION share/${PROJECT NAME}XIOBAITOKEN1
+> I'm not sure.
+>
+> # Install URL/Mesh files
+> Install
+> DESTINATION share/${PROJECT NAME}/
+> I'm not sure.
 
-### 5.4.5测试配置
+### 5.4.5 Test configuration
 
-```
-CMake
-# 启用测试
-if(BUILD_TESTING)
-find_package(ament_lint_auto REQUIRED)
-find_package(ament_cmake_gtest REQUIRED)
-# GTest 测试
-ament_add_gtest(test_my_library test/test_my_library.cpp)
-target_link_libraries(test_my_library my_library)
-# Lint 检查
-ament_lint_auto_find_test_dependencies()
-endif()
-```
+> CMake
+> # Enable testing
+> (BUILD TESTING)
+> Find package
+> Find package
+>
+> # Gtest Test
+> Ament add gtest (test my library test/test_my_library.cpp)
+> Target link librries (test my library my library)
+>
+> # Lint Check
+> ament lint auto find test dependincies()
+> Endif()
 
-### 5.5 setup.py配置(Python)
+## 5.5 setup.py Configuration (Python)
 
-### 5.5.1基本结构
+### 5.5.1 Basic structure
 
 ```python
 from setuptools import setup
+
 package_name = 'my_py_pkg'
+
 setup(
-name=package_name,
-version='1.0.0',
-packages=[package_name],
-data_files=[
-('share/ament_index/resource_index/packages',
-['resource/' + package_name]),
-('share/' + package_name, ['package.xml']),
-('share/' + package_name + '/launch', ['launch/my_launch.py']),
-('share/' + package_name + '/config', ['config/params.yaml']),
-],
-install_requires=['setuptools'],
-zip_safe=True,
-maintainer='Your Name',
-maintainer_email='user@example.com',
-description='My ROS 2 Python package',
-license='Apache-2.0',
-tests_require=['pytest'],
-entry_points={
-'console_scripts': [
-'my_node = my_py_pkg.my_node:main',
-],
-},
+  name=package_name,
+  version='1.0.0',
+  packages=[package_name],
+  data_files=[
+  ('share/ament_index/resource_index/packages',
+  ['resource/' + package_name]),
+  ('share/' + package_name, ['package.xml']),
+  ('share/' + package_name + '/launch', ['launch/my_launch.py']),
+  ('share/' + package_name + '/config', ['config/params.yaml']),
+  ],
+  install_requires=['setuptools'],
+  zip_safe=True,
+  maintainer='Your Name',
+  maintainer_email='user@example.com',
+  description='My ROS 2 Python package',
+  license='Apache-2.0',
+  tests_require=['pytest'],
+  entry_points={
+  'console_scripts': [
+  'my_node = my_py_pkg.my_node:main',
+  ],
+  },
 )
 ```
 
-### 5.5.2 setup.cfg配置
+### 5.5.2 setup.cfg configuration
 
 ```
 TOML
@@ -2654,278 +2758,75 @@ script-dir=$base/lib/my_py_pkg
 install-scripts=$base/lib/my_py_pkg
 ```
 
-### 5.5.3添加可执行节点
+### 5.5.3 Add enforceable nodes
 
-在setup.py中使用entry_points：
+Use entry points:
 
 ```python
 entry_points={
-'console_scripts': [
-# 节点名 = 模块路径:函数名
-'talker = my_py_pkg.talker:main',
-'listener = my_py_pkg.listener:main',
-'camera_node = my_py_pkg.camera:main',
-],
+  'console_scripts': [
+  # Node name = module path:function name
+  'talker = my_py_pkg.talker:main',
+  'listener = my_py_pkg.listener:main',
+  'camera_node = my_py_pkg.camera:main',
+  ],
 }
 ```
 
-### 5.6包的编译与安装
+#### 5.6 Compilation and installation of packages
 
-### 5.6.1编译单个包
+### 5.6.1 Compile individual packages
 
 ```bash
 cd ~/ros2_ws
-# 编译指定包
+
+# Build a specified package
 colcon build --packages-select my_cpp_pkg
-# 编译并显示详细输出
+
+# Build and show detailed output
 colcon build --packages-select my_cpp_pkg --event-handlers console_direct+
 ```
 
-### 5.6.2编译多个包
+#### 5.6.2 Compile multiple packages
 
 ```bash
-# 编译多个指定包
+# Build multiple specified packages
 colcon build --packages-select pkg1 pkg2 pkg3
-# 编译除了某些包之外的所有包
+
+# Build all packages except the specified ones
 colcon build --packages-skip pkg_to_skip
 ```
 
-### 5.6.3常用编译选项
+### 5.6.3 Common compilation options
 
 ```bash
-# 使用符号链接安装（开发时推荐）
+# Use symbolic-link install (recommended during development)
 colcon build --symlink-install
-# Debug 模式编译
+
+# Build in Debug mode
 colcon build --cmake-args -DCMAKE_BUILD_TYPE=Debug
-# Release 模式编译
+
+# Build in Release mode
 colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
-# 生成编译命令数据库
+
+# Generate the compile command database
 colcon build --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 ```
 
-### 5.7依赖管理
+## 5.7 Reliance on management
 
-### 5.7.1查看包依赖
+### 5.7.1 View package dependence
 
 ```bash
-# 查看包的直接依赖
+# View the package direct dependencies
 ros2 pkg dependencies my_package
-# 查看依赖的所有包（递归）
+
+# View all dependent packages (recursive)
 ros2 pkg dependencies my_package --all
-# 查看哪些包依赖于此包
+
+# View which packages depend on this package
 ros2 pkg dependents my_package
-# 查看包的元信息
+
+# View package metadata
 ros2 pkg xml my_package
 ```
-
-### 5.7.2使用rosdep管理系统依赖
-
-```bash
-# 安装包的所有系统依赖
-cd ~/ros2_ws
-rosdep install -r --from-paths src --ignore-src -y
-# 仅安装特定包的依赖
-rosdep install --from-paths src/my_package --ignore-src -y
-```
-
-### 5.7.3依赖关系图
-
-```
-Plain Text
-依赖关系示例：
-my_robot_app (顶层应用)
-├── 依赖
-│ ├── my_robot_controller (控制器)
-│ │ ├── 依赖 rclcpp
-│ │ ├── 依赖 std_msgs
-│ │ └── 依赖 geometry_msgs
-│ ├── my_sensor_driver (传感器驱动)
-│ │ └── 依赖 sensor_msgs
-│ └── navigation2 (导航)
-│ └── 依赖 tf2
-└── 构建依赖
-└── ament_cmake
-```
-
-### 5.8包的发布与共享
-
-### 5.8.1准备发布
-
-确保包包含以下文件：
-
-```
-Plain Text
-my_package/
-├── README.md # 项目说明
-├── LICENSE # 许可证文件
-├── package.xml # 包元信息
-├── CMakeLists.txt / setup.py
-├── src/ # 源代码
-├── include/ # 头文件（C++）
-├── launch/ # Launch 文件
-├── config/ # 配置文件
-└── test/ # 测试代码
-```
-
-### 5.8.2创建README.md
-
-```
-Markdown
-# My ROS 2 Package
-## Description
-Brief description of what this package does.
-## Features
-- Feature 1
-- Feature 2
-- Feature 3
-## Dependencies
-- ROS 2 Humble
-- rclcpp
-- std_msgs
-- geometry_msgs
-## Building
-```bash
-cd ~/ros2_ws
-colcon build --packages-select my_package
-```
-## Usage
-```bash
-source install/setup.bash
-ros2 run my_package my_node
-```
-## License
-Apache-2.0
-```
-### 5.8.3 发布到 GitHub
-```bash
-# 初始化 git 仓库
-cd ~/ros2_ws/src/my_package
-git init
-# 添加 .gitignore
-cat > .gitignore << 'EOF'
-build/
-install/
-log/
-*.pyc
-__pycache__/
-.vscode/
-.idea/
-EOF
-# 提交代码
-git add .
-git commit -m "Initial commit"
-# 推送到 GitHub
-git remote add origin https://github.com/username/my_package.git
-git push -u origin main
-```
-
-### 5.9最佳实践
-
-### 5.9.1包设计原则
-
-| 原则 | 说明 | 示例 |
-| --- | --- | --- |
-| 单一职责 | 每个包专注于一个功能 | 传感器驱动和控制逻辑分开 |
-| 低耦合 | 最小化包间依赖 | 使用消息接口通信 |
-| 高内聚 | 相关功能放在同一包 | TF 转换工具放一起 |
-| 可重用 | 设计为可被其他包使用 | 通用工具库 |
-
-### 5.9.2命名约定
-
-#### 包名约定：
-
-```
-Plain Text
-好的命名：
-- camera_driver (清晰描述功能)
-- robot_controller (描述功能域)
-- path_planning (描述算法)
-不好的命名：
-- my_package (不够描述性)
-- stuff (完全不描述)
-- pkg1 (无意义)
-```
-
-#### 节点命名：
-
-```
-Plain Text
-推荐格式: <function>_<type>_node
-camera_driver_node
-lidar_processor_node
-path_planner_node
-robot_state_publisher
-```
-
-### 5.9.3目录组织最佳实践
-
-```
-Plain Text
-大型项目组织示例：
-my_robot_project/
-├── my_robot_msgs/ # 自定义消息
-├── my_robot_driver/ # 硬件驱动
-├── my_robot_controller/ # 控制器
-├── my_robot_navigation/ # 导航配置
-├── my_robot_viz/ # 可视化配置
-└── my_robot_bringup/ # 启动配置
-```
-
-### 5.10常见问题
-
-### 5.10.1找不到包
-
-问题：`ros2 pkg list`看不到新创建的包
-
-#### 解决方法：
-
-```bash
-# 1. 检查 package.xml 语法
-xmllint --noout package.xml
-# 2. 确保在工作空间的 src 目录中
-ls ~/ros2_ws/src/
-# 3. 重新编译
-cd ~/ros2_ws
-colcon build --packages-select <package_name>
-# 4. Source 环境
-source install/setup.bash
-```
-
-### 5.10.2依赖问题
-
-#### 问题：编译时提示找不到依赖
-
-#### 解决方法：
-
-```bash
-# 1. 确保依赖已安装
-ros2 pkg list | grep <dependency_name>
-# 2. 如果是系统依赖，使用 rosdep
-rosdep install --from-paths src --ignore-src -y
-# 3. 检查 package.xml 中的依赖声明是否正确
-cat package.xml | grep <dependency_name>
-```
-
-### 5.10.3 CMake配置问题
-
-#### 问题：CMake找不到包
-
-#### 解决方法：
-
-```bash
-# 1. 确保 source 了 ROS 2 环境
-source /opt/ros/humble/setup.bash
-# 2. 检查 CMakeLists.txt 中的 find_package
-find_package(rclcpp REQUIRED)
-# 3. 清理并重新编译
-rm -rf build install
-colcon build
-```
-
-### 5.11下一步
-
-学习功能包后，您可以：
-
-1.06节点-编写节点代码
-
-2.07话题通讯-学习话题通信

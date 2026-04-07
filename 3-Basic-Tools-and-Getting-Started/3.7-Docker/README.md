@@ -2,257 +2,226 @@
 
 [Back to Module 3](../README.MD) | [Back to Table of Contents](../../Table-of-Contents.md)
 
-## 13安装Docker与基础使用
+## 13 Install Docker and Basic Use
 
-### 介绍
+### Introduction
 
-Docker是一款轻量级的容器化平台，用于将应用程序及其依赖打包成独立、可移植的容器，从而实现“在任何地方都能以相同方式运行”。它通过隔离环境、快速部署和高效资源利用，让开发、测试、部署流程更加一致和自动化。无论是本地开发、服务器部署，还是大规模微服务架构，Docker都能显著提升效率和稳定性。
+Docker is a lightweight containerized platform for packaging applications and their reliance into separate, portable containers, thus achieving “the same functioning anywhere”. It makes development, testing, deployment processes more consistent and automated through isolation, rapid deployment and efficient use of resources. Docker can significantly improve efficiency and stability, whether through local development, server deployment or large-scale micro-service structures.
 
-### Jetson安装Docker服务
+### Install Docker on Jetson
 
-#### 安装Docker CE
+Install Docker CE
 
 ```bash
 sudo apt update
-# 安装依赖
+# Install dependencies
 sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
 ```
 
-添加Docker官方GPG密钥：
+Add Docker official GPG key:
 
 ```bash
-# 添加阿里云 Docker 仓库 Key
+# Add the Aliyun Docker repository key
 curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-ce.gpg
-# 添加仓库
+# Add repository
 echo \
 "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-ce.gpg] \
 https://mirrors.aliyun.com/docker-ce/linux/ubuntu \
 $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list
-# 安装
+# Install
 sudo apt update
 sudo apt install docker-ce docker-ce-cli containerd.io
-# 验证安装
+# Verify the installation
 docker --version
 ```
 
 ![](./images/3-7-docker-01.png)
 
-添加访问权限
+Add access rights
 
 ```bash
 sudo usermod -aG docker $USER
 newgrp docker
 ```
 
-执行以上命令后，就可以不需要使用sudo命令就可以直接使用docker命令
+Upon execution of the above command, you can use the docker command without using the sudo command
 
-安装NVIDIA Container Toolkit
+Install NVIDIA Container Toolkit
 
 ```bash
 distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
-# 添加Key
+# Add key
 curl -s -L https://nvidia.github.io/libnvidia-container/gpgkey | \
 sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg
-# 添加仓库
+
+# Add repository
 curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | \
-sed 's# deb https://# deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://# g' | \
+sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' | \
 sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
 ```
 
 ![](./images/3-7-docker-02.png)
 
-安装nvidia-container-toolkit
+Install nvidia-container-toolkit
 
 ```bash
 sudo apt update
 sudo apt install -y nvidia-container-toolkit
 ```
 
-启用Docker GPU支持
+Enable Docker GPU support
 
 ```bash
 sudo nvidia-ctk runtime configure --runtime=docker
 sudo systemctl restart docker
-# 测试 Docker 容器内是否可使用 GPU
+# Test whether GPU access is available inside the Docker container
 sudo docker run --rm --runtime=nvidia --gpus all --network host ubuntu nvidia-smi
 ```
 
-```
-下载 docker 镜像时可能需要科学上网！
-```
+> You may need a proxy or mirror source when downloading Docker images or packages.
 
-如果你无法使用Docker官方APT仓库来安装Docker Engine，也可以选择手动下载.deb包并安装，参考下面流程。 👇👇👇
+If you cannot install Docker Engine from the official APT repository, you can also download the `.deb` packages manually and install them yourself.
 
-首先选择与你Ubuntu版本对应的仓库目录，打开Docker官方下载目录：
+First open the Docker download directory that matches your Ubuntu version:
 
-👉https://download.docker.com/linux/ubuntu/dists/
+https://download.docker.com/linux/ubuntu/dists/
 
-根据你当前使用的Ubuntu版本，选择对应的目录：
+Select the corresponding directory according to your current Ubuntu version:
 
-| Ubuntu 版本 | 版本代号 | 下载路径示例 |
+| Ubuntu Version | Version Designator | Example of download path |
 | --- | --- | --- |
-| Ubuntu 20.04 LTS | focal | dists/focal/pool/stable/ |
-| Ubuntu 22.04 LTS | jammy | dists/jammy/pool/stable/ |
-| Ubuntu 24.04 LTS | noble | dists/noble/pool/stable/ |
+| Ubuntu 20.04 LTS | focal | `dists/focal/pool/stable/` |
+| Ubuntu 22.04 LTS | jammy | `dists/jammy/pool/stable/` |
+| Ubuntu 24.04 LTS | noble | `dists/noble/pool/stable/` |
 
-例如：
+Select one of the architecture directories that match your system after entering the corresponding version of the directory:
 
-进入对应版本目录后，选择与你系统匹配的架构目录之一：
+amd64:x86 64 Server / PC
 
-在对应架构目录中，下载以下5个deb文件（版本号建议保持一致）：
+Arm64: ARM 64-bit systems, including Jetson
 
-然后安装Docker（使用dpkg），进入你下载deb文件的目录，执行：
+Armhf
+
+S390x
+
+In that directory, download these five `.deb` packages with matching versions:
+
+- `containerd.io_<version>_<arch>.deb`
+- `docker-ce_<version>_<arch>.deb`
+- `docker-ce-cli_<version>_<arch>.deb`
+- `docker-buildx-plugin_<version>_<arch>.deb`
+- `docker-compose-plugin_<version>_<arch>.deb`
+
+Then install Docker (using dpkg) to enter the directory where you download the Deb file, execute:
 
 ```bash
+
 sudo dpkg -i ./containerd.io_<version>_<arch>.deb \
-./docker-ce_<version>_<arch>.deb \
-./docker-ce-cli_<version>_<arch>.deb \
-./docker-buildx-plugin_<version>_<arch>.deb \
-./docker-compose-plugin_<version>_<arch>.deb
+  ./docker-ce_<version>_<arch>.deb \
+  ./docker-ce-cli_<version>_<arch>.deb \
+  ./docker-buildx-plugin_<version>_<arch>.deb \
+  ./docker-compose-plugin_<version>_<arch>.deb
 ```
 
-如果提示依赖缺失，可以执行：
+If the hint depends on the missing:
 
 ```bash
+
 sudo apt -f install
 ```
 
-如果需要验证Docker服务状态：
+If you need to verify Docker service status:
 
 ```bash
+
 sudo systemctl status docker
 ```
 
-Docker通常会在安装完成后自动启动。如果未启动，手动启动：
+Docker usually starts automatically after installation is complete. If not started, manually:
 
 ```bash
+
 sudo systemctl start docker
 ```
 
-### dcoker基础使用
+### Docker Basics
 
-Docker引擎包括Docker CLI，Docker CLI提供与Docker守护进程交互的命令行工具，教程介绍Docker常用命令的用法。
+The Docker Engine includes Docker CLI, which provides the command-line tools used to interact with the Docker daemon.
 
-在正式介绍Docker的基本使用之前，我们先补充说明Docker中“镜像（Image）”和“容器（Container）”的基本概念，以帮助读者更好地理解后续内容。
+Before officially introducing the basic use of Docker, we would like to add the basic concepts of “Image” and “Container” in Docker to help readers better understand what follows.
 
-简单来说：
+Image
+Docker images are read-only templates that contain the environment, dependencies, and configuration required to run software. An image does not run by itself; it is the base used to create a container.
 
-```
-镜像相当于程序的安装包，容器相当于正在运行的程序实例。
-```
+Container
+A Docker container is a running instance of an image. Once an image is launched, a container is created. Containers have isolated runtime environments and can be started, stopped, removed, and managed independently.
 
-理解了镜像与容器的关系后，接下来将通过具体示例介绍Docker的常用命令和基本使用方法。
+In short:
 
-### 1、查看详细信息
+> An image is like an installation package, while a container is a running program instance.
 
-```
-docker info
-```
+When the relationship between mirrors and containers is understood, it will be followed by a specific example of Docker's commonly used commands and basic usage methods.
 
-### 2、查看版本号
+### 1. View details
 
-```
-docker --version
-```
+> docker info
 
-### 3、拉取镜像
+### 2. View version number
 
-```
-docker pull <image_name>
-```
+> docker --version
 
-若没有指定标签，默认会拉取latest标签的镜像。
+### 3. Pull mirrors
 
-手动拉取指定docker镜像：
+> docker pull <image_name>
 
-```
-docker pull <image_name>:<tag>
-```
+If no label is specified, the default pulls the mirror of the last label.
 
-### 4、运行镜像
+Manually pull the assigned docker mirror:
 
-若本地没有需要运行的镜像，docker会自动拉取对应镜像。
+> docker pull <image_name>:<tag>
 
-```
-docker run <image_name>
-```
+### 4. Run mirrors
 
-从指定镜像启动容器：
+If there is no local mirror to run, docker automatically pulls the corresponding mirror.
 
-```
-docker run ubuntu:18.04 /bin/bash
-```
+> docker run <image_name>
 
-这会以交互模式启动，当输入exit退出（退出前如果没有保存，操作会清空）
+Start container from specified mirror:
 
-#### 4.1、查看正运行的容器
+> Docker run ubuntu: 18.04 /bin/bash
 
-```
-docker ps
-```
+This starts the container in interactive mode. Type `exit` to leave the container.
 
-#### 4.2、查看正运行或停止容器
+### 4.1. Viewing running containers
 
-```
-docker ps -a
-```
+> docker ps
 
-### 5、清理容器
+### 4.2. Viewing functioning or stopping containers
 
-```
-docker container prune
-```
+> docker ps -a
 
-### 6、查看本地镜像
+### 5. Cleaning of containers
 
-```
-docker images
-```
+> docker container prune
 
-### 7、删除镜像
+### 6. View local mirrors
 
-注意：待删除的镜像需要处于停止运行且被清理的状态
+> Docker images
 
-```
-docker rmi <image_name>
-```
+### 7. Remove mirrors
 
-### 8、保存容器为新的镜像
+Note: Mirrors to be deleted need to be disabled and cleaned
 
-```
-docker commit <container_id> <image_name>:<tag>
-```
+> Docker rmi <image name>
 
-注意：根据实际的CONTAINER ID以及自定义的镜像名称和tag后缀
+### 8. Preservation of containers as new mirrors
 
-### 9、停止容器
+> Docker company <container id>
 
-若是以交互模式运行容器，且终端进入容器内部，可以在容器内部输入exit停止容器；
+Note: Based on the actual CONTAINER ID and the custom mirror name and tag suffix
 
-若是在外部关闭容器，可以使用docker stop命令。
+### 9. Stop the container
 
-```
-docker stop
-```
-
-注意：根据实际CONTAINER ID进行修改
-
-### 10、多终端进同一容器
-
-容器之间是相互隔离的，直接使用运行镜像的命令会启动不同容器；若需要在同一容器执行操作，需要使用命令进入同一容器。
-
-以交互模式从ubuntu:18.04镜像中启动一个容器：
-
-docker run -it ubuntu:18.04 /bin/bash
-
-然后，查看正在运行的容器：
-
-docker ps
-
-记录容器ID后，可从另一个终端进入相同的容器，例如：
-
-docker exec -it bc4fcf3ef267 /bin/bash
-
-根据实际情况，bc4fcf3ef267改为你使用的容器ID
+If the container is operated in an interactive mode and the end enters the inner packaging, the exit can be entered inside the container to stop the container;
 
 [Back to Module 3](../README.MD)
