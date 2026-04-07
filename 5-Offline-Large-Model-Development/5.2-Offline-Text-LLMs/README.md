@@ -1,97 +1,225 @@
 # Offline Text LLMs
 
-This subchapter merges the text-only model lineup from `xiaobai-lesson` Chapter 12.
+## 02离线文字大模型（单模态）
 
-## General Workflow
+## 11.02-01 Meta AI：Llama3.2模型
 
-For all text-only models in the source material, the usage pattern is the same:
+### 简介
 
-```bash
-ollama run <model-name>
-```
+MetaLlama 3.2是Meta推出的最新一代大规模语言模型系列，在Llama 3.1的基础上进行了架构升级，并引入了真正的多模态能力：不仅可以处理和生成文本，还能理解图像内容，这让它兼具语言理解与视觉推理能力。
 
-If the model is not already local, Ollama downloads it first and then starts an interactive session.
+### 模型规模
 
-Exit a session with `Ctrl + D`.
+![](./images/5-2-offline-text-llms-01.gif)
 
-## Model Lineup from the Source Chapter
+#### 点击图片可查看完整电子表格
 
-### Llama 3.2
+### 性能表现
 
-The source positioned `llama3.2:3b` as a practical local baseline:
+![](./images/5-2-offline-text-llms-02.png)
+
+### 使用Llama3.2
+
+使用run命令运行模型，若此前本地未下载，ollama会先下载模型再运行
 
 ```bash
 ollama run llama3.2:3b
 ```
 
-Good fit:
+![](./images/5-2-offline-text-llms-03.png)
 
-- lightweight general chat
-- quick local experiments
-- low-friction first-run validation
+### 对话测试
 
-### Qwen3
+```bash
+who are you?
+```
 
-The source used `qwen3:8b` as a stronger multilingual and reasoning-oriented text model:
+![](./images/5-2-offline-text-llms-04.png)
+
+### 结束对话
+
+使用Ctrl+d快捷键或者/bye可以结束对话！
+
+### 参考资料
+
+```
+Ollama
+```
+
+官网：https://ollama.com/
+
+GitHub：https://github.com/ollama/ollama
+
+```
+Llama 3.2
+```
+
+官网：https://www.llama.com/docs/model-cards-and-prompt-formats/llama3_2/
+
+Ollama对应模型：https://ollama.com/library/llama3.2
+
+## 11.02-02阿里云：Qwen3模型
+
+### 简介
+
+Qwen3是阿里云通义千问团队在2025年推出的新一代开源大型语言模型家族，代表了该系列在规模、推理能力和多语言表现上的重要升级。Qwen3包括六种密集（Dense）模型和两种混合专家（MoE）模型，从0.6B到235B参数不等，支持长上下文（高达128K tokens），并引入了“混合推理”模式，可以在深度思考（复杂任务）与快速响应（通用任务）之间智能切换，从而在逻辑推理、数学、编码等复杂任务中表现出更强的能力。
+
+### 模型规模
+
+![](./images/5-2-offline-text-llms-05.gif)
+
+#### 点击图片可查看完整电子表格
+
+### 性能表现
+
+![](./images/5-2-offline-text-llms-06.png)
+
+![](./images/5-2-offline-text-llms-07.png)
+
+### 使用Qwen3
+
+使用run命令运行模型，若此前本地未下载，ollama会先下载模型再运行
 
 ```bash
 ollama run qwen3:8b
 ```
 
-Good fit:
+![](./images/5-2-offline-text-llms-08.png)
 
-- multilingual chat
-- stronger reasoning than smaller entry-level models
-- code and structured instructions
+### 对话测试
 
-### Phi-4-mini
+```bash
+please tell me a story.
+```
 
-The merged source used `phi4-mini:3.8b`:
+![](./images/5-2-offline-text-llms-09.png)
+
+### 结束对话
+
+使用Ctrl+d快捷键或者/bye可以结束对话！
+
+```
+Ollama
+```
+
+官网：https://ollama.com/
+
+GitHub：https://github.com/ollama/ollama
+
+```
+Qwen3
+```
+
+GitHub：https://github.com/QwenLM/Qwen3
+
+Ollama对应模型：https://ollama.com/library/qwen3
+
+## 11.02-03微软：Phi-4-mini模型
+
+### 简介
+
+Phi-4-mini是微软Phi模型系列中一个轻量级、高效的小规模语言模型（Small Language Model），属于Phi-4家族的紧凑版本，拥有约3.8 B参数，采用decoder-only Transformer架构，并引入了如200 K词汇表、grouped-query attention和共享输入–输出嵌入等技术设计，使它在计算与内存受限环境中也能高效推理，同时支持超长上下文（可达128 K tokens）。
+
+### 模型规模
+
+![](./images/5-2-offline-text-llms-10.gif)
+
+#### 点击图片可查看完整电子表格
+
+### 模型性能
+
+![](./images/5-2-offline-text-llms-11.png)
+
+### 使用Phi-4-mini模型
+
+使用run命令运行模型，若此前本地未下载，ollama会先下载模型再运行
 
 ```bash
 ollama run phi4-mini:3.8b
 ```
 
-Good fit:
+![](./images/5-2-offline-text-llms-12.png)
 
-- smaller local footprint
-- efficient general-purpose chat
-- devices with tighter memory limits
+### 对话测试
 
-### DeepSeek-R1
+```bash
+who are you?
+```
 
-The merged source included DeepSeek-R1 for reasoning-heavy workflows:
+![](./images/5-2-offline-text-llms-13.png)
+
+### 结束对话
+
+使用Ctrl+d快捷键或者/bye可以结束对话！
+
+### 参考资料
+
+```
+Ollama
+```
+
+官网：https://ollama.com/
+
+GitHub：https://github.com/ollama/ollama
+
+```
+Phi4-mini
+```
+
+Ollama对应模型：https://ollama.com/library/phi4-mini
+
+## 11.02-04 DeepSeek：DeepSeek-R1模型
+
+### 简介
+
+DeepSeek‑R1是由中国AI实验室DeepSeek开发的一款开放推理（reasoning‑first）大型语言模型（LLM），与传统以生成流畅文本为主的模型不同，它专注于逐步思考和解决复杂逻辑、数学、编程等任务，通过强化学习（RL）训练来增强“思考能力”而不是仅仅模仿语言输出。
+
+### 模型规模
+
+![](./images/5-2-offline-text-llms-14.gif)
+
+#### 点击图片可查看完整电子表格
+
+### 模型性能
+
+![](./images/5-2-offline-text-llms-15.png)
+
+### 使用DeepSeek-R1模型
+
+使用run命令运行模型，若此前本地未下载，ollama会先下载模型再运行
 
 ```bash
 ollama run deepseek-r1
 ```
 
-Good fit:
+![](./images/5-2-offline-text-llms-16.png)
 
-- logic-heavy prompts
-- coding-style reasoning
-- exploration of reasoning-first models
+### 对话测试
 
-## How to Compare Them on Jetson
-
-A simple practical comparison loop is:
-
-1. Run the same prompt on multiple models.
-2. Measure startup time and first-token delay.
-3. Watch RAM and swap pressure.
-4. Judge whether the quality gain is worth the extra latency.
-
-Example prompts:
-
-```text
-Explain ROS2 topics vs services in simple terms.
-Write a Python script to read a USB camera and save one frame.
-Summarize the steps to install Open WebUI on Jetson.
+```bash
+who are you?
 ```
 
-## Practical Advice
+![](./images/5-2-offline-text-llms-17.png)
 
-- Start with the smallest model that satisfies your task.
-- Use Qwen or DeepSeek when reasoning quality matters more than startup speed.
-- Use Phi or Llama when you need a lighter local assistant.
-- Keep notes on which models work well on your exact Jetson SKU, because the usable model size changes a lot between 4 GB, 8 GB, and larger systems.
+### 结束对话
+
+使用Ctrl+d快捷键或者/bye可以结束对话！
+
+### 参考资料
+
+```
+Ollama
+```
+
+官网：https://ollama.com/
+
+GitHub：https://github.com/ollama/ollama
+
+```
+DeepSeek-R1
+```
+
+Ollama对应模型：https://ollama.com/library/deepseek-r1
+
+GitHub：https://github.com/deepseek-ai/DeepSeek-r1

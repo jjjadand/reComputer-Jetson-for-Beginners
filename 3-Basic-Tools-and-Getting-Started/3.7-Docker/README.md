@@ -2,263 +2,257 @@
 
 [Back to Module 3](../README.MD) | [Back to Table of Contents](../../Table-of-Contents.md)
 
-## Introduction
+## 13安装Docker与基础使用
 
-Docker is a practical way to package applications and their dependencies into portable containers. On Jetson, containers are especially useful for AI development because they let you isolate Python environments, reuse prebuilt images, and run GPU-accelerated workloads without changing the host system too much.
+### 介绍
 
-This page introduces Docker on Jetson with beginner-friendly installation, image management, and container workflow examples.
+Docker是一款轻量级的容器化平台，用于将应用程序及其依赖打包成独立、可移植的容器，从而实现“在任何地方都能以相同方式运行”。它通过隔离环境、快速部署和高效资源利用，让开发、测试、部署流程更加一致和自动化。无论是本地开发、服务器部署，还是大规模微服务架构，Docker都能显著提升效率和稳定性。
 
-## Install Docker Engine
+### Jetson安装Docker服务
 
-Update the package index and install the required dependencies:
+#### 安装Docker CE
 
 ```bash
 sudo apt update
-sudo apt install -y apt-transport-https ca-certificates curl gnupg lsb-release software-properties-common
+# 安装依赖
+sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
 ```
 
-Add the official Docker GPG key:
+添加Docker官方GPG密钥：
 
 ```bash
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | \
-  sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-```
-
-Add the Docker repository:
-
-```bash
+# 添加阿里云 Docker 仓库 Key
+curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-ce.gpg
+# 添加仓库
 echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] \
-  https://download.docker.com/linux/ubuntu \
-  $(lsb_release -cs) stable" | \
-  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-```
-
-Install Docker:
-
-```bash
+"deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-ce.gpg] \
+https://mirrors.aliyun.com/docker-ce/linux/ubuntu \
+$(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list
+# 安装
 sudo apt update
-sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-```
-
-Check the installation:
-
-```bash
+sudo apt install docker-ce docker-ce-cli containerd.io
+# 验证安装
 docker --version
-sudo systemctl status docker
 ```
 
-## Install NVIDIA Container Toolkit
+![](./images/3-7-docker-01.png)
 
-To let Docker containers access Jetson GPU resources, install NVIDIA Container Toolkit:
-
-```bash
-distribution=$(. /etc/os-release; echo $ID$VERSION_ID)
-
-curl -s -L https://nvidia.github.io/libnvidia-container/gpgkey | \
-  sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg
-
-curl -s -L https://nvidia.github.io/libnvidia-container/$distribution/libnvidia-container.list | \
-  sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' | \
-  sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
-```
-
-Install and configure it:
-
-```bash
-sudo apt update
-sudo apt install -y nvidia-container-toolkit
-sudo nvidia-ctk runtime configure --runtime=docker
-sudo systemctl restart docker
-```
-
-## Test GPU Access in a Container
-
-On Jetson, `nvidia-smi` is usually not available like it is on desktop GPUs, so a more reliable validation method is to start an L4T container and inspect the mounted CUDA stack:
-
-```bash
-sudo docker run --rm --runtime=nvidia --network host \
-  nvcr.io/nvidia/l4t-base:r36.4.0 \
-  bash -lc 'ls /usr/local/cuda && cat /etc/nv_tegra_release'
-```
-
-> Note: Choose an `l4t-base` tag that matches your JetPack and L4T version. If the tag does not match your system, pull a compatible one first.
-
-You can also open [Jtop and System Monitoring](../3.16-Jtop-and-System-Monitoring/README.md) on the host while running a GPU-enabled container to confirm GPU activity.
-
-## Allow Non-Root Docker Usage
-
-To avoid typing `sudo` every time:
+添加访问权限
 
 ```bash
 sudo usermod -aG docker $USER
 newgrp docker
 ```
 
-After re-login or opening a new shell, test with:
+执行以上命令后，就可以不需要使用sudo命令就可以直接使用docker命令
+
+安装NVIDIA Container Toolkit
 
 ```bash
+distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
+# 添加Key
+curl -s -L https://nvidia.github.io/libnvidia-container/gpgkey | \
+sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg
+# 添加仓库
+curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | \
+sed 's# deb https://# deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://# g' | \
+sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
+```
+
+![](./images/3-7-docker-02.png)
+
+安装nvidia-container-toolkit
+
+```bash
+sudo apt update
+sudo apt install -y nvidia-container-toolkit
+```
+
+启用Docker GPU支持
+
+```bash
+sudo nvidia-ctk runtime configure --runtime=docker
+sudo systemctl restart docker
+# 测试 Docker 容器内是否可使用 GPU
+sudo docker run --rm --runtime=nvidia --gpus all --network host ubuntu nvidia-smi
+```
+
+```
+下载 docker 镜像时可能需要科学上网！
+```
+
+如果你无法使用Docker官方APT仓库来安装Docker Engine，也可以选择手动下载.deb包并安装，参考下面流程。 👇👇👇
+
+首先选择与你Ubuntu版本对应的仓库目录，打开Docker官方下载目录：
+
+👉https://download.docker.com/linux/ubuntu/dists/
+
+根据你当前使用的Ubuntu版本，选择对应的目录：
+
+| Ubuntu 版本 | 版本代号 | 下载路径示例 |
+| --- | --- | --- |
+| Ubuntu 20.04 LTS | focal | dists/focal/pool/stable/ |
+| Ubuntu 22.04 LTS | jammy | dists/jammy/pool/stable/ |
+| Ubuntu 24.04 LTS | noble | dists/noble/pool/stable/ |
+
+例如：
+
+进入对应版本目录后，选择与你系统匹配的架构目录之一：
+
+在对应架构目录中，下载以下5个deb文件（版本号建议保持一致）：
+
+然后安装Docker（使用dpkg），进入你下载deb文件的目录，执行：
+
+```bash
+sudo dpkg -i ./containerd.io_<version>_<arch>.deb \
+./docker-ce_<version>_<arch>.deb \
+./docker-ce-cli_<version>_<arch>.deb \
+./docker-buildx-plugin_<version>_<arch>.deb \
+./docker-compose-plugin_<version>_<arch>.deb
+```
+
+如果提示依赖缺失，可以执行：
+
+```bash
+sudo apt -f install
+```
+
+如果需要验证Docker服务状态：
+
+```bash
+sudo systemctl status docker
+```
+
+Docker通常会在安装完成后自动启动。如果未启动，手动启动：
+
+```bash
+sudo systemctl start docker
+```
+
+### dcoker基础使用
+
+Docker引擎包括Docker CLI，Docker CLI提供与Docker守护进程交互的命令行工具，教程介绍Docker常用命令的用法。
+
+在正式介绍Docker的基本使用之前，我们先补充说明Docker中“镜像（Image）”和“容器（Container）”的基本概念，以帮助读者更好地理解后续内容。
+
+简单来说：
+
+```
+镜像相当于程序的安装包，容器相当于正在运行的程序实例。
+```
+
+理解了镜像与容器的关系后，接下来将通过具体示例介绍Docker的常用命令和基本使用方法。
+
+### 1、查看详细信息
+
+```
+docker info
+```
+
+### 2、查看版本号
+
+```
+docker --version
+```
+
+### 3、拉取镜像
+
+```
+docker pull <image_name>
+```
+
+若没有指定标签，默认会拉取latest标签的镜像。
+
+手动拉取指定docker镜像：
+
+```
+docker pull <image_name>:<tag>
+```
+
+### 4、运行镜像
+
+若本地没有需要运行的镜像，docker会自动拉取对应镜像。
+
+```
+docker run <image_name>
+```
+
+从指定镜像启动容器：
+
+```
+docker run ubuntu:18.04 /bin/bash
+```
+
+这会以交互模式启动，当输入exit退出（退出前如果没有保存，操作会清空）
+
+#### 4.1、查看正运行的容器
+
+```
 docker ps
 ```
 
-## Common Docker Commands
+#### 4.2、查看正运行或停止容器
 
-### Pull an Image
-
-```bash
-docker pull ultralytics/ultralytics:8.3.201-jetson-jetpack6
 ```
-
-List local images:
-
-```bash
-docker image ls
-```
-
-### Start an Interactive Container
-
-```bash
-docker run --runtime=nvidia -it --rm --network host \
-  ultralytics/ultralytics:8.3.201-jetson-jetpack6
-```
-
-Meaning of the main options:
-
-| Option | Description |
-| --- | --- |
-| `--runtime=nvidia` | Enables GPU access inside the container |
-| `-it` | Starts the container in interactive terminal mode |
-| `--rm` | Deletes the container after exit |
-| `--network host` | Reuses the host network stack |
-
-### View Running Containers
-
-```bash
-docker ps
 docker ps -a
 ```
 
-### Run a Container in the Background
+### 5、清理容器
 
-```bash
-docker run -d --name jetson-demo --runtime=nvidia --network host \
-  ultralytics/ultralytics:8.3.201-jetson-jetpack6 sleep infinity
+```
+docker container prune
 ```
 
-Enter it later with:
+### 6、查看本地镜像
 
-```bash
-docker exec -it jetson-demo bash
+```
+docker images
 ```
 
-## Transfer Files Between Host and Container
+### 7、删除镜像
 
-Copy a host file into a container:
+注意：待删除的镜像需要处于停止运行且被清理的状态
 
-```bash
-docker cp ./test_file.txt jetson-demo:/workspace/
+```
+docker rmi <image_name>
 ```
 
-Copy a file from the container back to the host:
+### 8、保存容器为新的镜像
 
-```bash
-docker cp jetson-demo:/workspace/output.txt /home/seeed/
+```
+docker commit <container_id> <image_name>:<tag>
 ```
 
-For larger projects, bind mounts are usually more convenient than repeated `docker cp`:
+注意：根据实际的CONTAINER ID以及自定义的镜像名称和tag后缀
 
-```bash
-docker run --runtime=nvidia -it --rm --network host \
-  -v /home/seeed/project:/workspace/project \
-  ultralytics/ultralytics:8.3.201-jetson-jetpack6
+### 9、停止容器
+
+若是以交互模式运行容器，且终端进入容器内部，可以在容器内部输入exit停止容器；
+
+若是在外部关闭容器，可以使用docker stop命令。
+
+```
+docker stop
 ```
 
-## Save, Load, and Reuse Images
+注意：根据实际CONTAINER ID进行修改
 
-### Commit a Container as a New Image
+### 10、多终端进同一容器
 
-```bash
-docker commit jetson-demo my_container:latest
-```
+容器之间是相互隔离的，直接使用运行镜像的命令会启动不同容器；若需要在同一容器执行操作，需要使用命令进入同一容器。
 
-### Export an Image to a Tar File
+以交互模式从ubuntu:18.04镜像中启动一个容器：
 
-```bash
-docker save -o my_container.tar my_container:latest
-```
+docker run -it ubuntu:18.04 /bin/bash
 
-### Import an Image from a Tar File
+然后，查看正在运行的容器：
 
-```bash
-docker load -i my_container.tar
-```
+docker ps
 
-### Push an Image to Docker Hub
+记录容器ID后，可从另一个终端进入相同的容器，例如：
 
-```bash
-docker login -u <your-dockerhub-username>
-docker tag my_container:latest <your-dockerhub-username>/my_container:latest
-docker push <your-dockerhub-username>/my_container:latest
-```
+docker exec -it bc4fcf3ef267 /bin/bash
 
-### Remove an Image
-
-```bash
-docker rmi my_container:latest
-```
-
-## Troubleshooting
-
-- If `docker pull` is slow or fails, verify the Jetson network connection in [Network and Wi-Fi](../3.12-Network-and-Wi-Fi/README.md).
-- If `docker: permission denied` appears, re-open the shell after adding your user to the `docker` group.
-- If GPU access fails inside the container, check whether NVIDIA Container Toolkit is installed and whether the image tag matches your JetPack release.
-- If a service inside the container needs to be opened from another PC, use `--network host` or map the port explicitly with `-p`.
-
-## Visual Walkthrough
-
-The Docker screenshots extracted during the merge are now attached to this lesson, so the install flow and container management examples are visible directly inside the chapter.
-
-<details>
-<summary>Docker installation and usage screenshots</summary>
-
-![Docker lesson overview](./images/13-docker-basics-01.png)
-![Prepare the Jetson terminal](./images/13-docker-basics-02.png)
-![Install Docker dependencies](./images/image-20250917091102801.png)
-![Add the Docker key](./images/image-20250917091326075.png)
-![Configure the repository](./images/image-20250917091343874.png)
-![Install Docker Engine](./images/image-20250917091537022.png)
-![Check the Docker version](./images/image-20250917091901861.png)
-![Add the user to the docker group](./images/image-20250917092045343.png)
-![Install NVIDIA Container Toolkit](./images/image-20250917092208852.png)
-![Configure the Docker runtime](./images/image-20250917095005105.png)
-![Restart Docker](./images/image-20250917095426254.png)
-![Test GPU access inside a container](./images/image-20250917095500283.png)
-![Review the test result](./images/image-20250917095519854.png)
-![List local images](./images/image-20250917103828047.png)
-![Pull an image from a registry](./images/image-20250917133331771.png)
-![Start an interactive container](./images/image-20250917133428648.png)
-![Inspect running containers](./images/image-20250917134308736.png)
-![Run a background container](./images/image-20250918103244482.png)
-![Enter a running container](./images/image-20250918103334077.png)
-![Copy files into the container](./images/image-20250918103359703.png)
-![Use bind mounts for a workspace](./images/image-20250918103619026.png)
-![Commit a container as a new image](./images/image-20250918134423865.png)
-![Save an image to a tarball](./images/image-20250918142632980.png)
-![Load an image from a tarball](./images/image-20250918142913624.png)
-![Tag and push to a registry](./images/image-20250918144309547.png)
-![Remove an image you no longer need](./images/image-20250918145816792.png)
-
-</details>
-
-## Suggested Next Steps
-
-- Use [SSH Remote Access](../3.13-SSH-Remote-Access/README.md) or [VS Code](../3.19-VS-Code/README.md) to manage Jetson containers remotely.
-- Use [JupyterLab](../3.20-JupyterLab/README.md) inside a container if you want an isolated Python workflow.
-- Use [uv Python Environment Manager](../3.21-uv-Python-Environment-Manager/README.md) when Docker is too heavy and you only need per-project Python isolation.
-
-## Reference
-
-- [Docker Guides](https://docs.docker.com/guides/)
-- [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/)
+根据实际情况，bc4fcf3ef267改为你使用的容器ID
 
 [Back to Module 3](../README.MD)

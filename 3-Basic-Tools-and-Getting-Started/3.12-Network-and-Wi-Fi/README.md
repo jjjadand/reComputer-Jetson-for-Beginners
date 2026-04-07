@@ -2,99 +2,97 @@
 
 [Back to Module 3](../README.MD) | [Back to Table of Contents](../../Table-of-Contents.md)
 
-## Introduction
+## 02网络知识（WIFI配置）
 
-Before installing packages, using SSH, or opening web services such as JupyterLab, Jetson needs a working network connection. This page covers Wi-Fi, Ethernet, IP checking, and static IP basics.
+### 简介
 
-## Connect to Wi-Fi from the Desktop
+本篇将介绍如何让Jetson连接上网络以及常规的网络配置。
 
-On Jetson desktop:
+### Wifi配置
 
-1. Open the status menu in the top-right corner.
-2. Select the Wi-Fi icon.
-3. Open Wi-Fi settings.
-4. Choose your network and enter the password.
+### 连接Wifi
 
-If the Wi-Fi signal is very weak, check that the external antenna is installed correctly.
+#### 方式1：GUI连接
 
-## Connect to Wi-Fi from the Command Line
+进入Jeton系统桌面，点击右上角的电源图标—>Wifi图标—>Wi-Fi Setting。
 
-List visible Wi-Fi networks:
+![](./images/3-12-network-and-wi-fi-01.png)
 
-```bash
-nmcli device wifi list
-```
+选择想连接的WiFi，如果扫描到的Wifi信号都很差，请检查无线网卡是否安装了天线或天线安装是否正常。
 
-Connect to a Wi-Fi network:
+![](./images/3-12-network-and-wi-fi-02.png)
 
-```bash
-nmcli device wifi connect "YOUR_WIFI_NAME" password "YOUR_PASSWORD"
-```
+点击已经连接的WiFi设置图标可以查看WiFi的信息。
 
-## Check IP Addresses
+![](./images/3-12-network-and-wi-fi-03.png)
 
-You can inspect network interfaces with either of the following commands:
-
-```bash
-ip addr
-```
+查看所有网络连接的IP地址，打开终端输入以下命令：
 
 ```bash
 ifconfig
 ```
 
-Common interface names:
+![](./images/3-12-network-and-wi-fi-04.png)
 
-- `wlan*` or similar: Wi-Fi
-- `eno1` or `eth0`: Ethernet
-- `l4tbr0`: USB device mode bridge on Jetson
+如上图eno1是有线网的接口的IP地址，l4tbr0为Jetson为Type接口分配的IP地址，wlP1p1s0为WiFi接口的IP地址
 
-## Set a Static IP
+#### 方式2：命令行连接
 
-For a desktop-managed Wi-Fi connection:
+打开终端输入下面的命令查询当前环境中的wifi信号：
 
-1. Open Wi-Fi settings.
-2. Open the details page for the connected network.
-3. Change the IPv4 method to manual.
-4. Fill in:
-   - Address: an available IP in your LAN
-   - Netmask: usually `255.255.255.0`
-   - Gateway: your router address
-5. Reconnect to the network.
+```bash
+nmcli device wifi list
+```
 
-## Hotspot Mode
+![](./images/3-12-network-and-wi-fi-05.png)
 
-Jetson can also create a hotspot for debugging or local control, but the Wi-Fi adapter must support AP mode. On most desktop images this can be configured from the network settings page.
+使用下面的命令连接WiFi
 
-## Ethernet Connection
+```bash
+nmcli device wifi connect "WiFi名" password "密码"
+```
 
-If Wi-Fi is unavailable, connect Jetson directly to a router or PC with an Ethernet cable. After the cable is connected, re-run `ip addr` or `ifconfig` to find the address assigned to the wired interface.
+### 设置静态IP
 
-## Visual Walkthrough
+打开Wi-Fi的设置选项
 
-This chapter's screenshots are now embedded here so the desktop Wi-Fi flow, hotspot setup, and IP lookup are part of the merged lesson content.
+![](./images/3-12-network-and-wi-fi-06.png)
 
-<details>
-<summary>Wi-Fi configuration and network screenshots</summary>
+```
+Address:填写需要固定的IP地址，需要可分配的IP地址范围
+Netmask:填写255.255.255.0 Gateway:填写WiFi默认网关地址
+```
 
-![Open Wi-Fi settings](./images/02-network-wifi-01.png)
-![Choose a wireless network](./images/02-network-wifi-02.png)
-![Check Wi-Fi details](./images/02-network-wifi-03.png)
-![Inspect IP addresses in the terminal](./images/02-network-wifi-04.png)
-![Scan for wireless networks from the command line](./images/02-network-wifi-05.png)
-![Connect with nmcli](./images/02-network-wifi-06.png)
-![Set a static address](./images/02-network-wifi-07.png)
-![Open hotspot settings](./images/02-network-wifi-08.png)
-![Configure hotspot parameters](./images/02-network-wifi-09.png)
-![Enable Jetson hotspot mode](./images/02-network-wifi-10.png)
-![Detect the hotspot from another device](./images/02-network-wifi-11.png)
-![Use a wired network connection](./images/02-network-wifi-12.png)
+重新连接WiFi即可生效。
 
-</details>
+![](./images/3-12-network-and-wi-fi-07.png)
 
-## Suggested Next Steps
+### Wifi热点
 
-- Use [SSH Remote Access](../3.13-SSH-Remote-Access/README.md) once the device has an IP address.
-- Use [VNC Remote Desktop](../3.14-VNC-Remote-Desktop/README.md) or [NoMachine](../3.10-Nomachine/README.md) for remote GUI access.
+在开发的时候，有时候需要连接Jetson的热点，来控制和调试程序。下面将介绍如何开启热点。
+
+```
+请注意，需要无线网卡支持 AP 工作模式！
+```
+
+打开Wifi热点
+
+![](./images/3-12-network-and-wi-fi-08.png)
+
+配置热点然后打开
+
+![](./images/3-12-network-and-wi-fi-09.png)
+
+![](./images/3-12-network-and-wi-fi-10.png)
+
+在Window PC上可以正常检测到Jetson打开的热点连接
+
+![](./images/3-12-network-and-wi-fi-11.png)
+
+### 有线网连接
+
+直接将网线连接到Jetson的网口即可
+
+![](./images/3-12-network-and-wi-fi-12.png)
 
 [Back to Module 3](../README.MD)

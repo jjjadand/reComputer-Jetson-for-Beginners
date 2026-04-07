@@ -2,80 +2,75 @@
 
 [Back to Module 3](../README.MD) | [Back to Table of Contents](../../Table-of-Contents.md)
 
-## Introduction
+## 06 jtop工具
 
-`jtop` is one of the most useful Jetson tools for beginners. It provides a real-time view of CPU, GPU, memory, temperatures, power mode, clocks, fan state, storage, process activity, and JetPack component versions.
+### 系统资源监控工具——Jtop
 
-## Install `jtop`
+### 介绍
+
+Jtop是Jetson专用的系统监控工具，可以像htop一样实时查看CPU/GPU使用率、内存、功耗、温度、NVPModel、电源模式、风扇、进程信息 等。它可以帮助你快速诊断性能瓶颈、监控模型推理时的资源占用，是Jetson开发中最常用的调试工具之一。
+
+#### Step1.安装Jtop
+
+在jetson终端中输入下面的命令。
 
 ```bash
 sudo apt update
-sudo apt install -y python3-pip
-sudo -H pip3 install -U jetson-stats
+sudo apt-get install python3-pip -y
+sudo -H pip install -U jetson_stats
+```
+
+首次安装Jtop需要重新启动设备以启动Jtop的系统服务。
+
+```bash
 sudo reboot
 ```
 
-After reboot, start `jtop`:
+#### Step2.启动最大功率以及Jetson时钟
 
 ```bash
+# 启动Jetson的MAXN SUPER最大功率模式
+sudo nvpmodel -m 2
+# 启动jetson时钟,这会让Jetson的CPU和GPU以最大频率运行
+sudo jetson_clocks
+# 打开Jtop查看系统资源
 jtop
 ```
 
-## What You Can Check in `jtop`
+可以监看系统的硬件资源信息
 
-- CPU load and frequency
-- GPU usage and GPU-running processes
-- Memory and swap usage
-- Temperature and power consumption
-- NVPModel and clock state
-- Fan profile and speed
-- JetPack, CUDA, cuDNN, TensorRT, and network information
+![](./images/3-16-jtop-and-system-monitoring-01.png)
 
-## Common Development Uses
+在Jtop中，可以按数字1、2、3...来切换不同页面的信息
 
-### Confirm Jetson Is Running at the Expected Power State
+页面2这里监视着GPU的使用情况，以及进程使用GPU的情况
 
-Open `jtop` before benchmarking or model inference. This helps you verify whether Jetson is limited by power mode or clocks.
+![](./images/3-16-jtop-and-system-monitoring-02.png)
 
-### Watch Memory Pressure During AI Workloads
+页面3 CPU监视界面
 
-When running PyTorch, TensorRT, or OpenCV pipelines, keep an eye on:
+![](./images/3-16-jtop-and-system-monitoring-03.png)
 
-- system memory
-- swap usage
-- GPU utilization
+页面4内存管理
 
-### Check Installed Component Versions
+![](./images/3-16-jtop-and-system-monitoring-04.png)
 
-`jtop` is a convenient place to verify whether CUDA, TensorRT, OpenCV with CUDA, and JetPack are installed as expected.
+可以通过s,b,+,-按键来增加交换区
 
-## Keyboard Tips Inside `jtop`
+![](./images/3-16-jtop-and-system-monitoring-05.png)
 
-- press number keys to switch pages
-- press `q` to quit
-- on some pages you can toggle performance-related controls directly
+页面5监看NVIDIA Jetson Orin芯片内部各类“专用硬件加速引擎”的工作状态和频率
 
-## Visual Walkthrough
+![](./images/3-16-jtop-and-system-monitoring-06.png)
 
-This lesson's screenshots are now embedded in the markdown so the `jtop` pages mentioned in the text are visible during reading.
+页面6控制页面，允许你直接调整Jetson Orin Nano的硬件运行模式、散热策略和时钟频率
 
-<details>
-<summary>Jtop monitoring screenshots</summary>
+![](./images/3-16-jtop-and-system-monitoring-07.png)
 
-![Install jetson-stats](./images/06-jtop-system-monitoring-01.png)
-![Reboot after installation](./images/06-jtop-system-monitoring-02.png)
-![Open the main jtop page](./images/06-jtop-system-monitoring-03.png)
-![Inspect GPU usage](./images/06-jtop-system-monitoring-04.png)
-![Inspect CPU status](./images/06-jtop-system-monitoring-05.png)
-![Inspect memory and swap](./images/06-jtop-system-monitoring-06.png)
-![Open the control page](./images/06-jtop-system-monitoring-07.png)
-![Review JetPack and component versions](./images/06-jtop-system-monitoring-08.png)
+页面7可以监看Jetpack版本、各种环境组件的版本以及网络IP等系统信息
 
-</details>
+![](./images/3-16-jtop-and-system-monitoring-08.png)
 
-## Suggested Next Steps
-
-- Use [Performance and Fan Control](../3.17-Performance-and-Fan-Control/README.md) when you need maximum throughput.
-- Use [CUDA](../3.3-CUDA/README.md) and [TensorRT](../3.4-TensorRT/README.md) after verifying your runtime environment.
+最后，按键盘上的q键，即可退出jtop。
 
 [Back to Module 3](../README.MD)

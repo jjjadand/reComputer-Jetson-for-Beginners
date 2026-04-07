@@ -2,70 +2,44 @@
 
 [Back to Module 3](../README.MD) | [Back to Table of Contents](../../Table-of-Contents.md)
 
-## Introduction
+## 05文件远程传输
 
-During development you will often move scripts, datasets, models, and logs between your PC and Jetson. The simplest secure approach is to transfer files over SSH.
+### 介绍
 
-## Transfer Files with `scp`
+在开发的过程中经常需要在PC与Jetson之间传输数据，所以本篇将介绍如何在PC与Jetson之间进行文件传输。
 
-Upload a file from your PC to Jetson:
+### scp方法
 
-```bash
-scp test_scp.txt seeed@192.168.1.50:/home/seeed/
-```
+SCP（Secure Copy）是一种基于SSH的安全文件传输命令，可用于在本机与远程服务器之间快速、加密地复制文件或文件夹。它操作简单，只需一条命令即可把文件上传到远程设备或从远程设备下载到本地，非常适合在不同设备之间进行安全的数据传输。
 
-Download a file from Jetson to your PC:
+#### 传输文件
 
-```bash
-scp seeed@192.168.1.50:/home/seeed/output.log ./
-```
+将PC中的文件传输到Jetson。
 
-Upload a folder recursively:
+在Linux PC的终端窗口中运行下面的命令即可将当前目录下的`test_scp.txt`文件复制到局域网中jetson设备的`/home/seeed`目录中。
 
 ```bash
-scp -r ./dataset seeed@192.168.1.50:/home/seeed/
+scp test_scp.txt seeed@192.168.137.94:/home/seeed
 ```
 
-## Transfer Files with `rsync`
+输入Jetson密码
 
-`rsync` is more suitable for large folders or repeated synchronization:
+![](./images/3-15-remote-file-transfer-01.png)
 
-```bash
-rsync -avP ./dataset/ seeed@192.168.1.50:/home/seeed/dataset/
-```
+此时，可以看到在Jetson的/home/seeed/目录下多了一个test_scp.txt文件
 
-## Transfer Files with Graphical Tools
+![](./images/3-15-remote-file-transfer-02.png)
 
-If you prefer a GUI, any SFTP-capable tool will work once SSH is enabled:
+### 使用MobaXterm
 
-- MobaXterm
-- FileZilla
-- VS Code Remote - SSH
+使用03 SSH远程登陆章节介绍的MobaXterm进行文件传输
 
-For example, in MobaXterm you can create an `SFTP` session and provide:
+新建一个Seesion—>SFTP—>输入Jetson IP和用户名—>OK
 
-- Jetson IP
-- Jetson username
-- Jetson password
+![](./images/3-15-remote-file-transfer-03.png)
 
-## Troubleshooting
+连接成功后就能传输文件了。
 
-- If authentication fails, confirm the Jetson username and password.
-- If file transfer is slow, prefer Ethernet over Wi-Fi.
-- If `scp` cannot connect, verify SSH setup in [SSH Remote Access](../3.13-SSH-Remote-Access/README.md).
-
-## Visual Walkthrough
-
-The following screenshots are now linked directly in the lesson to show both the terminal-based transfer path and the GUI-based SFTP workflow.
-
-<details>
-<summary>Remote file transfer screenshots</summary>
-
-![Upload a file with scp](./images/05-remote-file-transfer-01.png)
-![Check the file on Jetson](./images/05-remote-file-transfer-02.png)
-![Create an SFTP session in MobaXterm](./images/05-remote-file-transfer-03.png)
-![Transfer files through the GUI](./images/05-remote-file-transfer-04.png)
-
-</details>
+![](./images/3-15-remote-file-transfer-04.png)
 
 [Back to Module 3](../README.MD)
