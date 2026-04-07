@@ -77,5 +77,16 @@ Explore a broad range of topics from Jetson platform basics to generative AI dep
 | Module 7.4| Development with Physical ROS Robots |
 | Module 7.5| ROS Project Practice: Advanced Features |
 | **Module 8**| **Algorithm Optimization and Deployment** |
-| **Module 9**| **Practical Applications of the Jetson Platform** |
+| **Module 9**| [**Practical Applications of the Jetson Platform**](./9-Practical-Applications-of-the-Jetson-Platform/README.md) |
+| Module 9.1 | [Isaac ROS Environment and Setup](./9-Practical-Applications-of-the-Jetson-Platform/9.1-Isaac-ROS-Environment-and-Setup/README.md) |
+| Module 9.2 | [Depth Segmentation](./9-Practical-Applications-of-the-Jetson-Platform/9.2-Depth-Segmentation/README.md) |
+| Module 9.3 | [DNN Stereo Depth](./9-Practical-Applications-of-the-Jetson-Platform/9.3-DNN-Stereo-Depth/README.md) |
+| Module 9.4 | [Free Space Segmentation](./9-Practical-Applications-of-the-Jetson-Platform/9.4-Free-Space-Segmentation/README.md) |
+| Module 9.5 | [Image Rectification and Preprocessing](./9-Practical-Applications-of-the-Jetson-Platform/9.5-Image-Rectification-and-Preprocessing/README.md) |
+| Module 9.6 | [Image Segmentation](./9-Practical-Applications-of-the-Jetson-Platform/9.6-Image-Segmentation/README.md) |
+| Module 9.7 | [3D Scene Reconstruction and Mapping](./9-Practical-Applications-of-the-Jetson-Platform/9.7-3D-Scene-Reconstruction-and-Mapping/README.md) |
+| Module 9.8 | [Object Detection](./9-Practical-Applications-of-the-Jetson-Platform/9.8-Object-Detection/README.md) |
+| Module 9.9 | [3D Pose Estimation](./9-Practical-Applications-of-the-Jetson-Platform/9.9-3D-Pose-Estimation/README.md) |
+| Module 9.10 | [Visual SLAM](./9-Practical-Applications-of-the-Jetson-Platform/9.10-Visual-SLAM/README.md) |
+| Module 9.11 | [A-LOAM 3D SLAM on Jetson](./9-Practical-Applications-of-the-Jetson-Platform/9.11-A-LOAM-3D-SLAM-on-Jetson/README.md) |
 | **Module 10**| **Course Summary and Outlook** |

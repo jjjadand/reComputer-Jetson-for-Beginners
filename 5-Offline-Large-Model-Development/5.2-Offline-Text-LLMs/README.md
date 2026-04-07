@@ -19,9 +19,12 @@ Meta Llama 3.2, the latest generation of large-scale linguistic models launched 
 
 #### Model size
 
-Click on a picture to view the complete spreadsheet
-
-![](./images/5-2-offline-text-llms-02.png)
+| Variant | Modality | Typical fit |
+| --- | --- | --- |
+| Llama 3.2 1B | Text | Smallest local text-only option |
+| Llama 3.2 3B | Text | Practical local deployment on Jetson |
+| Llama 3.2 11B Vision | Vision-language | Image understanding with higher compute demand |
+| Llama 3.2 90B Vision | Vision-language | Server-class deployment rather than single-device use |
 
 ### Performance
 
@@ -71,11 +74,13 @@ Qwen3 is a new generation of large-scale, open-source language model families, l
 
 #### Model size
 
-Click on a picture to view the complete spreadsheet
-
-![](./images/5-2-offline-text-llms-06.png)
-
-![](./images/5-2-offline-text-llms-07.png)
+| Variant | Family type | Notes |
+| --- | --- | --- |
+| Qwen3 0.6B | Dense | Smallest local deployment option |
+| Qwen3 1.7B / 4B / 8B | Dense | Common edge and workstation sizes |
+| Qwen3 14B / 32B | Dense | Larger local or server deployment |
+| Qwen3 30B-A3B | MoE | Mixture-of-experts model with lighter active parameters |
+| Qwen3 235B-A22B | MoE | Largest flagship model for server-scale deployment |
 
 ### Performance
 
@@ -123,9 +128,9 @@ Phi-4-mini is a small, lightweight and efficient language model (Small Language 
 
 #### Model size
 
-Click on a picture to view the complete spreadsheet
-
-![](./images/5-2-offline-text-llms-11.png)
+| Variant | Parameters | Notes |
+| --- | --- | --- |
+| Phi-4-mini | ~3.8B | Compact reasoning-focused model with long-context support |
 
 ### Model performance
 
@@ -173,9 +178,11 @@ DeepSeek – R1 is a large-scale LLM of open reasoning (LLLM), developed by the 
 
 #### Model size
 
-Click on a picture to view the complete spreadsheet
-
-![](./images/5-2-offline-text-llms-15.png)
+| Variant | Typical scale | Notes |
+| --- | --- | --- |
+| DeepSeek-R1 1.5B / 7B / 8B | Small distilled variants | Easiest to test locally |
+| DeepSeek-R1 14B / 32B | Medium distilled variants | Better reasoning quality with higher memory demand |
+| DeepSeek-R1 70B and above | Large variants | Better suited to server-class hardware than a single Jetson |
 
 ### Model performance
 

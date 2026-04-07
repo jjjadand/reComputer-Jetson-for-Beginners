@@ -69,7 +69,13 @@ ROS 2 provides the service of the operating system, which usually transmits mess
 
 The design of ROS 2 is based on the needs of modern robotic applications and has the following main objectives:
 
-Click on a picture to view the complete spreadsheet
+| Objective | Why it matters |
+| --- | --- |
+| Real-time friendliness | Better support for low-latency robotics workloads |
+| Distributed deployment | Multiple nodes can run across many processes or machines |
+| Reliability and maintainability | More suitable for production robotics than ROS 1 era assumptions |
+| Security | Supports secure communication and access control |
+| Cross-platform support | Runs on Linux, embedded targets, and other modern environments |
 
 ### 1.1.3 ROS 2 Core values
 
@@ -148,7 +154,12 @@ The topic is the mechanism for insular communication between nodes, using the pu
 
 Topical communication features:
 
-Click on a picture to view the complete spreadsheet
+| Feature | Description |
+| --- | --- |
+| Asynchronous | Publishers and subscribers do not block each other |
+| One-to-many | Multiple subscribers can consume the same topic |
+| Loosely coupled | Nodes only agree on topic name and message type |
+| Streaming friendly | Well suited for sensor data, telemetry, and continuous control |
 
 Example of typical topic:
 
@@ -179,7 +190,12 @@ Services are the mechanism for synchronized communication between nodes, using t
 
 Service communications characteristics:
 
-Click on a picture to view the complete spreadsheet
+| Feature | Description |
+| --- | --- |
+| Request/response | Client sends a request and waits for a response |
+| Synchronous pattern | Useful when a clear completion result is required |
+| One-to-one interaction | Typically one client talks to one service endpoint |
+| Best for short tasks | Not ideal for long-running jobs or continuous feedback |
 
 Example of service type definition:
 
@@ -220,7 +236,11 @@ Actions are communication mechanisms used to handle long-term assignments to sup
 
 Three streams of action communication:
 
-Click on a picture to view the complete spreadsheet
+| Stream | Purpose |
+| --- | --- |
+| Goal | Describes the task to execute |
+| Feedback | Reports progress while the task is running |
+| Result | Returns the final outcome when the task finishes |
 
 Example of action type definition:
 
@@ -316,7 +336,13 @@ ROS 2 Designed with a clear layered structure from the bottom operating system t
 
 ROS 2 provides a multilingual client library where developers can choose a familiar language to write nodes:
 
-Click on a picture to view the complete spreadsheet
+| Library | Language | Typical use |
+| --- | --- | --- |
+| `rclcpp` | C++ | High-performance production nodes |
+| `rclpy` | Python | Fast prototyping and scripting |
+| `rclc` | C | Micro-ROS and resource-constrained systems |
+| `rcljava` | Java | JVM-based ROS 2 integrations |
+| `rclnodejs` | JavaScript / Node.js | Web and tooling integrations |
 
 rclcpp versus rclpy:
 
@@ -1632,7 +1658,12 @@ gint part - Adds the contents of the temporary storage area to the repository.
 
 The following table shows the orders of the guit to create a repository:
 
-Click on a picture to view the complete spreadsheet
+| Command | Purpose |
+| --- | --- |
+| `git init` | Create a new local repository |
+| `git status` | Check the current repository state |
+| `git add <file>` | Stage a file for the next commit |
+| `git add .` | Stage all current changes |
 
 ### 3.12.4 Submission and modification
 
@@ -1640,15 +1671,30 @@ Git's job is to create and preserve a snapshot of your project and to compare it
 
 The following table shows the orders to create snapshots of the projects submitted to you:
 
-Click on a picture to view the complete spreadsheet
+| Command | Purpose |
+| --- | --- |
+| `git commit -m "message"` | Create a new snapshot with a message |
+| `git diff` | Show unstaged changes |
+| `git diff --staged` | Show staged changes |
+| `git restore <file>` | Discard local edits to a file |
 
 #### 3.12.5 Submission of logs
 
-Click on a picture to view the complete spreadsheet
+| Command | Purpose |
+| --- | --- |
+| `git log` | Show commit history |
+| `git log --oneline` | Show a compact commit history |
+| `git show <commit>` | Inspect one commit in detail |
+| `git reflog` | Show branch and HEAD movement history |
 
 ### 3.12.6 Remote operation
 
-Click on a picture to view the complete spreadsheet
+| Command | Purpose |
+| --- | --- |
+| `git remote -v` | List configured remotes |
+| `git branch -M main` | Rename the current branch |
+| `git push -u origin main` | Push and set the upstream branch |
+| `git pull` | Fetch and merge remote updates |
 
 Use of more Git tools can be entered below terminal: Git-help view the help document
 

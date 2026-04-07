@@ -25,13 +25,12 @@ Qwen 2.5 VL is an advanced visual-language multi-modular model launched by the Q
 
 #### Model size
 
-Click on a picture to view the complete spreadsheet
-
-![](./images/5-3-offline-vision-language-models-and-applications-02.png)
-
-![](./images/5-3-offline-vision-language-models-and-applications-03.png)
-
-![](./images/5-3-offline-vision-language-models-and-applications-04.png)
+| Variant | Notes |
+| --- | --- |
+| Qwen2.5-VL 3B | Smallest practical local multimodal deployment |
+| Qwen2.5-VL 7B | Balanced local quality and resource usage |
+| Qwen2.5-VL 32B | Higher quality for workstation or server deployment |
+| Qwen2.5-VL 72B | Largest flagship variant for server-scale inference |
 
 ### Performance
 
@@ -92,9 +91,12 @@ Gemma 3 is the latest open-source series of visual multimodular models for Googl
 
 #### Model size
 
-Click on a picture to view the complete spreadsheet
-
-![](./images/5-3-offline-vision-language-models-and-applications-10.png)
+| Variant | Notes |
+| --- | --- |
+| Gemma 3 1B | Lightweight baseline |
+| Gemma 3 4B | Practical local multimodal deployment |
+| Gemma 3 12B | Higher quality with more memory required |
+| Gemma 3 27B | Largest open model in the Gemma 3 multimodal family |
 
 ### Performance
 
@@ -153,11 +155,11 @@ LLAVA, full name Large Language and Vision Asistant, is an open-source visual-la
 
 #### Model size
 
-Click on a picture to view the complete spreadsheet
-
-![](./images/5-3-offline-vision-language-models-and-applications-16.png)
-
-![](./images/5-3-offline-vision-language-models-and-applications-17.png)
+| Variant | Notes |
+| --- | --- |
+| LLaVA 7B | Common local-entry multimodal model |
+| LLaVA 13B | Better quality with higher GPU memory demand |
+| LLaVA 34B | Large server-oriented deployment |
 
 ### Performance
 
@@ -216,9 +218,9 @@ MiniCPM-V is an efficient visual-linguistic, multi-modular model series develope
 
 #### Model size
 
-Click on a picture to view the complete spreadsheet
-
-![](./images/5-3-offline-vision-language-models-and-applications-23.png)
+| Variant | Notes |
+| --- | --- |
+| MiniCPM-V 8B | Main local deployment variant highlighted in this chapter |
 
 ### Performance
 
