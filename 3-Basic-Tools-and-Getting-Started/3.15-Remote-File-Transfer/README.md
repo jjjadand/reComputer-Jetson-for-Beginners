@@ -54,4 +54,18 @@ For example, in MobaXterm you can create an `SFTP` session and provide:
 - If file transfer is slow, prefer Ethernet over Wi-Fi.
 - If `scp` cannot connect, verify SSH setup in [SSH Remote Access](../3.13-SSH-Remote-Access/README.md).
 
+## Visual Walkthrough
+
+The following screenshots are now linked directly in the lesson to show both the terminal-based transfer path and the GUI-based SFTP workflow.
+
+<details>
+<summary>Remote file transfer screenshots</summary>
+
+![Upload a file with scp](./images/05-remote-file-transfer-01.png)
+![Check the file on Jetson](./images/05-remote-file-transfer-02.png)
+![Create an SFTP session in MobaXterm](./images/05-remote-file-transfer-03.png)
+![Transfer files through the GUI](./images/05-remote-file-transfer-04.png)
+
+</details>
+
 [Back to Module 3](../README.MD)

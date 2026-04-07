@@ -105,4 +105,21 @@ sudo systemctl enable --now jupyter
 sudo systemctl status jupyter
 ```
 
+## Visual Walkthrough
+
+The setup screenshots for JupyterLab are now inserted directly into the markdown so the configuration sequence is preserved in the merged lesson.
+
+<details>
+<summary>JupyterLab installation screenshots</summary>
+
+![Install JupyterLab with pip](./images/12-jupyterlab-installation-01.png)
+![Add local bin to PATH](./images/12-jupyterlab-installation-02.png)
+![Generate the config file](./images/12-jupyterlab-installation-03.png)
+![Edit the configuration](./images/12-jupyterlab-installation-04.png)
+![Create the systemd service](./images/12-jupyterlab-installation-05.png)
+![Restart the service and check status](./images/12-jupyterlab-installation-06.png)
+![Open JupyterLab from the browser](./images/12-jupyterlab-installation-07.png)
+
+</details>
+
 [Back to Module 3](../README.MD)

@@ -70,6 +70,28 @@ Jetson can also create a hotspot for debugging or local control, but the Wi-Fi a
 
 If Wi-Fi is unavailable, connect Jetson directly to a router or PC with an Ethernet cable. After the cable is connected, re-run `ip addr` or `ifconfig` to find the address assigned to the wired interface.
 
+## Visual Walkthrough
+
+This chapter's screenshots are now embedded here so the desktop Wi-Fi flow, hotspot setup, and IP lookup are part of the merged lesson content.
+
+<details>
+<summary>Wi-Fi configuration and network screenshots</summary>
+
+![Open Wi-Fi settings](./images/02-network-wifi-01.png)
+![Choose a wireless network](./images/02-network-wifi-02.png)
+![Check Wi-Fi details](./images/02-network-wifi-03.png)
+![Inspect IP addresses in the terminal](./images/02-network-wifi-04.png)
+![Scan for wireless networks from the command line](./images/02-network-wifi-05.png)
+![Connect with nmcli](./images/02-network-wifi-06.png)
+![Set a static address](./images/02-network-wifi-07.png)
+![Open hotspot settings](./images/02-network-wifi-08.png)
+![Configure hotspot parameters](./images/02-network-wifi-09.png)
+![Enable Jetson hotspot mode](./images/02-network-wifi-10.png)
+![Detect the hotspot from another device](./images/02-network-wifi-11.png)
+![Use a wired network connection](./images/02-network-wifi-12.png)
+
+</details>
+
 ## Suggested Next Steps
 
 - Use [SSH Remote Access](../3.13-SSH-Remote-Access/README.md) once the device has an IP address.

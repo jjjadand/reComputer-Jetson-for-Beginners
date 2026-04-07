@@ -55,6 +55,24 @@ When running PyTorch, TensorRT, or OpenCV pipelines, keep an eye on:
 - press `q` to quit
 - on some pages you can toggle performance-related controls directly
 
+## Visual Walkthrough
+
+This lesson's screenshots are now embedded in the markdown so the `jtop` pages mentioned in the text are visible during reading.
+
+<details>
+<summary>Jtop monitoring screenshots</summary>
+
+![Install jetson-stats](./images/06-jtop-system-monitoring-01.png)
+![Reboot after installation](./images/06-jtop-system-monitoring-02.png)
+![Open the main jtop page](./images/06-jtop-system-monitoring-03.png)
+![Inspect GPU usage](./images/06-jtop-system-monitoring-04.png)
+![Inspect CPU status](./images/06-jtop-system-monitoring-05.png)
+![Inspect memory and swap](./images/06-jtop-system-monitoring-06.png)
+![Open the control page](./images/06-jtop-system-monitoring-07.png)
+![Review JetPack and component versions](./images/06-jtop-system-monitoring-08.png)
+
+</details>
+
 ## Suggested Next Steps
 
 - Use [Performance and Fan Control](../3.17-Performance-and-Fan-Control/README.md) when you need maximum throughput.

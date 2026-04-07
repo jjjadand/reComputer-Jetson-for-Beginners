@@ -56,4 +56,19 @@ After reboot:
 2. Add `Google Pinyin` and `English`.
 3. Use `Ctrl + Space` to switch input methods.
 
+## Visual Walkthrough
+
+The browser and input-method screenshots extracted from the source chapter are now part of the merged lesson.
+
+<details>
+<summary>Browser installation and Chinese input method screenshots</summary>
+
+![Firefox installed on Jetson](./images/09-browser-installation-01.png)
+![Open language settings](./images/10-chinese-input-method-01.png)
+![Add Chinese language support](./images/10-chinese-input-method-02.png)
+![Choose fcitx as the input framework](./images/10-chinese-input-method-03.png)
+![Switch between English and Google Pinyin](./images/10-chinese-input-method-04.png)
+
+</details>
+
 [Back to Module 3](../README.MD)

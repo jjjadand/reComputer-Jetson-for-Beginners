@@ -106,6 +106,27 @@ Useful normal mode keys:
 | `p` | Paste |
 | `n` | Jump to the next search result |
 
+## Visual Walkthrough
+
+The merged screenshots for this lesson are included below so the terminal and editor workflow is visible in the chapter itself instead of only existing in the `images/` folder.
+
+<details>
+<summary>Terminal and editor screenshots</summary>
+
+![Open the terminal](./images/01-basic-usage-01.png)
+![Create files and folders](./images/01-basic-usage-02.png)
+![Navigate the filesystem](./images/01-basic-usage-03.png)
+![Edit a file with a GUI editor](./images/01-basic-usage-04.png)
+![Install and use nano](./images/01-basic-usage-05.png)
+![Launch Vim](./images/01-basic-usage-06.png)
+![Enter insert mode in Vim](./images/01-basic-usage-07.png)
+![Return to normal mode](./images/01-basic-usage-08.png)
+![Save the file](./images/01-basic-usage-09.png)
+![Quit or force quit](./images/01-basic-usage-10.png)
+![Search and navigate in Vim](./images/01-basic-usage-11.png)
+
+</details>
+
 ## Suggested Next Steps
 
 - Use [Network and Wi-Fi](../3.12-Network-and-Wi-Fi/README.md) to get Jetson online.

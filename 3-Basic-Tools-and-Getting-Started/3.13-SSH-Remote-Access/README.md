@@ -83,6 +83,32 @@ If `jtop` is not available, install it from [Jtop and System Monitoring](../3.16
 - If you get `Connection refused`, make sure the `ssh` service is running.
 - If the IP changed after reconnecting Wi-Fi, re-run `ip addr` on Jetson.
 
+## Visual Walkthrough
+
+The merged screenshots for the SSH lesson are included below to show both the Jetson-side IP lookup flow and the PC-side login flow.
+
+<details>
+<summary>SSH connection screenshots</summary>
+
+![Find the Jetson IP address](./images/03-ssh-remote-access-01.png)
+![Open the PC-side SSH client](./images/03-ssh-remote-access-02.png)
+![Download MobaXterm](./images/03-ssh-remote-access-03.png)
+![Start the SSH terminal](./images/03-ssh-remote-access-04.png)
+![Run the ssh command](./images/03-ssh-remote-access-05.png)
+![Confirm host key or first connection](./images/03-ssh-remote-access-06.png)
+![Enter the Jetson password](./images/03-ssh-remote-access-07.png)
+![Check resources after login](./images/03-ssh-remote-access-08.png)
+![Prepare Ethernet sharing on the PC](./images/03-ssh-remote-access-09.png)
+![Open network sharing settings](./images/03-ssh-remote-access-10.png)
+![Share the PC network to Ethernet](./images/03-ssh-remote-access-11.png)
+![Confirm wired link on Jetson](./images/03-ssh-remote-access-12.png)
+![Inspect the wired IP address](./images/03-ssh-remote-access-13.png)
+![Connect through the wired interface](./images/03-ssh-remote-access-14.png)
+![Verify the second login path](./images/03-ssh-remote-access-15.png)
+![Remote shell ready for development](./images/03-ssh-remote-access-16.png)
+
+</details>
+
 ## Suggested Next Steps
 
 - Use [Remote File Transfer](../3.15-Remote-File-Transfer/README.md) to copy datasets or scripts.

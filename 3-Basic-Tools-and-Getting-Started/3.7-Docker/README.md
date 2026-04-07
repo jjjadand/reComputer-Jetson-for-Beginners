@@ -214,6 +214,42 @@ docker rmi my_container:latest
 - If GPU access fails inside the container, check whether NVIDIA Container Toolkit is installed and whether the image tag matches your JetPack release.
 - If a service inside the container needs to be opened from another PC, use `--network host` or map the port explicitly with `-p`.
 
+## Visual Walkthrough
+
+The Docker screenshots extracted during the merge are now attached to this lesson, so the install flow and container management examples are visible directly inside the chapter.
+
+<details>
+<summary>Docker installation and usage screenshots</summary>
+
+![Docker lesson overview](./images/13-docker-basics-01.png)
+![Prepare the Jetson terminal](./images/13-docker-basics-02.png)
+![Install Docker dependencies](./images/image-20250917091102801.png)
+![Add the Docker key](./images/image-20250917091326075.png)
+![Configure the repository](./images/image-20250917091343874.png)
+![Install Docker Engine](./images/image-20250917091537022.png)
+![Check the Docker version](./images/image-20250917091901861.png)
+![Add the user to the docker group](./images/image-20250917092045343.png)
+![Install NVIDIA Container Toolkit](./images/image-20250917092208852.png)
+![Configure the Docker runtime](./images/image-20250917095005105.png)
+![Restart Docker](./images/image-20250917095426254.png)
+![Test GPU access inside a container](./images/image-20250917095500283.png)
+![Review the test result](./images/image-20250917095519854.png)
+![List local images](./images/image-20250917103828047.png)
+![Pull an image from a registry](./images/image-20250917133331771.png)
+![Start an interactive container](./images/image-20250917133428648.png)
+![Inspect running containers](./images/image-20250917134308736.png)
+![Run a background container](./images/image-20250918103244482.png)
+![Enter a running container](./images/image-20250918103334077.png)
+![Copy files into the container](./images/image-20250918103359703.png)
+![Use bind mounts for a workspace](./images/image-20250918103619026.png)
+![Commit a container as a new image](./images/image-20250918134423865.png)
+![Save an image to a tarball](./images/image-20250918142632980.png)
+![Load an image from a tarball](./images/image-20250918142913624.png)
+![Tag and push to a registry](./images/image-20250918144309547.png)
+![Remove an image you no longer need](./images/image-20250918145816792.png)
+
+</details>
+
 ## Suggested Next Steps
 
 - Use [SSH Remote Access](../3.13-SSH-Remote-Access/README.md) or [VS Code](../3.19-VS-Code/README.md) to manage Jetson containers remotely.

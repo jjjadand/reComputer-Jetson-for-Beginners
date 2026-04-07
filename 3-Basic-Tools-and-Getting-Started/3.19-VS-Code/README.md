@@ -58,4 +58,29 @@ This gives you a full editing environment on Jetson while keeping the IDE on you
 - If the VS Code package name differs, use `ls ~/Downloads/code*.deb` first.
 - If remote connection fails, verify [SSH Remote Access](../3.13-SSH-Remote-Access/README.md).
 
+## Visual Walkthrough
+
+The VS Code installation screenshots from the original lesson are now embedded below to keep the merged chapter self-contained.
+
+<details>
+<summary>VS Code installation and Remote - SSH screenshots</summary>
+
+![Open the official VS Code website](./images/11-vscode-installation-01.png)
+![Choose the ARM64 package](./images/11-vscode-installation-02.png)
+![Install the downloaded deb file](./images/11-vscode-installation-03.png)
+![Launch VS Code](./images/11-vscode-installation-04.png)
+![Pin VS Code for easier access](./images/11-vscode-installation-05.png)
+![Open the extensions view](./images/11-vscode-installation-06.png)
+![Install the Python extension](./images/11-vscode-installation-07.png)
+![Install the C/C++ extension](./images/11-vscode-installation-08.png)
+![Install Material Icon Theme](./images/11-vscode-installation-09.png)
+![Install Remote - SSH](./images/11-vscode-installation-10.png)
+![Create SSH host configuration](./images/11-vscode-installation-11.png)
+![Select the remote target](./images/11-vscode-installation-12.png)
+![Connect to Jetson through Remote - SSH](./images/11-vscode-installation-13.png)
+![Enter the remote password](./images/11-vscode-installation-14.png)
+![VS Code connected to Jetson](./images/11-vscode-installation-15.png)
+
+</details>
+
 [Back to Module 3](../README.MD)
