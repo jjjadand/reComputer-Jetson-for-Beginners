@@ -34,6 +34,16 @@ Explore a broad range of topics from Jetson platform basics to generative AI dep
 | Module 3.19 | [VS Code](./3-Basic-Tools-and-Getting-Started/3.19-VS-Code/README.md) |
 | Module 3.20 | [JupyterLab](./3-Basic-Tools-and-Getting-Started/3.20-JupyterLab/README.md) |
 | Module 3.21 | [uv Python Environment Manager](./3-Basic-Tools-and-Getting-Started/3.21-uv-Python-Environment-Manager/README.md) |
+| Module 3.22 | [Wi-Fi Adapter](./3-Basic-Tools-and-Getting-Started/3.22-Wi-Fi-Adapter/README.md) |
+| Module 3.23 | [SSD Expansion](./3-Basic-Tools-and-Getting-Started/3.23-SSD-Expansion/README.md) |
+| Module 3.24 | [CSI Camera](./3-Basic-Tools-and-Getting-Started/3.24-CSI-Camera/README.md) |
+| Module 3.25 | [USB Camera](./3-Basic-Tools-and-Getting-Started/3.25-USB-Camera/README.md) |
+| Module 3.26 | [GPIO Basics](./3-Basic-Tools-and-Getting-Started/3.26-GPIO-Basics/README.md) |
+| Module 3.27 | [Installing the GPIO Library](./3-Basic-Tools-and-Getting-Started/3.27-Installing-the-GPIO-Library/README.md) |
+| Module 3.28 | [GPIO Input](./3-Basic-Tools-and-Getting-Started/3.28-GPIO-Input/README.md) |
+| Module 3.29 | [GPIO Output](./3-Basic-Tools-and-Getting-Started/3.29-GPIO-Output/README.md) |
+| Module 3.30 | [UART Serial Communication](./3-Basic-Tools-and-Getting-Started/3.30-UART-Serial-Communication/README.md) |
+| Module 3.31 | [I2C Communication](./3-Basic-Tools-and-Getting-Started/3.31-I2C-Communication/README.md) |
 | **Module 4**| **Computer Vision Applications**                  |
 | Module 4.1|  [Overview-of-Computer-Vision](./4-Computer-Vision/4.1-Overview-of-Computer-Vision/README.md)|
 | Module 4.2|  [Real-time-Video-Processing](./4-Computer-Vision/4.2-Real-time-Video-Processing/README.md)|
